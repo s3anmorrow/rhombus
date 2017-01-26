@@ -2,7 +2,7 @@ body {
 	margin: 0px;
 	padding: 0px;
 	overflow: hidden;
-	background: #000000;
+	background: #333333;
 	font-family: verdana,arial,helvetica,sans-serif;
 	font-size: 11px;
 	color: #FFFFFF;
@@ -26,3 +26,11 @@ body {
     width: 1280px;
 }
 
+#stage {
+    width:600px;
+    height:800px;
+    border-width:1px;
+    border-style:solid;
+    margin-left:0px;
+    margin-top:0px"    
+}
