@@ -2,7 +2,7 @@
 // Sean Morrow
 // May 6 / 2014
 
-var AssetManager = function() {
+var AssetManager = function(stage) {
 	// keep track of assets
     var manifest = null;
 	var counter = -1;
@@ -15,8 +15,7 @@ var AssetManager = function() {
 	preloader = new createjs.LoadQueue();
 
 	// construct custom event object and initialize it
-	var eventAssetLoaded = new createjs.Event("onAssetLoaded");
-	var eventAllLoaded = new createjs.Event("onAssetsLoaded");
+	var eventAllLoaded = new createjs.Event("onAllAssetsLoaded");
 	var eventScreensLoaded = new createjs.Event("onScreensLoaded");
 
 	// ------------------------------------------------------ event handlers
@@ -50,6 +49,8 @@ var AssetManager = function() {
                 spriteSheetsJSON[spriteSheetID] = e.result;
                 break;
         }
+		// increment asset counter
+		counter++;
     }
 
 	//called if there is an error loading the spriteSheet (usually due to a 404)
@@ -59,29 +60,33 @@ var AssetManager = function() {
 
 	function onComplete(e) {
 		if (counter >= total) {
+			spriteSheetsJSON = null;
+			// kill event listeners
+        	preloader.removeAllEventListeners();
 			// dispatch event that all assets are loaded
 			stage.dispatchEvent(eventAllLoaded);
         }
 	}
 
 	function onScreensComplete(e) {
-		if (counter >= total) 
+		if (counter >= total) {
 			spriteSheetsJSON = null;
 			// kill event listeners
-        	preloader.removeAllEventListeners();{
+        	preloader.removeAllEventListeners();
 			// dispatch event that all assets are loaded
 			stage.dispatchEvent(eventScreensLoaded);
         }
 	}
 
 	// ------------------------------------------------------ public methods
-	this.getSprite = function(id) {
+	this.getSprite = function(id, frame) {
 		// construct sprite object to animate the frames (I call this a clip)
 		var sprite = new createjs.Sprite(spriteSheets[id]);
 		sprite.name = id;
 		sprite.x = 0;
 		sprite.y = 0;
-		sprite.currentFrame = 0;
+		if (frame != undefined) sprite.gotoAndPlay(frame);
+		else sprite.currentFrame = 0;
 		return sprite;
 	};
 

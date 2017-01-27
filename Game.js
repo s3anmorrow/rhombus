@@ -7,8 +7,12 @@
 	// game variables
 	var stage = null;
 	var canvas = null;
-	//var downKey = false;
-	//var upKey = false;
+	var downKey = false;
+	var upKey = false;
+	var leftKey = false;
+	var rightKey = false;
+	var fireKey = false;
+
 	// array of all game objects currently in use
 	//var usedList;
 	// game objects
@@ -45,7 +49,7 @@
 		// initialization
 
 		// construct/start game objects (have to be in this order due to object dependencies)
-		rhombus = new Rhombus();
+		rhombus = new Rhombus(stage, assetManager);
 		rhombus.startMe();
 
 
@@ -114,10 +118,10 @@
 		// setup listener for when assetManager has loaded the gameScreen assets
 		stage.addEventListener("onScreensLoaded", onPreloadAssets);
 		// construct preloader object to load spritesheet and sound assets
-		assetManager = new AssetManager();
+		assetManager = new AssetManager(stage);
 		// load screens first so I can display the preload gameScreen
 		//assetManager.loadScreens(screenManifest);
-		onSetup();
+		onPreloadAssets();
 	}
 
 	function onPreloadAssets() {
@@ -147,6 +151,8 @@
 		// get reference to usedList from objectPool object
 		usedList = objectPool.getUsedList();
 		*/
+
+		startGame();
 
 		// setup listener for ticker to actually update the stage
 		createjs.Ticker.useRAF = true;

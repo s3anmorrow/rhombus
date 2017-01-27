@@ -1,0 +1,16 @@
+{
+"framerate":24,
+"images":["assets.png"],
+"frames":[
+    [204, 2, 57, 35, 0, 29, 20],
+    [142, 2, 58, 35, 0, 29, 15],
+    [92, 2, 46, 45, 0, 31, 31],
+    [2, 2, 36, 58, 0, 16, 29],
+    [42, 2, 46, 46, 0, 32, 15]
+],
+"animations":{
+    "playerSpin": {"speed": 1, "frames": [1, 2, 3, 4, 0]},
+    "player": {"speed": 1, "frames": [0]},
+    "playerInverted": {"speed": 1, "frames": [1]}
+}
+}
