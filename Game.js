@@ -110,6 +110,7 @@
 		canvas.height = 800;
 		// create stage object
 		stage = new createjs.Stage(canvas);
+		Globals.stage = stage;
 
 		// color the background of the game with a shape
 		background = new createjs.Shape();
@@ -122,6 +123,7 @@
 		stage.addEventListener("onScreensLoaded", onPreloadAssets);
 		// construct preloader object to load spritesheet and sound assets
 		assetManager = new AssetManager(stage);
+		Globals.assetManager = assetManager;
 		// load screens first so I can display the preload gameScreen
 		//assetManager.loadScreens(screenManifest);
 		onPreloadAssets();
@@ -149,6 +151,7 @@
 		
 		// construct object pool
 		objectPool = new ObjectPool(stage, assetManager);
+		Globals.objectPool = objectPool;
 		objectPool.init();
 		// get reference to updateList from objectPool object
 		updateList = objectPool.getUpdateList();

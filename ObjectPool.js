@@ -2,7 +2,7 @@
 // Sean Morrow
 // Mar 22 / 2013
 
-var ObjectPool = function(stage, assetManager) {
+var ObjectPool = function() {
 	// private property variables
 	// list of all game objects to be rendered onto the canvas
 	var updateList = [];
@@ -37,7 +37,7 @@ var ObjectPool = function(stage, assetManager) {
 	function constructObjects(pool,max,Class) {
 		// adding new object to a pool
 		for (var i = 0; i < max; i++) {
-			pool[i] = new Class(stage, assetManager);
+			pool[i] = new Class();
 			pool[i].poolIndex = i;
 			pool[i].usedIndex = index;
 			updateList[index] = null;

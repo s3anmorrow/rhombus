@@ -1,4 +1,8 @@
-var Triangle = function(stage, assetManager){
+var Triangle = function(){
+
+    // set references to globals
+    var stage = Globals.stage;
+    var assetManager = Globals.assetManager;
     
     // private game variables
     var sprite = assetManager.getSprite("assets","player");
