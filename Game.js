@@ -13,9 +13,10 @@
 	var rightKey = false;
 	var fireKey = false;
 
-	// array of all game objects currently in use
-	//var usedList;
+	// array of all game objects currently in use and thus need update() called in ticker
+	var updateList;
 	// game objects
+	var background;
 	//var background, sky, gameScreen, scoreboard, redPlane, prison1, prison2, prison3, redFactory, blueFactory, redBunker, blueBunker, tower, balloon, landscape;
 	// object to preload and handle all assets (spritesheet and sounds)
 	var assetManager;
@@ -30,6 +31,7 @@
 
 	// !!!!! temporary object
 	var rhombus = null;
+	var triangle = null;
 
 
 	var GameConstants = {
@@ -49,8 +51,9 @@
 		// initialization
 
 		// construct/start game objects (have to be in this order due to object dependencies)
-		rhombus = new Rhombus(stage, assetManager);
-		rhombus.startMe();
+		triangle = objectPool.getTriangle();
+		triangle.setupMe("player",function(){console.log("doing behaviour...")});
+		triangle.startMe();
 
 
 
@@ -76,10 +79,10 @@
 	function resetGame() {
 		/*
 		// scroll through all used elements and return them to the objectPool (with exceptions)
-		var length = usedList.length;
+		var length = updateList.length;
 		var object = null;
 		for (var n=0; n<length; n++) {
-			object = usedList[n];
+			object = updateList[n];
 			// remove everything except the clouds
 			if ((object !== null) && (!(object instanceof Cloud))) object.removeMe();
 		}
@@ -109,11 +112,11 @@
 		stage = new createjs.Stage(canvas);
 
 		// color the background of the game with a shape
-		//background = new createjs.Shape();
-		//background.graphics.beginFill("#6699CC").drawRect(0,0,800,500);
-		//background.cache(0,0,800,500);
-		//stage.addChild(background);
-		//stage.update();
+		background = new createjs.Shape();
+		background.graphics.beginFill("#6699CC").drawRect(0,0,600,800);
+		background.cache(0,0,600,800);
+		stage.addChild(background);
+		stage.update();
 
 		// setup listener for when assetManager has loaded the gameScreen assets
 		stage.addEventListener("onScreensLoaded", onPreloadAssets);
@@ -133,7 +136,7 @@
 		//gameScreen.showMe("Preload");
 		// setup listeners for when assetManager has loaded each asset and all assets
 		//stage.addEventListener("onAssetLoaded", gameScreen.progressMe);
-		stage.addEventListener("onAssetsLoaded", onSetup);
+		stage.addEventListener("onAllAssetsLoaded", onSetup);
 		// load the rest of the assets (minus gameScreen assets)
 		assetManager.loadAssets(gameManifest);
 	}
@@ -142,16 +145,13 @@
 		console.log(">> setup");
 		// kill event listeners
 		//stage.removeEventListener("onAssetLoaded", gameScreen.progressMe);
-		stage.removeEventListener("onAssetsLoaded", onSetup);
+		stage.removeEventListener("onAllAssetsLoaded", onSetup);
 		
-		/*
 		// construct object pool
-		objectPool = new ObjectPool();
+		objectPool = new ObjectPool(stage, assetManager);
 		objectPool.init();
-		// get reference to usedList from objectPool object
-		usedList = objectPool.getUsedList();
-		*/
-
+		// get reference to updateList from objectPool object
+		updateList = objectPool.getUpdateList();
 		startGame();
 
 		// setup listener for ticker to actually update the stage
@@ -191,7 +191,7 @@
 
 		// change state of game
 		state = GameConstants.STATE_INTRO;
-		console.log(">> intro gameScreen ready");
+		//console.log(">> intro gameScreen ready");
 	}
 
 	function onKeyDown(e) {
@@ -226,16 +226,14 @@
 		// monitor gamepadManager for any buttons / joystick changes
 		//gamepadManager.monitorMe(state);
 
-		/*
 		// STEP II : UPDATING STEP
 		// scroll through all used objects in game and update them all
-		var length = usedList.length;
+		var length = updateList.length;
 		var target = null;
 		for (var n=0; n<length; n++) {
-			target = usedList[n];
+			target = updateList[n];
 			if (target !== null) target.updateMe();
 		}
-		*/
 
 		// STEP III : RENDERING
 		// update the stage!
