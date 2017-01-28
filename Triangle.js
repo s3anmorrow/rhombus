@@ -42,7 +42,10 @@ var Triangle = function(){
     }
 
     this.updateMe = function() {
-        behaviour();
+
+
+        // run behaviour function
+        behaviour(sprite);
 
 
     };

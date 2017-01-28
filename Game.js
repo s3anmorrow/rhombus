@@ -52,7 +52,7 @@
 
 		// construct/start game objects (have to be in this order due to object dependencies)
 		triangle = objectPool.getTriangle();
-		triangle.setupMe("player",function(){console.log("doing behaviour...")});
+		triangle.setupMe("player", Behaviours.verticalDescend);
 		triangle.startMe();
 
 
