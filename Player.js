@@ -16,7 +16,16 @@ var Player = function(){
     }
 
     this.startMe = function() {
+        // center the player sprite
         sprite.x = (Globals.stage.canvas.width / 2) - (sprite.getBounds().width / 2);
+        sprite.y = Globals.stage.canvas.height + sprite.getBounds().height;
+
+        var stopY = Globals.stage.canvas.height - sprite.getBounds().height - 10;
+
+
+        createjs.Tween.get(sprite, {useTicks:true}).to({y:stopY}, 30, createjs.Ease.cubicOut).call(onSpin);
+
+
         stage.addChild(sprite);
     }
 
@@ -33,6 +42,14 @@ var Player = function(){
 
 
     };
+
+    function onSpin(e) {
+        sprite.addEventListener("animationend", function(e){
+            e.remove();
+            sprite.stop();
+        });
+        sprite.play();
+    }
 
 
 }

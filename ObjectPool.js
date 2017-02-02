@@ -55,6 +55,7 @@ var ObjectPool = function() {
 		// pool object construction
 		// populate arrays to create pool of game objects
 		constructObjects(shapePool, SHAPE_MAX, Shape);
+		constructObjects(playerPool, PLAYER_MAX, Player);
 
 		console.log(">> object pools filled");
 	};

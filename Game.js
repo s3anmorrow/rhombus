@@ -33,11 +33,15 @@
 	// current state of the game
 	var state = -1;
 
-	// !!!!! temporary object
+	// !!!!!!!! TESTING
 	var rhombus = null;
 	var triangle = null;
 	var triangle2 = null;
 	var triangle3 = null;
+	var player = null;
+
+	// !!!!!!!!!!!!!!!!!!!!!
+
 
 	// entry point
 	window.addEventListener("load", onInit);
@@ -82,8 +86,10 @@
 		*/
 
 
-		//waveFactory.levelMe();
+		waveFactory.levelMe();
 
+		player = objectPool.getPlayer();
+		player.startMe();
 
 
 		// game event listener for all events that control gameplay
