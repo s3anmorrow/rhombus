@@ -11,7 +11,13 @@ var Globals = {
 	},
     stage:null,
     assetManager:null,
-    objectPool:null
+    objectPool:null,
+
+	// converts degrees to radians for Trig calc
+    radianMe:function(degrees) {
+        return (degrees * (Math.PI / 180));
+    }  
+	
     
 
 

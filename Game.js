@@ -33,6 +33,7 @@
 	var rhombus = null;
 	var triangle = null;
 	var triangle2 = null;
+	var triangle3 = null;
 
 
 	var GameConstants = {
@@ -51,6 +52,7 @@
 	function startGame() {
 		// initialization
 
+		/*
 		// construct/start game objects (have to be in this order due to object dependencies)
 		triangle = objectPool.getTriangle();
 		triangle.setupMe("player", Behaviours.looping, 600, 300, {r:100, cx:300, cy:300, dir:"left", loops:2, speed:6});
@@ -60,21 +62,35 @@
 		triangle2.setupMe("player", Behaviours.looping, 0, 300, {r:100, cx:300, cy:300, dir:"right", loops:3, speed:2});
 		triangle2.startMe();
 
+		triangle3 = objectPool.getTriangle();
+		triangle3.setupMe("player", Behaviours.looping, 300, 0, {r:100, cx:300, cy:300, dir:"down", loops:2, speed:4});
+		triangle3.startMe();
 
-		/*
 		triangle = objectPool.getTriangle();
-		triangle.setupMe("player", Behaviours.verticalDown,50,-50);
+		triangle.setupMe("player", Behaviours.down, 300, 0, {speed:6});
 		triangle.startMe();
+
 		triangle = objectPool.getTriangle();
-		triangle.setupMe("player", Behaviours.verticalDown,50,-100);
+		triangle.setupMe("player", Behaviours.up, 300, 800, {speed:6});
 		triangle.startMe();
+		
 		triangle = objectPool.getTriangle();
-		triangle.setupMe("player", Behaviours.verticalDown,50,-150);
+		triangle.setupMe("player", Behaviours.switch, 300, 0, {speed:6, y:300});
 		triangle.startMe();
+
 		triangle = objectPool.getTriangle();
-		triangle.setupMe("player", Behaviours.verticalDown,50,-200);
+		triangle.setupMe("player", Behaviours.left, 600, 300, {speed:6});
+		triangle.startMe();
+
+		triangle = objectPool.getTriangle();
+		triangle.setupMe("player", Behaviours.right, 0, 300, {speed:6});
 		triangle.startMe();
 		*/
+		
+		triangle = objectPool.getTriangle();
+		triangle.setupMe("player", Behaviours.diagonal, 300, 0, {speed:6, angle:115});
+		triangle.startMe();
+
 
 
 
