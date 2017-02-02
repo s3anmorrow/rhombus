@@ -3,34 +3,41 @@ var Triangle = function(){
     // set references to globals
     var stage = Globals.stage;
     var assetManager = Globals.assetManager;
+
+    // private property variables
+    var moving = false;
+
     
     // private game variables
     var sprite = assetManager.getSprite("assets","player");
-    sprite.x = 50;
-    sprite.y = 50;
-
-    // the array of other shapes who are to behave together
-    var group = [];
     // the behaviour function that will be called in updateMe()
     var behaviour = null;
 
     // ----------------------------------------------- get/set methods
-    this.setGroup = function(myGroup){
-        group = myGroup;
-    }
 
     // ----------------------------------------------- public methods
-    this.setupMe = function(type, myBehaviour) {
+    this.setupMe = function(type, myBehaviour, startX, startY, options) {
         sprite.gotoAndStop(type);
         behaviour = myBehaviour;
+        // position sprite
+        sprite.x = startX;
+        sprite.y = startY;
+        // add options object to sprite for setting up behaviour function
+        if (options != undefined) {
+            sprite.behaviour = options;
+            sprite.behaviour.ready = false;
+        }
+
 
     }
 
     this.startMe = function() {
         stage.addChild(sprite);
+        moving = true;
     }
 
     this.stopMe = function() {
+        moving = false;
 
     }
 
@@ -42,10 +49,17 @@ var Triangle = function(){
     }
 
     this.updateMe = function() {
+        if (!moving) return;
+
+        // collision detection
+
 
 
         // run behaviour function
-        behaviour(sprite);
+        if (behaviour(sprite) == false) {
+            console.log("off stage!")
+            this.stopMe();
+        }
 
 
     };

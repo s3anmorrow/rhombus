@@ -32,6 +32,7 @@
 	// !!!!! temporary object
 	var rhombus = null;
 	var triangle = null;
+	var triangle2 = null;
 
 
 	var GameConstants = {
@@ -52,9 +53,28 @@
 
 		// construct/start game objects (have to be in this order due to object dependencies)
 		triangle = objectPool.getTriangle();
-		triangle.setupMe("player", Behaviours.verticalDescend);
+		triangle.setupMe("player", Behaviours.looping, 600, 300, {r:100, cx:300, cy:300, dir:"left", loops:2, speed:6});
 		triangle.startMe();
 
+		triangle2 = objectPool.getTriangle();
+		triangle2.setupMe("player", Behaviours.looping, 0, 300, {r:100, cx:300, cy:300, dir:"right", loops:3, speed:2});
+		triangle2.startMe();
+
+
+		/*
+		triangle = objectPool.getTriangle();
+		triangle.setupMe("player", Behaviours.verticalDown,50,-50);
+		triangle.startMe();
+		triangle = objectPool.getTriangle();
+		triangle.setupMe("player", Behaviours.verticalDown,50,-100);
+		triangle.startMe();
+		triangle = objectPool.getTriangle();
+		triangle.setupMe("player", Behaviours.verticalDown,50,-150);
+		triangle.startMe();
+		triangle = objectPool.getTriangle();
+		triangle.setupMe("player", Behaviours.verticalDown,50,-200);
+		triangle.startMe();
+		*/
 
 
 
@@ -114,7 +134,7 @@
 
 		// color the background of the game with a shape
 		background = new createjs.Shape();
-		background.graphics.beginFill("#6699CC").drawRect(0,0,600,800);
+		background.graphics.beginFill("#222222").drawRect(0,0,600,800);
 		background.cache(0,0,600,800);
 		stage.addChild(background);
 		stage.update();
