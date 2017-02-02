@@ -4,6 +4,8 @@
 (function() {
 	"use strict";
 
+	// TODO pause game when lose focus (timers keep going)
+
 	// game variables
 	var stage = null;
 	var canvas = null;
@@ -37,17 +39,7 @@
 	var triangle2 = null;
 	var triangle3 = null;
 
-
-	var GameConstants = {
-		"FRAME_RATE":30,
-		"STATE_SETUP":-1,
-		"STATE_INTRO":0,
-		"STATE_INSTRUCT":1,
-		"STATE_CREDITS":2,
-		"STATE_PLAYING":3,
-		"STATE_GAMEOVER":4
-	};
-
+	// entry point
 	window.addEventListener("load", onInit);
 
 	// ------------------------------------------------------------ private methods
@@ -88,30 +80,16 @@
 		triangle.setupMe("player", Behaviours.right, 0, 300, {speed:6});
 		triangle.startMe();
 		*/
-		
-
-		/*
-		triangle = objectPool.getShape();
-		triangle.setupMe("rhombus", Behaviours.diagonal, 300, 0, {speed:4, angle:115});
-		triangle.startMe();
-		
-		triangle2 = objectPool.getShape();
-		triangle2.setupMe("rhombus", Behaviours.switch, 575, 0, {speed:4, y:450});
-		triangle2.startMe();		
-		*/
 
 
-		waveFactory.levelMe();
+		//waveFactory.levelMe();
 
 
 
 		// game event listener for all events that control gameplay
 		stage.addEventListener("onGameEvent", onGameEvent);
 		// change stage of game
-		state = GameConstants.STATE_PLAYING;
-		
-		// start up level one
-		//levelMe();
+		state = Globals.gameConstants.STATE_PLAYING;
 
 		console.log(">> game started");
 	}
@@ -120,7 +98,7 @@
 		// kill game event listener
 		stage.removeEventListener("onGameEvent", onGameEvent);
 
-		state = GameConstants.STATE_GAMEOVER;
+		state = Globals.gameConstants.STATE_GAMEOVER;
 	}
 
 	function resetGame() {
@@ -135,13 +113,13 @@
 		}
 		*/
 
-		state = GameConstants.STATE_INTRO;
+		state = Globals.gameConstants.STATE_INTRO;
 	}
 
 	// ------------------------------------------------------------ event handlers
 	function onInit() {
 		console.log(">> initializing");
-		state = GameConstants.STATE_SETUP;
+		state = Globals.gameConstants.STATE_SETUP;
 
 		// get reference to canvas
 		canvas = document.getElementById("stage");
@@ -203,7 +181,7 @@
 		// setup listener for ticker to actually update the stage
 		createjs.Ticker.useRAF = true;
 		// set framerate
-		createjs.Ticker.setFPS(GameConstants.FRAME_RATE);
+		createjs.Ticker.setFPS(Globals.gameConstants.FRAME_RATE);
 		createjs.Ticker.addEventListener("tick", onTick);
 
 		/*
@@ -231,7 +209,7 @@
 
 
 		// change state of game
-		state = GameConstants.STATE_INTRO;
+		state = Globals.gameConstants.STATE_INTRO;
 		//console.log(">> intro gameScreen ready");
 
 		// ???????????????? temporary start

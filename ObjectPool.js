@@ -9,12 +9,15 @@ var ObjectPool = function() {
 
 	// starting constant maximums of the game elements (virusMax can be extended by Object pool if needed)
 	var SHAPE_MAX = 100;
+	var PLAYER_MAX = 1;
 
 	// object pool arrays
 	var shapePool = [];
+	var playerPool = [];
 
 	// direct public access to pools
 	this.shapePool = shapePool;
+	this.playerPool = playerPool;
 
 	// other
 	var index = 0;
@@ -60,12 +63,19 @@ var ObjectPool = function() {
 		return getObject(shapePool, SHAPE_MAX);
     };
 
+	this.getPlayer = function() {
+		return getObject(playerPool, PLAYER_MAX);
+	}
+
     this.dispose = function(o) {
 		// which type of game object are we disposing?
 		if (o.type == "Shape") {
 			shapePool[o.poolIndex].used = false;
 			updateList[o.usedIndex] = null;
-		} 
+		} else if (o.type == "Player") {
+			playerPool[o.poolIndex].used = false;
+			updateList[o.usedIndex] = null;
+		}
 
 		//console.log("dispose " + o.type + " @ pool index " + o.poolIndex);
 	};
