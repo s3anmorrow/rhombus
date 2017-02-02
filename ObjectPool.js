@@ -8,13 +8,13 @@ var ObjectPool = function() {
 	var updateList = [];
 
 	// starting constant maximums of the game elements (virusMax can be extended by Object pool if needed)
-	var TRIANGLE_MAX = 20;
+	var SHAPE_MAX = 20;
 
 	// object pool arrays
-	var trianglePool = [];
+	var shapePool = [];
 
 	// direct public access to pools
-	this.trianglePool = trianglePool;
+	this.shapePool = shapePool;
 
 	// other
 	var index = 0;
@@ -51,19 +51,19 @@ var ObjectPool = function() {
 	this.init = function() {
 		// pool object construction
 		// populate arrays to create pool of game objects
-		constructObjects(trianglePool, TRIANGLE_MAX, Triangle);
+		constructObjects(shapePool, SHAPE_MAX, Shape);
 
 		console.log(">> object pools filled");
 	};
 
-	this.getTriangle = function() {
-		return getObject(trianglePool, TRIANGLE_MAX);
+	this.getShape = function() {
+		return getObject(shapePool, SHAPE_MAX);
     };
 
     this.dispose = function(o) {
 		// which type of game object are we disposing?
-		if (o.type == "Triangle") {
-			trianglePool[o.poolIndex].used = false;
+		if (o.type == "Shape") {
+			shapePool[o.poolIndex].used = false;
 			updateList[o.usedIndex] = null;
 		} 
 

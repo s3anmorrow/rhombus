@@ -1,4 +1,4 @@
-var Triangle = function(){
+var Shape = function(){
 
     // set references to globals
     var stage = Globals.stage;
@@ -9,7 +9,7 @@ var Triangle = function(){
 
     
     // private game variables
-    var sprite = assetManager.getSprite("assets","player");
+    var sprite = assetManager.getSprite("assets","circle");
     // the behaviour function that will be called in updateMe()
     var behaviour = null;
 
@@ -27,8 +27,6 @@ var Triangle = function(){
             sprite.behaviour = options;
             sprite.behaviour.ready = false;
         }
-
-
     }
 
     this.startMe = function() {
@@ -55,8 +53,9 @@ var Triangle = function(){
 
 
 
-        // run behaviour function
-        if (behaviour(sprite) == false) {
+        // run move behaviour function (result is whether behaviour should still active)
+        var result = behaviour(sprite);
+        if (!result) {
             console.log("off stage!")
             this.stopMe();
         }

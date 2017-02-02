@@ -24,6 +24,8 @@
 	var gamepadManager;
 	// object pool for all game objects
 	var objectPool;
+	// object to handle waves of enemies
+	var waveFactory;
 
 
 	// current state of the game
@@ -87,10 +89,13 @@
 		triangle.startMe();
 		*/
 		
-		triangle = objectPool.getTriangle();
-		triangle.setupMe("player", Behaviours.diagonal, 300, 0, {speed:6, angle:115});
+		triangle = objectPool.getShape();
+		triangle.setupMe("rhombus", Behaviours.diagonal, 300, 0, {speed:4, angle:115});
 		triangle.startMe();
 
+
+
+		waveFactory.setWave(1);
 
 
 
@@ -127,13 +132,6 @@
 		state = GameConstants.STATE_INTRO;
 	}
 
-	function randomMe(iLower,iUpper) {
-		// randomly selects returns a number between range
-		var iRandomNum = 0;
-		iRandomNum = Math.round(Math.random() * (iUpper - iLower)) + iLower;
-		return iRandomNum;
-	}
-
 	// ------------------------------------------------------------ event handlers
 	function onInit() {
 		console.log(">> initializing");
@@ -150,7 +148,7 @@
 
 		// color the background of the game with a shape
 		background = new createjs.Shape();
-		background.graphics.beginFill("#222222").drawRect(0,0,600,800);
+		background.graphics.beginFill("#C0C0C0").drawRect(0,0,600,800);
 		background.cache(0,0,600,800);
 		stage.addChild(background);
 		stage.update();
@@ -191,7 +189,10 @@
 		objectPool.init();
 		// get reference to updateList from objectPool object
 		updateList = objectPool.getUpdateList();
-		startGame();
+
+		// construct WaveFactory to control enemy waves
+		waveFactory = new WaveFactory();
+
 
 		// setup listener for ticker to actually update the stage
 		createjs.Ticker.useRAF = true;
@@ -222,15 +223,14 @@
 		stage.addChild(sky);
 		*/
 
-		/*
-		// construct three clouds - but it requires the landscape object and that requires the redPlane (none are started)
-		redPlane = objectPool.getPlane();
-		redPlane.type = "RedPlane";
-		*/
 
 		// change state of game
 		state = GameConstants.STATE_INTRO;
 		//console.log(">> intro gameScreen ready");
+
+		// ???????????????? temporary start
+		startGame();
+
 	}
 
 	function onKeyDown(e) {
@@ -264,6 +264,10 @@
 		//else if (downKey) redPlane.rotateDown();
 		// monitor gamepadManager for any buttons / joystick changes
 		//gamepadManager.monitorMe(state);
+
+
+		waveFactory.updateMe();
+
 
 		// STEP II : UPDATING STEP
 		// scroll through all used objects in game and update them all

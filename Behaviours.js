@@ -96,10 +96,10 @@ var Behaviours = {
                 // looping in circle - increment rotation of shape
                 sprite.rotation+=sprite.behaviour.speed;
                 // get current angle of rotation and convert to radians
-                var angle = sprite.rotation * (Math.PI/180);
+                var radians = Globals.radianMe(sprite.rotation);
                 // calculate X and Y location around circle
-                sprite.x = sprite.behaviour.cx + sprite.behaviour.r * Math.cos(angle);
-                sprite.y = sprite.behaviour.cy + sprite.behaviour.r * Math.sin(angle);
+                sprite.x = sprite.behaviour.cx + sprite.behaviour.r * Math.cos(radians);
+                sprite.y = sprite.behaviour.cy + sprite.behaviour.r * Math.sin(radians);
                 // ready to move onto exit stage?
                 if (sprite.rotation >= (360 * sprite.behaviour.loops)) sprite.behaviour.stage = 2;
             } else if (sprite.behaviour.stage == 2) {
@@ -121,10 +121,10 @@ var Behaviours = {
                 // looping in circle - increment rotation of shape
                 sprite.rotation+=sprite.behaviour.speed;
                 // get current angle of rotation and convert to radians
-                var angle = (sprite.rotation + 180) * (Math.PI/180);
+                var radians = Globals.radianMe(sprite.rotation + 180);
                 // calculate X and Y location around circle
-                sprite.x = sprite.behaviour.cx + sprite.behaviour.r * Math.cos(angle);
-                sprite.y = sprite.behaviour.cy + sprite.behaviour.r * Math.sin(angle);
+                sprite.x = sprite.behaviour.cx + sprite.behaviour.r * Math.cos(radians);
+                sprite.y = sprite.behaviour.cy + sprite.behaviour.r * Math.sin(radians);
                 // ready to move onto exit stage?
                 if (sprite.rotation >= (360 * sprite.behaviour.loops)) sprite.behaviour.stage = 2;
             } else if (sprite.behaviour.stage == 2) {
@@ -146,10 +146,10 @@ var Behaviours = {
                 // looping in circle - increment rotation of shape
                 sprite.rotation+=sprite.behaviour.speed;
                 // get current angle of rotation and convert to radians
-                var angle = (sprite.rotation + 270) * (Math.PI/180);
+                var radians = Globals.radianMe(sprite.rotation + 270);
                 // calculate X and Y location around circle
-                sprite.x = sprite.behaviour.cx + sprite.behaviour.r * Math.cos(angle);
-                sprite.y = sprite.behaviour.cy + sprite.behaviour.r * Math.sin(angle);
+                sprite.x = sprite.behaviour.cx + sprite.behaviour.r * Math.cos(radians);
+                sprite.y = sprite.behaviour.cy + sprite.behaviour.r * Math.sin(radians);
                 // ready to move onto exit stage?
                 if (sprite.rotation >= (360 * sprite.behaviour.loops)) sprite.behaviour.stage = 2;
             } else if (sprite.behaviour.stage == 2) {

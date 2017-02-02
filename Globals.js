@@ -16,7 +16,14 @@ var Globals = {
 	// converts degrees to radians for Trig calc
     radianMe:function(degrees) {
         return (degrees * (Math.PI / 180));
-    }  
+    },
+	// generates random number within range
+	randomMe:function(lower,upper) {
+		// randomly selects returns a number between range
+		var iRandomNum = 0;
+		iRandomNum = Math.round(Math.random() * (upper - lower)) + lower;
+		return iRandomNum;
+	}
 	
     
 
