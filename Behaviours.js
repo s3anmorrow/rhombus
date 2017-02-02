@@ -67,12 +67,24 @@ var Behaviours = {
             sprite.behaviour.stage = 0;
             sprite.behaviour.ready = true;
         }
-        if (sprite.behaviour.stage == 0) {
-            sprite.y+=sprite.behaviour.speed;
-            if (sprite.y >= sprite.behaviour.y) sprite.behaviour.stage = 1;
+        if (sprite.behaviour.dir == "down") {
+            if (sprite.behaviour.stage == 0) {
+                sprite.y+=sprite.behaviour.speed;
+                if (sprite.y >= sprite.behaviour.y) sprite.behaviour.stage = 1;
+            } else {
+                sprite.y-=sprite.behaviour.speed;
+                if (sprite.y <= -sprite.getBounds().height) return false;
+            }
+            return true;
         } else {
-            sprite.y-=sprite.behaviour.speed;
-            if (sprite.y <= -sprite.getBounds().height) return false;
+            if (sprite.behaviour.stage == 0) {
+                sprite.y-=sprite.behaviour.speed;
+                if (sprite.y <= sprite.behaviour.y) sprite.behaviour.stage = 1;
+            } else {
+                sprite.y+=sprite.behaviour.speed;
+                if (sprite.y <= -sprite.getBounds().height) return false;
+            }
+            return true;
         }
     },
 

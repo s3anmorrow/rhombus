@@ -35,6 +35,7 @@ var Shape = function(){
     }
 
     this.stopMe = function() {
+        stage.removeChild(sprite);
         moving = false;
 
     }
@@ -51,7 +52,7 @@ var Shape = function(){
 
         // collision detection
 
-
+        
 
         // run move behaviour function (result is whether behaviour should still active)
         var result = behaviour(sprite);

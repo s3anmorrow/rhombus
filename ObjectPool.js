@@ -8,7 +8,7 @@ var ObjectPool = function() {
 	var updateList = [];
 
 	// starting constant maximums of the game elements (virusMax can be extended by Object pool if needed)
-	var SHAPE_MAX = 20;
+	var SHAPE_MAX = 100;
 
 	// object pool arrays
 	var shapePool = [];

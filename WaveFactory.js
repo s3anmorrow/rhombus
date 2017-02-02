@@ -6,71 +6,88 @@ var WaveFactory = function(){
     var objectPool = Globals.objectPool;
 
     // private property variables
+    var level = -1;
     //var wave = 0;
-    //var waveIndex = 0;
+    var waveIndex = 0;
 
-    var activeWaves = [{x:300,y:0,type:"square",behaviour:"down",dropped:0,count:5,frameCount:0,spaced:10}];
+    // timer to control dispatchment of waves
+    var waveTimer;
+    var waveDelay = 0;
+    // the current active waves on the stage
+    var activeWaves = [];
 
-
-    //var wavePlan = [{x:300,y:0,behaviour:"down",shapes:5,spaced:10}];
-
-
-
-
+    // keep track of frames for spacing shapes out
     var frameCounter = 0;
 
     // ----------------------------------------------------------- get/set methods
-    this.setWave = function(myWave) {
-        //wave = myWave;
+    this.getLevel = function() {
+        return (level + 1);
+    }
 
 
-
-
-
-
-
-
-
-    };
-
+    // ------------------------------------------------------------- public methods
     this.levelMe = function() {
         // initialization
+        level++;
+        waveDelay = 2000;
+        waveIndex = 0;
         activeWaves = [];
+        // start timer to start dropping waves
+        waveTimer = window.setInterval(onAddWave, waveDelay);
+    }
+
+    this.resetMe = function() {
+        // various resets
+        level = 0;
+        activeWaves = [];
+        frameCounter = 0;
+        waveIndex = 0;
+        window.clearInterval(waveTimer);
 
 
     }
 
     this.updateMe = function() {
-
         // loop through all active waves
         for (var n=0; n<activeWaves.length; n++) {
             var wave = activeWaves[n];
             if (wave != null) {
                 wave.frameCount++;
                 if (wave.frameCount >= wave.spaced) {
+                    // prepare options
+                    var options = Object.assign({}, wave.options);
 
-                    triangle = objectPool.getShape();
-                    triangle.setupMe(wave.type, Behaviours.down, wave.x, wave.y, {speed:4, angle:115});
-                    triangle.startMe();
 
+                    // drop shape into the game
+                    var shape = objectPool.getShape();
+                    shape.setupMe(wave.type, Behaviours[wave.behaviour], wave.x, wave.y, options);
+                    shape.startMe();
                     wave.dropped++;
+                    // reset frameCount for next drop
                     wave.frameCount = 0;
-
-                    if (wave.dropped >= wave.count) {
-                        // wave's shapes have all been dropped
-                        console.log("wave done!");
-                        // since wave is complete set value to null
-                        activeWaves[n] = null;
-                    }
+                    // if wave is complete set value to null
+                    if (wave.dropped >= wave.count) activeWaves[n] = null;
                 }
             }
-
         }
-
-
 
         frameCounter++;
     };
+
+    // ------------------------------------------------------- event handlers
+    function onAddWave(e) {
+        activeWaves.push(levelManifest[level][waveIndex]);
+        waveIndex++;
+        if (waveIndex > (levelManifest[level].length - 1)) {
+            // wave is complete
+            window.clearInterval(waveTimer);
+        }
+
+        //console.log(activeWaves);
+
+
+
+    }
 
 
 
