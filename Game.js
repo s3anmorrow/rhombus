@@ -130,7 +130,7 @@
 		// get reference to canvas
 		canvas = document.getElementById("stage");
 		// set canvas to as wide/high as the browser window
-		canvas.width = 600;
+		canvas.width = 800;
 		canvas.height = 800;
 		// create stage object
 		stage = new createjs.Stage(canvas);
@@ -138,8 +138,8 @@
 
 		// color the background of the game with a shape
 		background = new createjs.Shape();
-		background.graphics.beginFill("#C0C0C0").drawRect(0,0,600,800);
-		background.cache(0,0,600,800);
+		background.graphics.beginFill("#000022").drawRect(0,0,800,800);
+		background.cache(0,0,800,800);
 		stage.addChild(background);
 		stage.update();
 
@@ -196,11 +196,9 @@
 		gamepadManager.setup(gamepadManifest);
 		*/
 
-		/*
 		// setup event listeners for keyboard keys
 		document.addEventListener("keydown", onKeyDown);
 		document.addEventListener("keyup", onKeyUp);
-		*/
 
 		/*
 		// game ready - show intro gameScreen
@@ -224,12 +222,18 @@
 	}
 
 	function onKeyDown(e) {
-
+		if (e.keyCode == 40) downKey = true;
+		else if (e.keyCode == 38) upKey = true;
+		else if (e.keyCode == 37) leftKey = true;
+		else if (e.keyCode == 39) rightKey = true;
 		e.preventDefault();
 	}
 
 	function onKeyUp(e) {
-		
+		if (e.keyCode == 40) downKey = false;
+		else if (e.keyCode == 38) upKey = false;
+		else if (e.keyCode == 37) leftKey = false;
+		else if (e.keyCode == 39) rightKey = false;
 		e.preventDefault();
 	}
 
@@ -250,13 +254,16 @@
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 		// STEP I : KEYBOARD / GAMEPAD MONITORING
-		//if (upKey) redPlane.rotateUp();
-		//else if (downKey) redPlane.rotateDown();
+		if (leftKey) player.goLeft();
+		else if (rightKey) player.goRight();
+		else if (upKey) player.goUp();
+		else if (downKey) player.goDown();
+		else player.goStraight();
 		// monitor gamepadManager for any buttons / joystick changes
 		//gamepadManager.monitorMe(state);
 
-
 		waveFactory.updateMe();
+		//player.updateMe();
 
 
 		// STEP II : UPDATING STEP
