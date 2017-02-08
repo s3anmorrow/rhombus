@@ -3,26 +3,43 @@ var Player = function(){
     // set references to globals
     var stage = Globals.stage;
     var assetManager = Globals.assetManager;
+    var objectPool = Globals.objectPool;
+    var gameConstants = Globals.gameConstants;
 
     // public property variables
 	var state = 0;
 
     // the current speeds of movement of player
     var speedX = 0;
-    var targetSpeedX = 8;
+    var targetSpeedX = gameConstants.PLAYER_SPEED;
     var speedY = 0;
-    var targetSpeedY = 8;
-
-    // maximum moving speed
-    //var maxSpeed = 6;
-
+    var targetSpeedY = gameConstants.PLAYER_SPEED;
 
     // private game variables
+    var fireCounter = 0;
+    //var fireFreq = 0;
+
+    var weaponData = null;
+
+
     var sprite = assetManager.getSprite("assets","playerEntrance");
     sprite.stop();
 
+    // open sprite to be public property for ease of access
+    this.sprite = sprite;
+
+    // --------------------------------------------------------- get/set methods
+    this.setWeapon = function(type){
+        // update bullet data
+        weaponData = gameConstants.WEAPONS[type];
+    }
+
+
     // --------------------------------------------------------- public methods
     this.startMe = function() {
+        // initialization
+        fireCounter = 0;
+
         // center the player sprite
         sprite.x = (Globals.stage.canvas.width / 2);
         sprite.y = Globals.stage.canvas.height + sprite.getBounds().height;
@@ -54,6 +71,8 @@ var Player = function(){
 
     this.resetMe = function() {
         sprite.gotoAndStop("playerEntrance");
+        fireCounter = 0;
+        state = PlayerState.ENTERING;
 
 
     }
@@ -77,8 +96,7 @@ var Player = function(){
     }
 
     this.goStraight = function() {
-        if (state == PlayerState.ENTERING) return;
-        // save the last state player was in
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.STOPPED)) return;
 
         if (state == PlayerState.MOVING_LEFT) state = PlayerState.STOPPING_LEFT;
         else if (state == PlayerState.MOVING_RIGHT) state = PlayerState.STOPPING_RIGHT;
@@ -86,37 +104,65 @@ var Player = function(){
         else if (state == PlayerState.MOVING_DOWN) state = PlayerState.STOPPING_DOWN;
 
         sprite.gotoAndStop("playerAlive");
-    }      
+    }   
+
+    this.fire = function() {
+        if (fireCounter == weaponData.freq) {
+
+            var firePoints = weaponData.firePoints;
+
+            // loop through all firePoints and add bullet
+            for (var n=0; n<firePoints.length; n++) {
+                // pluck bullet out of object pool and release
+                var bullet = objectPool.getBullet();
+                bullet.startMe(this, sprite.x + firePoints[n].x, 
+                               sprite.y + firePoints[n].y, 
+                               (Globals.cosTable[firePoints[n].r] * weaponData.speed), 
+                               (Globals.sinTable[firePoints[n].r] * weaponData.speed), 
+                               firePoints[n].r);
+            }
+
+            // reset fire frame counter
+            fireCounter = 0;
+        }
+        fireCounter++;
+    };
+
+    this.cease = function() {
+        fireCounter = weaponData.freq;
+    }
 
     this.updateMe = function() {
-        // moving player in all directions including acceleration / decelerration
-        if (state == PlayerState.MOVING_LEFT) {
-            if (speedX < targetSpeedX) speedX++;
-            sprite.x-=speedX;
-        } else if (state == PlayerState.MOVING_RIGHT) {
-            if (speedX < targetSpeedX) speedX++;
-            sprite.x+=speedX;
-        } else if (state == PlayerState.STOPPING_LEFT) {
-            if (speedX > 0) speedX--;
-            sprite.x-=speedX;
-        } else if (state == PlayerState.STOPPING_RIGHT) {
-            if (speedX > 0) speedX--;
-            sprite.x+=speedX;
-        } else if (state == PlayerState.MOVING_UP) {
-            if (speedY < targetSpeedY) speedY++;
-            sprite.y-=speedY;
-        } else if (state == PlayerState.MOVING_DOWN) {
-            if (speedY < targetSpeedY) speedY++;
-            sprite.y+=speedY;
-        } else if (state == PlayerState.STOPPING_UP) {
-            if (speedY > 0) speedY--;
-            sprite.y-=speedY;
-        } else if (state == PlayerState.STOPPING_DOWN) {
-            if (speedY > 0) speedY--;
-            sprite.y+=speedY;
+        if ((state != PlayerState.STOPPED)) {
+            // moving player in all directions including acceleration / decelerration
+            if (state == PlayerState.MOVING_LEFT) {
+                if (speedX < targetSpeedX) speedX++;
+                sprite.x-=speedX;
+            } else if (state == PlayerState.MOVING_RIGHT) {
+                if (speedX < targetSpeedX) speedX++;
+                sprite.x+=speedX;
+            } else if (state == PlayerState.STOPPING_LEFT) {
+                if (speedX > 0) speedX--;
+                sprite.x-=speedX;
+            } else if (state == PlayerState.STOPPING_RIGHT) {
+                if (speedX > 0) speedX--;
+                sprite.x+=speedX;
+            } else if (state == PlayerState.MOVING_UP) {
+                if (speedY < targetSpeedY) speedY++;
+                sprite.y-=speedY;
+            } else if (state == PlayerState.MOVING_DOWN) {
+                if (speedY < targetSpeedY) speedY++;
+                sprite.y+=speedY;
+            } else if (state == PlayerState.STOPPING_UP) {
+                if (speedY > 0) speedY--;
+                sprite.y-=speedY;
+            } else if (state == PlayerState.STOPPING_DOWN) {
+                if (speedY > 0) speedY--;
+                sprite.y+=speedY;
+            }    
+            // has the player stopped?
+            if ((speedX == 0) && (speedY == 0)) state = PlayerState.STOPPED;
         }
-
-          
 
     };
 
@@ -133,5 +179,6 @@ var PlayerState = {
     "STOPPING_LEFT":6,
     "STOPPING_RIGHT":7,
     "STOPPING_UP":8,
-    "STOPPING_DOWN":9
+    "STOPPING_DOWN":9,
+    "STOPPED":10
 };

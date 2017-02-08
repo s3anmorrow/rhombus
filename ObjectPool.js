@@ -10,14 +10,17 @@ var ObjectPool = function() {
 	// starting constant maximums of the game elements (virusMax can be extended by Object pool if needed)
 	var SHAPE_MAX = 100;
 	var PLAYER_MAX = 1;
+	var BULLET_MAX = 50;
 
 	// object pool arrays
 	var shapePool = [];
 	var playerPool = [];
+	var bulletPool = [];
 
 	// direct public access to pools
 	this.shapePool = shapePool;
 	this.playerPool = playerPool;
+	this.bulletPool = bulletPool;
 
 	// other
 	var index = 0;
@@ -56,6 +59,7 @@ var ObjectPool = function() {
 		// populate arrays to create pool of game objects
 		constructObjects(shapePool, SHAPE_MAX, Shape);
 		constructObjects(playerPool, PLAYER_MAX, Player);
+		constructObjects(bulletPool, BULLET_MAX, Bullet);
 
 		console.log(">> object pools filled");
 	};
@@ -68,15 +72,20 @@ var ObjectPool = function() {
 		return getObject(playerPool, PLAYER_MAX);
 	}
 
+	this.getBullet = function() {
+		return getObject(bulletPool, BULLET_MAX);
+	}
+
     this.dispose = function(o) {
 		// which type of game object are we disposing?
-		if (o.type == "Shape") {
-			shapePool[o.poolIndex].used = false;
-			updateList[o.usedIndex] = null;
-		} else if (o.type == "Player") {
+		if (o.constructor.name == "Shape") {
+			shapePool[o.poolIndex].used = false;			
+		} else if (o.constructor.name == "Player") {
 			playerPool[o.poolIndex].used = false;
-			updateList[o.usedIndex] = null;
+		} else if (o.constructor.name == "Bullet") {
+			bulletPool[o.poolIndex].used = false;	
 		}
+		updateList[o.usedIndex] = null;
 
 		//console.log("dispose " + o.type + " @ pool index " + o.poolIndex);
 	};

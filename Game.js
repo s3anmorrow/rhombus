@@ -39,6 +39,7 @@
 	var triangle2 = null;
 	var triangle3 = null;
 	var player = null;
+	var bullet = null;
 
 	// !!!!!!!!!!!!!!!!!!!!!
 
@@ -86,16 +87,20 @@
 		*/
 
 
-		waveFactory.levelMe();
+		//waveFactory.levelMe();
+
+
+
 
 		player = objectPool.getPlayer();
 		player.startMe();
+		player.setWeapon("spread");
 
 
 		// game event listener for all events that control gameplay
 		stage.addEventListener("onGameEvent", onGameEvent);
 		// change stage of game
-		state = Globals.gameConstants.STATE_PLAYING;
+		state = Globals.gameStates.STATE_PLAYING;
 
 		console.log(">> game started");
 	}
@@ -104,7 +109,7 @@
 		// kill game event listener
 		stage.removeEventListener("onGameEvent", onGameEvent);
 
-		state = Globals.gameConstants.STATE_GAMEOVER;
+		state = Globals.gameStates.STATE_GAMEOVER;
 	}
 
 	function resetGame() {
@@ -119,13 +124,13 @@
 		}
 		*/
 
-		state = Globals.gameConstants.STATE_INTRO;
+		state = Globals.gameStates.STATE_INTRO;
 	}
 
 	// ------------------------------------------------------------ event handlers
 	function onInit() {
 		console.log(">> initializing");
-		state = Globals.gameConstants.STATE_SETUP;
+		state = Globals.gameStates.STATE_SETUP;
 
 		// get reference to canvas
 		canvas = document.getElementById("stage");
@@ -177,6 +182,7 @@
 		objectPool = new ObjectPool(stage, assetManager);
 		Globals.objectPool = objectPool;
 		objectPool.init();
+
 		// get reference to updateList from objectPool object
 		updateList = objectPool.getUpdateList();
 
@@ -213,7 +219,7 @@
 
 
 		// change state of game
-		state = Globals.gameConstants.STATE_INTRO;
+		state = Globals.gameStates.STATE_INTRO;
 		//console.log(">> intro gameScreen ready");
 
 		// ???????????????? temporary start
@@ -226,6 +232,7 @@
 		else if (e.keyCode == 38) upKey = true;
 		else if (e.keyCode == 37) leftKey = true;
 		else if (e.keyCode == 39) rightKey = true;
+		else if (e.keyCode == 32) fireKey = true;
 		e.preventDefault();
 	}
 
@@ -234,6 +241,7 @@
 		else if (e.keyCode == 38) upKey = false;
 		else if (e.keyCode == 37) leftKey = false;
 		else if (e.keyCode == 39) rightKey = false;
+		else if (e.keyCode == 32) fireKey = false;
 		e.preventDefault();
 	}
 
@@ -259,6 +267,10 @@
 		else if (upKey) player.goUp();
 		else if (downKey) player.goDown();
 		else player.goStraight();
+
+		if (fireKey) player.fire();
+		else player.cease();
+
 		// monitor gamepadManager for any buttons / joystick changes
 		//gamepadManager.monitorMe(state);
 
