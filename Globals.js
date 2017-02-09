@@ -13,6 +13,10 @@ var Globals = {
     gameConstants:{
 		FRAME_RATE:30,
 		PLAYER_SPEED:10,
+		PLAYER_MIN_X:20,
+		PLAYER_MAX_X:780,
+		PLAYER_MIN_Y:400,
+		PLAYER_MAX_Y:750,
 		WEAPONS:{
 			"single":{
 				freq:8,

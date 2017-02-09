@@ -14,6 +14,10 @@ var Player = function(){
     var targetSpeedX = gameConstants.PLAYER_SPEED;
     var speedY = 0;
     var targetSpeedY = gameConstants.PLAYER_SPEED;
+    var minX = gameConstants.PLAYER_MIN_X; 
+    var maxX = gameConstants.PLAYER_MAX_X;
+    var minY = gameConstants.PLAYER_MIN_Y;
+    var maxY = gameConstants.PLAYER_MAX_Y;
 
     // private game variables
     var fireCounter = 0;
@@ -86,8 +90,17 @@ var Player = function(){
             sprite.gotoAndStop("playerLeft");
             state = PlayerState.MOVING_LEFT;
         }
+        // no vertical movement now
+        speedY = 0;
+        // acceleration to targetSpeed
         if (speedX < targetSpeedX) speedX++;
+        // move sprite to the left
         sprite.x-=speedX;
+        // have I hit the movement boundary?
+        if (sprite.x < minX) {
+            sprite.x = minX;
+            speedX = 0;
+        }
     }
 
     this.goRight = function() {
@@ -96,9 +109,13 @@ var Player = function(){
             sprite.gotoAndStop("playerRight");
             state = PlayerState.MOVING_RIGHT;
         }
-
+        speedY = 0;
         if (speedX < targetSpeedX) speedX++;
         sprite.x+=speedX;
+        if (sprite.x > maxX) {
+            sprite.x = maxX;
+            speedX = 0;
+        }
     }      
 
     this.goUp = function() {
@@ -107,9 +124,13 @@ var Player = function(){
             if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
             state = PlayerState.MOVING_UP;
         }
-
+        speedX = 0;
         if (speedY < targetSpeedY) speedY++;
         sprite.y-=speedY;
+        if (sprite.y < minY) {
+            sprite.y = minY;
+            speedY = 0;
+        }
     }
 
     this.goDown = function() {
@@ -118,8 +139,13 @@ var Player = function(){
             if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
             state = PlayerState.MOVING_DOWN;
         }
+        speedX = 0;
         if (speedY < targetSpeedY) speedY++;
         sprite.y+=speedY;
+        if (sprite.y > maxY) {
+            sprite.y = maxY;
+            speedY = 0;
+        }
     }
 
     this.goIdle = function() {
