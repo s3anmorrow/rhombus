@@ -21,6 +21,11 @@ var Player = function(){
     // get sprite for Player
     var sprite = assetManager.getSprite("assets","playerEntrance");
     sprite.stop();
+    // calculate spot where player stops when animating up into game
+    var enteringStopY = stage.canvas.height - sprite.getBounds().height - 50;
+    // calculating starting position of player sprite (center of stage)
+    var startX = stage.canvas.width / 2;
+    var startY = stage.canvas.height + sprite.getBounds().height;    
 
     // open sprite to be public property for ease of access
     this.sprite = sprite;
@@ -42,15 +47,12 @@ var Player = function(){
         sprite.gotoAndStop("playerEntrance");
 
         // center the player sprite
-        sprite.x = stage.canvas.width / 2;
-        sprite.y = stage.canvas.height + sprite.getBounds().height;
-
-        // spot where player stops when animating up into game
-        var stopY = stage.canvas.height - sprite.getBounds().height - 10;
+        sprite.x = startX;
+        sprite.y = startY;
 
         // animate player sprite coming onto stage
         createjs.Tween.get(sprite, {useTicks:true})
-            .to({y:stopY}, 30, createjs.Ease.cubicOut)
+            .to({y:enteringStopY}, 30, createjs.Ease.cubicOut)
             .call(function(){
                 sprite.addEventListener("animationend", function(e){
                     e.remove();
@@ -68,15 +70,13 @@ var Player = function(){
 
     }
 
-    /*
     this.resetMe = function() {
         sprite.gotoAndStop("playerEntrance");
         fireCounter = 0;
         state = PlayerState.ENTERING;
-
-
+        sprite.x = startX;
+        sprite.y = startY;
     }
-    */
 
     this.goLeft = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
