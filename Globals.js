@@ -18,20 +18,31 @@ var Globals = {
 				freq:8,
 				firePoints:[{x:0,y:-20,r:270}],
 				speed:14,
+				damage:2,
 				frame:"bullet"
 			},
 			"double":{
 				freq:2,
 				firePoints:[{x:-20,y:-5,r:270},{x:20,y:-5,r:270}],
 				speed:20,
+				damage:2,
 				frame:"bullet"				
 			},
 			"spread":{
 				freq:4,
-				firePoints:[{x:0,y:-20,r:270},{x:-20,y:-5,r:250},{x:20,y:-5,r:290}],
+				firePoints:[{x:0,y:-20,r:270},{x:-20,y:-5,r:260},{x:20,y:-5,r:280}],
 				speed:20,
-				frame:"bullet"				
+				damage:1,
+				frame:"spread"				
+			},
+			"laser":{
+				freq:1,
+				firePoints:[{x:0,y:-20,r:270}],
+				speed:10,
+				damage:0.5,
+				frame:"laser"				
 			}
+
 		}
 	},
 

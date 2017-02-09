@@ -10,13 +10,13 @@ var Bullet = function() {
 	var objectPool = Globals.objectPool;
 
 	// public properties
-	this.owner = null;
+	//this.owner = null;
+	var owner = null;
 
 	// private variables
 	// state of bullet
 	var state = 0;
-	// type of bullet
-	var type = 0;
+	var damage = 0;
 
 	// grab clip for bullet
 	var sprite = assetManager.getSprite("assets","bullet");
@@ -25,12 +25,6 @@ var Bullet = function() {
 	// private property variables
 	//var owner = this.owner;
 	//var ownerType;
-
-	// reference to the global game objects
-	var landscape;
-	var balloon;
-	var redBunker;
-	var prison1, prison2, prison3;
 
 	// other
 	var canvas = Globals.stage.canvas;
@@ -71,15 +65,17 @@ var Bullet = function() {
 
 
 	// ------------------------------------------------------ public methods
-	this.startMe = function(myOwner, x, y, xd, yd, r) {
+	this.startMe = function(myOwner, spriteFrame, speed, myDamage, x, y, r) {
 		// initialization
 		owner = myOwner;
 		//ownerType = owner.type;
 
 		state = BulletState.MOVING;
 		distance = 0;
-		xDisplace = xd;
-		yDisplace = yd;
+		damage = myDamage;
+		xDisplace = Globals.cosTable[r] * speed;
+		yDisplace = Globals.sinTable[r] * speed;
+		sprite.gotoAndStop(spriteFrame);
 		sprite.x = x;
 		sprite.y = y;
 		sprite.rotation = r;

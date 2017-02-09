@@ -87,14 +87,14 @@
 		*/
 
 
-		//waveFactory.levelMe();
+		waveFactory.levelMe();
 
 
 
 
 		player = objectPool.getPlayer();
 		player.startMe();
-		player.setWeapon("spread");
+		player.setWeapon("laser");
 
 
 		// game event listener for all events that control gameplay

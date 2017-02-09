@@ -17,16 +17,16 @@ var Player = function(){
 
     // private game variables
     var fireCounter = 0;
-    //var fireFreq = 0;
-
     var weaponData = null;
-
-
+    // get sprite for Player
     var sprite = assetManager.getSprite("assets","playerEntrance");
     sprite.stop();
 
     // open sprite to be public property for ease of access
     this.sprite = sprite;
+
+    // other variables
+    var _this = this;
 
     // --------------------------------------------------------- get/set methods
     this.setWeapon = function(type){
@@ -34,20 +34,19 @@ var Player = function(){
         weaponData = gameConstants.WEAPONS[type];
     }
 
-
     // --------------------------------------------------------- public methods
     this.startMe = function() {
         // initialization
+        state = PlayerState.ENTERING;
         fireCounter = 0;
+        sprite.gotoAndStop("playerEntrance");
 
         // center the player sprite
-        sprite.x = (Globals.stage.canvas.width / 2);
-        sprite.y = Globals.stage.canvas.height + sprite.getBounds().height;
+        sprite.x = stage.canvas.width / 2;
+        sprite.y = stage.canvas.height + sprite.getBounds().height;
 
         // spot where player stops when animating up into game
-        var stopY = Globals.stage.canvas.height - sprite.getBounds().height - 10;
-        // player is currently entering the game
-        state = PlayerState.ENTERING;
+        var stopY = stage.canvas.height - sprite.getBounds().height - 10;
 
         // animate player sprite coming onto stage
         createjs.Tween.get(sprite, {useTicks:true})
@@ -69,6 +68,7 @@ var Player = function(){
 
     }
 
+    /*
     this.resetMe = function() {
         sprite.gotoAndStop("playerEntrance");
         fireCounter = 0;
@@ -76,49 +76,54 @@ var Player = function(){
 
 
     }
+    */
 
     this.goLeft = function() {
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         state = PlayerState.MOVING_LEFT;
         sprite.gotoAndStop("playerLeft");
     }
 
     this.goRight = function() {
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         state = PlayerState.MOVING_RIGHT;
         sprite.gotoAndStop("playerRight");
     }      
 
     this.goUp = function() {
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         state = PlayerState.MOVING_UP;
     }
 
     this.goDown = function() {
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         state = PlayerState.MOVING_DOWN;
     }
 
     this.goStraight = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.STOPPED)) return;
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.STOPPED) || (state == PlayerState.KILLED)) return;
 
         if (state == PlayerState.MOVING_LEFT) state = PlayerState.STOPPING_LEFT;
         else if (state == PlayerState.MOVING_RIGHT) state = PlayerState.STOPPING_RIGHT;
         else if (state == PlayerState.MOVING_UP) state = PlayerState.STOPPING_UP;
         else if (state == PlayerState.MOVING_DOWN) state = PlayerState.STOPPING_DOWN;
 
-        sprite.gotoAndStop("playerAlive");
+        sprite.gotoAndStop("playerStraight");
     }   
 
     this.fire = function() {
         if (fireCounter == weaponData.freq) {
-
             var firePoints = weaponData.firePoints;
-
             // loop through all firePoints and add bullet
             for (var n=0; n<firePoints.length; n++) {
                 // pluck bullet out of object pool and release
                 var bullet = objectPool.getBullet();
-                bullet.startMe(this, sprite.x + firePoints[n].x, 
+                bullet.startMe(this, 
+                               weaponData.frame, 
+                               weaponData.speed, 
+                               weaponData.damage,
+                               sprite.x + firePoints[n].x, 
                                sprite.y + firePoints[n].y, 
-                               (Globals.cosTable[firePoints[n].r] * weaponData.speed), 
-                               (Globals.sinTable[firePoints[n].r] * weaponData.speed), 
                                firePoints[n].r);
             }
 
@@ -132,7 +137,17 @@ var Player = function(){
         fireCounter = weaponData.freq;
     }
 
+    this.killMe = function() {
+        state = PlayerState.KILLED;
+        sprite.addEventListener("animationend",function(e){
+            e.remove();
+            _this.startMe();
+        });
+        sprite.gotoAndPlay("playerKilled");
+    }
+
     this.updateMe = function() {
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         if ((state != PlayerState.STOPPED)) {
             // moving player in all directions including acceleration / decelerration
             if (state == PlayerState.MOVING_LEFT) {
