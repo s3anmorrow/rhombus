@@ -94,7 +94,7 @@
 
 		player = objectPool.getPlayer();
 		player.startMe();
-		player.setWeapon("laser");
+		player.setWeapon("double");
 
 
 		// game event listener for all events that control gameplay
@@ -266,7 +266,7 @@
 		else if (rightKey) player.goRight();
 		else if (upKey) player.goUp();
 		else if (downKey) player.goDown();
-		else player.goStraight();
+		else player.goIdle();
 
 		if (fireKey) player.fire();
 		else player.cease();
@@ -274,7 +274,7 @@
 		// monitor gamepadManager for any buttons / joystick changes
 		//gamepadManager.monitorMe(state);
 
-		waveFactory.updateMe();
+		//waveFactory.updateMe();
 		//player.updateMe();
 
 

@@ -3,65 +3,48 @@ var Bullet = function() {
 	var KILLED = BulletState.KILLED;
 	var MOVING = BulletState.MOVING;
 
-
-	// private game variables
+	// access to globals
     var stage = Globals.stage;
     var assetManager = Globals.assetManager;
 	var objectPool = Globals.objectPool;
 
-	// public properties
-	//this.owner = null;
+	// private property variables
 	var owner = null;
 
 	// private variables
 	// state of bullet
 	var state = 0;
 	var damage = 0;
-
-	// grab clip for bullet
-	var sprite = assetManager.getSprite("assets","bullet");
-	//this.explosionClip = assetManager.getClip("Plane");
-
-	// private property variables
-	//var owner = this.owner;
-	//var ownerType;
-
-	// other
 	var canvas = Globals.stage.canvas;
 	var stageLeft = -10;
 	var stageRight = canvas.width + 10;
 	var stageTop = -10;
 	var stageBottom = canvas.height + 10;
 	var xDisplace, yDisplace;
-	var distance;
-
+	//var distance;
 	// access to this object from callbacks [out of scope issues]
-	var me = this;
-	//var bombSound;
-
+	var _this = this;
 	// access to pool objects
 	var shapePool = objectPool.shapePool;
+
+	// grab clip for bullet
+	var sprite = assetManager.getSprite("assets","bullet");
+
 
 	// ------------------------------------------------------ get/set methods
 
 
 
-	// ------------------------------------------------------ event handlers
-	/*
-	function onKilled(bitmap, animation) {
-		// end animation
-        explosionClip.removeEventListener("animationend", onKilled);
-		explosionClip.stop();
-		explosionClip.y = -2000;
+	// ------------------------------------------------------ private methods
+	function removeMe() {
+		// remove bullet
+		sprite.stop();
+		sprite.y = -2000;
 		// return this object to the object pool
-		objectPool.dispose(me);
-		stage.removeChild(explosionClip);
-		// memory management
-		me.owner = null;
+		objectPool.dispose(_this);
+		stage.removeChild(sprite);
 	}
-	*/
 
-	
 
 
 	// ------------------------------------------------------ public methods
@@ -71,7 +54,7 @@ var Bullet = function() {
 		//ownerType = owner.type;
 
 		state = BulletState.MOVING;
-		distance = 0;
+		//distance = 0;
 		damage = myDamage;
 		xDisplace = Globals.cosTable[r] * speed;
 		yDisplace = Globals.sinTable[r] * speed;
@@ -91,25 +74,25 @@ var Bullet = function() {
 		stage.addChildAt(sprite, index);
 	};
 
-	this.killMe = function() {
+	this.killMe = function(explode) {
 		// initialization
 		state = BulletState.KILLED;
 		// reset variables
 		xDisplace = 0;
 		yDisplace = 0;
-		
-		sprite.y = -2000;
-		// return this object to the object pool
-		objectPool.dispose(this);
-		stage.removeChild(sprite);
-
-		/*
-		// decrement bulletCount of owner
-		if ((ownerType != "RedBunker") && (ownerType != "BlueBunker")) owner.adjustBulletCount(-1);
-		*/
-
 		// memory management
-		this.owner = null;
+		owner = null;
+
+		if (explode) {
+			// explode bullet
+			sprite.gotoAndPlay("bulletExplosion");
+			sprite.addEventListener("animationend",function(e){
+				e.remove();
+				removeMe();
+			});
+		} else {
+			removeMe();
+		}
 	};
 
 	this.updateMe = function(){

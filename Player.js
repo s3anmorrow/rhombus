@@ -57,7 +57,8 @@ var Player = function(){
                 sprite.addEventListener("animationend", function(e){
                     e.remove();
                     sprite.stop();
-                    state = PlayerState.READY;
+                    state = PlayerState.IDLE;
+                    sprite.gotoAndPlay("playerIdle");
                 });
                 sprite.play();
             });
@@ -79,37 +80,72 @@ var Player = function(){
     }
 
     this.goLeft = function() {
+        // exit if in entering or killed state
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        state = PlayerState.MOVING_LEFT;
-        sprite.gotoAndStop("playerLeft");
+        if (state != PlayerState.MOVING_LEFT) {
+            sprite.gotoAndStop("playerLeft");
+            state = PlayerState.MOVING_LEFT;
+        }
+        if (speedX < targetSpeedX) speedX++;
+        sprite.x-=speedX;
     }
 
     this.goRight = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        state = PlayerState.MOVING_RIGHT;
-        sprite.gotoAndStop("playerRight");
+        if (state != PlayerState.MOVING_RIGHT) {
+            sprite.gotoAndStop("playerRight");
+            state = PlayerState.MOVING_RIGHT;
+        }
+
+        if (speedX < targetSpeedX) speedX++;
+        sprite.x+=speedX;
     }      
 
     this.goUp = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        state = PlayerState.MOVING_UP;
+        if (state != PlayerState.MOVING_UP) {
+            if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
+            state = PlayerState.MOVING_UP;
+        }
+
+        if (speedY < targetSpeedY) speedY++;
+        sprite.y-=speedY;
     }
 
     this.goDown = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        state = PlayerState.MOVING_DOWN;
+        if (state != PlayerState.MOVING_DOWN) {
+            if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
+            state = PlayerState.MOVING_DOWN;
+        }
+        if (speedY < targetSpeedY) speedY++;
+        sprite.y+=speedY;
     }
 
-    this.goStraight = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.STOPPED) || (state == PlayerState.KILLED)) return;
+    this.goIdle = function() {
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.IDLE)) return;
 
-        if (state == PlayerState.MOVING_LEFT) state = PlayerState.STOPPING_LEFT;
-        else if (state == PlayerState.MOVING_RIGHT) state = PlayerState.STOPPING_RIGHT;
-        else if (state == PlayerState.MOVING_UP) state = PlayerState.STOPPING_UP;
-        else if (state == PlayerState.MOVING_DOWN) state = PlayerState.STOPPING_DOWN;
+        if (state == PlayerState.MOVING_LEFT) {
+            if (speedX > 0) speedX--;
+            sprite.x-=speedX;
+        } else if (state == PlayerState.MOVING_RIGHT) {
+            if (speedX > 0) speedX--;
+            sprite.x+=speedX;
+        } else if (state == PlayerState.MOVING_UP) {
+            if (speedY > 0) speedY--;
+            sprite.y-=speedY;
+        } else if (state == PlayerState.MOVING_DOWN) {
+            if (speedY > 0) speedY--;
+            sprite.y+=speedY;
+        }    
 
-        sprite.gotoAndStop("playerStraight");
-    }   
+        // has the player finished decelerration?
+        if ((speedX == 0) && (speedY == 0)) {
+            state = PlayerState.IDLE;
+            sprite.gotoAndPlay("playerIdle");
+        }
+    } 
+
 
     this.fire = function() {
         if (fireCounter == weaponData.freq) {
@@ -135,7 +171,7 @@ var Player = function(){
 
     this.cease = function() {
         fireCounter = weaponData.freq;
-    }
+    };
 
     this.killMe = function() {
         state = PlayerState.KILLED;
@@ -147,37 +183,9 @@ var Player = function(){
     }
 
     this.updateMe = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        if ((state != PlayerState.STOPPED)) {
-            // moving player in all directions including acceleration / decelerration
-            if (state == PlayerState.MOVING_LEFT) {
-                if (speedX < targetSpeedX) speedX++;
-                sprite.x-=speedX;
-            } else if (state == PlayerState.MOVING_RIGHT) {
-                if (speedX < targetSpeedX) speedX++;
-                sprite.x+=speedX;
-            } else if (state == PlayerState.STOPPING_LEFT) {
-                if (speedX > 0) speedX--;
-                sprite.x-=speedX;
-            } else if (state == PlayerState.STOPPING_RIGHT) {
-                if (speedX > 0) speedX--;
-                sprite.x+=speedX;
-            } else if (state == PlayerState.MOVING_UP) {
-                if (speedY < targetSpeedY) speedY++;
-                sprite.y-=speedY;
-            } else if (state == PlayerState.MOVING_DOWN) {
-                if (speedY < targetSpeedY) speedY++;
-                sprite.y+=speedY;
-            } else if (state == PlayerState.STOPPING_UP) {
-                if (speedY > 0) speedY--;
-                sprite.y-=speedY;
-            } else if (state == PlayerState.STOPPING_DOWN) {
-                if (speedY > 0) speedY--;
-                sprite.y+=speedY;
-            }    
-            // has the player stopped?
-            if ((speedX == 0) && (speedY == 0)) state = PlayerState.STOPPED;
-        }
+
+
+
 
     };
 
@@ -185,15 +193,10 @@ var Player = function(){
 
 var PlayerState = {
     "ENTERING":-1,
-    "READY":0,
+    "IDLE":0,
     "MOVING_LEFT":1,
     "MOVING_RIGHT":2,
     "MOVING_UP":3,
     "MOVING_DOWN":4,
     "KILLED":5,
-    "STOPPING_LEFT":6,
-    "STOPPING_RIGHT":7,
-    "STOPPING_UP":8,
-    "STOPPING_DOWN":9,
-    "STOPPED":10
 };
