@@ -180,6 +180,7 @@
 		
 		// construct object pool
 		objectPool = new ObjectPool(stage, assetManager);
+		// grant global access to object pool
 		Globals.objectPool = objectPool;
 		objectPool.init();
 
@@ -189,16 +190,9 @@
 		// construct WaveFactory to control enemy waves
 		waveFactory = new WaveFactory();
 
-
-		// setup listener for ticker to actually update the stage
-		createjs.Ticker.useRAF = true;
-		// set framerate
-		createjs.Ticker.setFPS(Globals.gameConstants.FRAME_RATE);
-		createjs.Ticker.addEventListener("tick", onTick);
-
 		/*
 		// construct gamepadManager
-		gamepadManager =  new GamepadManager();
+		gamepadManager = new GamepadManager();
 		gamepadManager.setup(gamepadManifest);
 		*/
 
@@ -221,6 +215,12 @@
 		// change state of game
 		state = Globals.gameStates.STATE_INTRO;
 		//console.log(">> intro gameScreen ready");
+
+		// setup listener for ticker to actually update the stage
+		createjs.Ticker.useRAF = true;
+		// set framerate
+		createjs.Ticker.setFPS(Globals.gameConstants.FRAME_RATE);
+		createjs.Ticker.addEventListener("tick", onTick);
 
 		// ???????????????? temporary start
 		startGame();
@@ -274,8 +274,9 @@
 		// monitor gamepadManager for any buttons / joystick changes
 		//gamepadManager.monitorMe(state);
 
-		//waveFactory.updateMe();
-		//player.updateMe();
+		// required updates
+		waveFactory.updateMe();
+		player.updateMe();
 
 
 		// STEP II : UPDATING STEP

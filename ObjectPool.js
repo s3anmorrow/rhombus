@@ -57,8 +57,8 @@ var ObjectPool = function() {
 	this.init = function() {
 		// pool object construction
 		// populate arrays to create pool of game objects
-		constructObjects(shapePool, SHAPE_MAX, Shape);
 		constructObjects(playerPool, PLAYER_MAX, Player);
+		constructObjects(shapePool, SHAPE_MAX, Shape);
 		constructObjects(bulletPool, BULLET_MAX, Bullet);
 
 		console.log(">> object pools filled");
@@ -87,7 +87,7 @@ var ObjectPool = function() {
 		}
 		updateList[o.usedIndex] = null;
 
-		//console.log("dispose " + o.constructor.name + " @ pool index " + o.poolIndex);
+		console.log("dispose " + o.constructor.name + " @ pool index " + o.poolIndex);
 	};
 
 };

@@ -38,7 +38,7 @@ var WaveFactory = function(){
 
     this.resetMe = function() {
         // various resets
-        level = 0;
+        level = -1;
         activeWaves = [];
         frameCounter = 0;
         waveIndex = 0;
@@ -56,12 +56,9 @@ var WaveFactory = function(){
                 if (wave.frameCount >= wave.spaced) {
                     // prepare options
                     var options = Object.assign({}, wave.options);
-
-
                     // drop shape into the game
                     var shape = objectPool.getShape();
-                    shape.setupMe(wave.type, Behaviours[wave.behaviour], wave.x, wave.y, options);
-                    shape.startMe();
+                    shape.startMe(wave.type, Behaviours[wave.behaviour], wave.x, wave.y, options);
                     wave.dropped++;
                     // reset frameCount for next drop
                     wave.frameCount = 0;

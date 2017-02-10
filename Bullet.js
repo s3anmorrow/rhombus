@@ -34,18 +34,8 @@ var Bullet = function() {
 	// ------------------------------------------------------ get/set methods
 
 
-
 	// ------------------------------------------------------ private methods
-	function removeMe() {
-		// remove bullet
-		sprite.stop();
-		sprite.y = -2000;
-		// return this object to the object pool
-		objectPool.dispose(_this);
-		stage.removeChild(sprite);
-	}
-
-
+	
 
 	// ------------------------------------------------------ public methods
 	this.startMe = function(myOwner, spriteFrame, speed, myDamage, x, y, r) {
@@ -74,6 +64,15 @@ var Bullet = function() {
 		stage.addChildAt(sprite, index);
 	};
 
+	this.stopMe = function() {
+		// remove bullet
+		sprite.stop();
+		sprite.y = -2000;
+		// return this object to the object pool
+		objectPool.dispose(_this);
+		stage.removeChild(sprite);
+	};
+
 	this.killMe = function(explode) {
 		// initialization
 		state = BulletState.KILLED;
@@ -88,10 +87,10 @@ var Bullet = function() {
 			sprite.gotoAndPlay("bulletExplosion");
 			sprite.addEventListener("animationend",function(e){
 				e.remove();
-				removeMe();
+				this.stopMe();
 			});
 		} else {
-			removeMe();
+			this.stopMe();
 		}
 	};
 

@@ -31,7 +31,7 @@ var Player = function(){
     var startX = stage.canvas.width / 2;
     var startY = stage.canvas.height + sprite.getBounds().height;    
 
-    // open sprite to be public property for ease of access
+    // open up sprite to be public property for ease of access
     this.sprite = sprite;
 
     // other variables
@@ -41,6 +41,10 @@ var Player = function(){
     this.setWeapon = function(type){
         // update bullet data
         weaponData = gameConstants.WEAPONS[type];
+    }
+
+    this.getState = function() {
+        return state;
     }
 
     // --------------------------------------------------------- public methods
