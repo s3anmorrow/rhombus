@@ -11,7 +11,8 @@ var levelManifest = [
         {type:"rhombus", behaviour:"looping", x:500, y:0, dropped:0, count:10, frameCount:0, spaced:12, options:{r:200, cx:500, cy:350, dir:"down", loops:3, speed:4}}
         */
 
-        {type:"circle", behaviour:"down", x:500, y:0, dropped:0, count:5, frameCount:0, spaced:15, options:{speed:4}}
+        {type:"circle", behaviour:"down", x:500, y:0, dropped:0, count:1, frameCount:0, spaced:15, shooters:[0,2,4], options:{speed:4}}/*,
+        {type:"square", behaviour:"looping", x:300, y:0, dropped:0, count:7, frameCount:0, spaced:10, shooters:[0,1,2,3,4,5,14], options:{r:225, cx:300, cy:300, dir:"down", loops:1, speed:4}}*/
 
     ]
     

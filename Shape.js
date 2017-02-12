@@ -3,10 +3,12 @@ var Shape = function(){
     var stage = Globals.stage;
     var assetManager = Globals.assetManager;
     var objectPool = Globals.objectPool;
+    var gameConstants = Globals.gameConstants;
 
     // private property variables
     var type = "";
     var shooter = false;
+    var points = 100;
     
     // private game variables
     var _this = this;
@@ -20,10 +22,15 @@ var Shape = function(){
     var sprite = assetManager.getSprite("assets");
     // make sprite public for easy access
     this.sprite = sprite;
+    // shape's explosion sprite
+    var explosionSprite = assetManager.getSprite("assets");
     // the behaviour function that will be called in updateMe()
     var behaviour = null;
 
     // ----------------------------------------------- private methods
+    this.setShooter = function(value) {
+        shooter = value;
+    }
 
     // ----------------------------------------------- event handlers
     function onFiringFinished(e) {
@@ -35,16 +42,19 @@ var Shape = function(){
 
     // ----------------------------------------------- public methods
     this.startMe = function(myType, myBehaviour, startX, startY, options) {
+        // shape initialization
         type = myType;
+        points = gameConstants.POINTS[type];
         sprite.gotoAndStop(type);
         state = ShapeState.ATTACKING;
         behaviour = myBehaviour;
         frameCounter = 0;
         // random fire frequency
-		fireFrequency = Globals.randomMe(1.5,3) * Globals.gameConstants.FRAME_RATE;
+		fireFrequency = Globals.randomMe(1.5,3) * gameConstants.FRAME_RATE;
         // position sprite
         sprite.x = startX;
         sprite.y = startY;
+        sprite.rotation = 0;
         // add options object to sprite for setting up behaviour function
         if (options != undefined) {
             sprite.behaviour = options;
@@ -56,11 +66,12 @@ var Shape = function(){
     this.stopMe = function() {
         // remove Shape
 		sprite.stop();
-		sprite.y = -2000;
+		//sprite.y = -2000;
 		// return this object to the object pool
-		objectPool.dispose(_this);
+		objectPool.dispose(this);
 		stage.removeChild(sprite);
-    }
+        stage.removeChild(explosionSprite);
+    };
 
     this.resetMe = function() {
         group = [];
@@ -69,7 +80,23 @@ var Shape = function(){
         
 
 
-    }
+    };
+
+    this.killMe = function() {
+        state = ShapeState.KILLED;
+        explosionSprite.addEventListener("animationend",function(e){
+            e.remove();
+            _this.stopMe();
+        });
+
+        // position sprite and bitmaptext
+        explosionSprite.gotoAndPlay("explosion" + points);
+        explosionSprite.x = sprite.x;
+        explosionSprite.y = sprite.y; 
+
+        stage.removeChild(sprite); 
+        stage.addChild(explosionSprite);     
+    };
 
     this.fireMe = function() {
         // play firing animation
@@ -85,7 +112,7 @@ var Shape = function(){
     }
 
     this.updateMe = function() {
-        if (ShapeState.Killed) return;
+        if (state == ShapeState.KILLED) return;
 
         // Step I : collision detection
         // ???????????????

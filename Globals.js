@@ -17,6 +17,12 @@ var Globals = {
 		PLAYER_MAX_X:780,
 		PLAYER_MIN_Y:400,
 		PLAYER_MAX_Y:750,
+		POINTS:{
+			"square":100,
+			"triangle":200,
+			"circle":300,
+			"rhombus":400
+		},
 		WEAPONS:{
 			"single":{
 				freq:8,

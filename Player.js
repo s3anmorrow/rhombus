@@ -8,6 +8,7 @@ var Player = function(){
 
     // public property variables
 	var state = 0;
+    var distance = 0;
 
     // the current speeds of movement of player
     var speedX = 0;
@@ -178,6 +179,12 @@ var Player = function(){
 
 
     this.fire = function() {
+
+        // ????????????? TESTING
+        console.log("player firing");
+        objectPool.shapePool[0].killMe();
+
+
         if (fireCounter == weaponData.freq) {
             var firePoints = weaponData.firePoints;
             // loop through all firePoints and add bullet

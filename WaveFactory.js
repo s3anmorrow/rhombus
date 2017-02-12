@@ -59,11 +59,13 @@ var WaveFactory = function(){
                     // drop shape into the game
                     var shape = objectPool.getShape();
                     shape.startMe(wave.type, Behaviours[wave.behaviour], wave.x, wave.y, options);
+                    // is this shape of this wave a shooter?
+                    if ((wave.shooters != undefined) && (wave.shooters.indexOf(wave.dropped) != -1)) shape.setShooter(true);
                     wave.dropped++;
-                    // reset frameCount for next drop
-                    wave.frameCount = 0;
                     // if wave is complete set value to null
                     if (wave.dropped >= wave.count) activeWaves[n] = null;
+                    // reset frameCount for next drop
+                    wave.frameCount = 0;
                 }
             }
         }
