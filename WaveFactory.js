@@ -29,7 +29,11 @@ var WaveFactory = function(){
     this.levelMe = function() {
         // initialization
         level++;
+
+        // TODO add ticker/time delay between waves into level manifest
+        // ?????????????????????? needs fixing
         waveDelay = 2000;
+
         waveIndex = 0;
         activeWaves = [];
         // start timer to start dropping waves

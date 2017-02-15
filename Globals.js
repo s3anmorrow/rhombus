@@ -20,7 +20,7 @@ var Globals = {
 		POINTS:{
 			"square":100,
 			"triangle":200,
-			"circle":300,
+			"circle":50,
 			"rhombus":400
 		},
 		WEAPONS:{
