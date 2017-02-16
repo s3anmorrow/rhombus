@@ -19,7 +19,6 @@
 	var updateList;
 	// game objects
 	var background;
-	//var background, sky, gameScreen, scoreboard, redPlane, prison1, prison2, prison3, redFactory, blueFactory, redBunker, blueBunker, tower, balloon, landscape;
 	// object to preload and handle all assets (spritesheet and sounds)
 	var assetManager;
 	// object to setup and dispatch key events for gamepad events
@@ -139,20 +138,15 @@
 		canvas.height = 800;
 		// create stage object
 		stage = new createjs.Stage(canvas);
+		// grant global access to stage object
 		Globals.stage = stage;
-
-		// color the background of the game with a shape
-		background = new createjs.Shape();
-		background.graphics.beginFill("#000022").drawRect(0,0,800,800);
-		background.cache(0,0,800,800);
-		stage.addChild(background);
-		stage.update();
 
 		// setup listener for when assetManager has loaded the gameScreen assets
 		stage.addEventListener("onScreensLoaded", onPreloadAssets);
 		// construct preloader object to load spritesheet and sound assets
 		assetManager = new AssetManager(stage);
 		Globals.assetManager = assetManager;
+
 		// load screens first so I can display the preload gameScreen
 		//assetManager.loadScreens(screenManifest);
 		onPreloadAssets();
@@ -186,6 +180,10 @@
 
 		// get reference to updateList from objectPool object
 		updateList = objectPool.getUpdateList();
+
+		// construct background object
+		background = new Background();
+		background.startMe();
 
 		// construct WaveFactory to control enemy waves
 		waveFactory = new WaveFactory();
@@ -273,11 +271,7 @@
 
 		// monitor gamepadManager for any buttons / joystick changes
 		//gamepadManager.monitorMe(state);
-
-		// required updates
-		waveFactory.updateMe();
-		player.updateMe();
-
+		
 
 		// STEP II : UPDATING STEP
 		// scroll through all used objects in game and update them all
@@ -287,6 +281,10 @@
 			target = updateList[n];
 			if (target !== null) target.updateMe();
 		}
+		// required routine updates
+		waveFactory.updateMe();
+		player.updateMe();
+		background.updateMe();		
 
 		// STEP III : RENDERING
 		// update the stage!

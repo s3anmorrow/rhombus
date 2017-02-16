@@ -42,11 +42,11 @@ var Player = function(){
     this.setWeapon = function(type){
         // update bullet data
         weaponData = gameConstants.WEAPONS[type];
-    }
+    };
 
     this.getState = function() {
         return state;
-    }
+    };
 
     // --------------------------------------------------------- public methods
     this.startMe = function() {
@@ -73,12 +73,12 @@ var Player = function(){
             });
 
         stage.addChild(sprite);
-    }
+    };
 
     this.stopMe = function() {
         stage.removeChild(sprite);
 
-    }
+    };
 
     this.resetMe = function() {
         sprite.gotoAndStop("playerEntrance");
@@ -86,7 +86,7 @@ var Player = function(){
         state = PlayerState.ENTERING;
         sprite.x = startX;
         sprite.y = startY;
-    }
+    };
 
     this.goLeft = function() {
         // exit if in entering or killed state
@@ -106,7 +106,7 @@ var Player = function(){
             sprite.x = minX;
             speedX = 0;
         }
-    }
+    };
 
     this.goRight = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
@@ -121,7 +121,7 @@ var Player = function(){
             sprite.x = maxX;
             speedX = 0;
         }
-    }      
+    };     
 
     this.goUp = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
@@ -136,7 +136,7 @@ var Player = function(){
             sprite.y = minY;
             speedY = 0;
         }
-    }
+    };
 
     this.goDown = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
@@ -151,7 +151,7 @@ var Player = function(){
             sprite.y = maxY;
             speedY = 0;
         }
-    }
+    };
 
     this.goIdle = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.IDLE)) return;
@@ -171,11 +171,11 @@ var Player = function(){
         }    
 
         // has the player finished decelerration?
-        if ((speedX == 0) && (speedY == 0)) {
+        if ((speedX === 0) && (speedY === 0)) {
             state = PlayerState.IDLE;
             sprite.gotoAndPlay("playerIdle");
         }
-    } 
+    };
 
 
     this.fire = function() {
@@ -217,7 +217,7 @@ var Player = function(){
             _this.startMe();
         });
         sprite.gotoAndPlay("playerKilled");
-    }
+    };
 
     this.updateMe = function() {
 
@@ -226,7 +226,7 @@ var Player = function(){
 
     };
 
-}
+};
 
 var PlayerState = {
     "ENTERING":-1,

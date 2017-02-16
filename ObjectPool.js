@@ -70,11 +70,11 @@ var ObjectPool = function() {
 
 	this.getPlayer = function() {
 		return getObject(playerPool, PLAYER_MAX);
-	}
+	};
 
 	this.getBullet = function() {
 		return getObject(bulletPool, BULLET_MAX);
-	}
+	};
 
     this.dispose = function(o) {
 		// which type of game object are we disposing?
