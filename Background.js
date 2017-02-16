@@ -26,15 +26,13 @@ var Background = function() {
         var shape = assetManager.getSprite("assets","backgroundShape" + Globals.randomMe(1,3));
         shape.speed = Globals.randomMe(1,3);
         shape.rotation = Globals.randomMe(50,180);        
-        shape.x = Globals.randomMe(200,700);
-        if (dropY === undefined) shape.y = -shape.getBounds().height * 1.5;
+        shape.x = Globals.randomMe(200,600);
+        if (dropY === undefined) shape.y = -shape.getBounds().height;
         else shape.y = dropY;
         backgroundLayer.addChild(shape);
 
         // add to array for reference in updateMe
         shapes.push(shape);
-
-        console.log(shapes);
     }
 
 
@@ -71,8 +69,6 @@ var Background = function() {
                 stage.removeChild(shape);
                 // remove shape sprite from array
                 shapes.splice(n, 1);
-
-                console.log(shapes);
             }
         }
 
@@ -92,7 +88,7 @@ var Background = function() {
 
 
         frameCounter++;
-        if ((frameCounter % 150) === 0) {
+        if ((frameCounter % 100) === 0) {
             dropShape();
             frameCounter = 0;
         }
