@@ -17,6 +17,9 @@ var Globals = {
 		PLAYER_MAX_X:780,
 		PLAYER_MIN_Y:400,
 		PLAYER_MAX_Y:750,
+		PLAYER_START_POWER:6,
+		PLAYER_MAX_POWER:6,
+		PLAYER_START_LIVES:3,
 		POINTS:{
 			"square":100,
 			"triangle":200,

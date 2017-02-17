@@ -85,7 +85,7 @@ var AssetManager = function(stage) {
 		sprite.name = id;
 		sprite.x = 0;
 		sprite.y = 0;
-		if (frame != undefined) sprite.gotoAndPlay(frame);
+		if (frame !== undefined) sprite.gotoAndPlay(frame);
 		else sprite.currentFrame = 0;
 		return sprite;
 	};
