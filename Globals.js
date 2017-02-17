@@ -1,7 +1,4 @@
 var Globals = {
-	stage:null,
-    assetManager:null,
-    objectPool:null,
 	gameStates:{
 		STATE_SETUP:-1,
 		STATE_INTRO:0,
@@ -20,49 +17,55 @@ var Globals = {
 		PLAYER_START_POWER:6,
 		PLAYER_MAX_POWER:6,
 		PLAYER_START_LIVES:3,
-		POINTS:{
-			"square":100,
-			"triangle":200,
-			"circle":50,
-			"rhombus":400
-		},
-		WEAPONS:{
+		PLAYER_WEAPONS:{
 			"single":{
 				freq:8,
-				firePoints:[{x:0,y:-20,r:270}],
+				gunPoints:[{x:0,y:-20,r:270}],
+				alternateFire:false,
 				speed:14,
 				damage:2,
 				frame:"bullet"
 			},
 			"double":{
-				freq:2,
-				firePoints:[{x:-20,y:-5,r:270},{x:20,y:-5,r:270}],
+				freq:6,
+				gunPoints:[{x:-20,y:-5,r:270},{x:20,y:-5,r:270}],
+				alternateFire:true,
 				speed:20,
 				damage:2,
 				frame:"bullet"				
 			},
 			"spread":{
 				freq:4,
-				firePoints:[{x:0,y:-20,r:270},{x:-20,y:-5,r:260},{x:20,y:-5,r:280}],
+				gunPoints:[{x:0,y:-20,r:270},{x:-20,y:-5,r:260},{x:20,y:-5,r:280}],
+				alternateFire:true,
 				speed:20,
 				damage:1,
 				frame:"spread"				
 			},
 			"laser":{
 				freq:1,
-				firePoints:[{x:0,y:-20,r:270}],
+				gunPoints:[{x:0,y:-20,r:270}],
+				alternateFire:false,
 				speed:10,
 				damage:0.5,
 				frame:"laser"				
 			}
-
+		},
+		SHAPE_POINTS:{
+			"square":100,
+			"triangle":200,
+			"circle":50,
+			"rhombus":400
 		}
 	},
-
+	// frequent access global variables
+	stage:null,
+    assetManager:null,
+    objectPool:null,
 	// lookup tables for trig in Globals object for global access
 	sinTable:[],
 	cosTable:[],
-
+	// frequent access methods
 	// ??????????????????/ possibly not need this below with lookup tables
 	// converts degrees to radians for Trig calc
     radianMe:function(degrees) {

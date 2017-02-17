@@ -19,6 +19,7 @@ var Player = function(){
     var maxX = gameConstants.PLAYER_MAX_X;
     var minY = gameConstants.PLAYER_MIN_Y;
     var maxY = gameConstants.PLAYER_MAX_Y;
+    var firingGunIndex = 0;
 
     // private game variables
     var fireCounter = 0;
@@ -41,7 +42,7 @@ var Player = function(){
     // --------------------------------------------------------- get/set methods
     this.setWeapon = function(type){
         // update bullet data
-        weaponData = gameConstants.WEAPONS[type];
+        weaponData = gameConstants.PLAYER_WEAPONS[type];
     };
 
     this.getState = function() {
@@ -179,26 +180,27 @@ var Player = function(){
 
 
     this.fire = function() {
-
-        // ????????????? TESTING
-        console.log("player firing");
-        objectPool.shapePool[0].killMe();
-
-
         if (fireCounter == weaponData.freq) {
-            var firePoints = weaponData.firePoints;
-            // loop through all firePoints and add bullet
-            for (var n=0; n<firePoints.length; n++) {
-                // pluck bullet out of object pool and release
-                var bullet = objectPool.getBullet();
-                bullet.startMe(this, 
-                               weaponData.frame, 
-                               weaponData.speed, 
-                               weaponData.damage,
-                               sprite.x + firePoints[n].x, 
-                               sprite.y + firePoints[n].y, 
-                               firePoints[n].r);
+            var gunPoints = weaponData.gunPoints;
+            // loop through all gunPoints and add bullet
+            for (var n=0; n<gunPoints.length; n++) {
+
+                if (((weaponData.alternateFire) && (firingGunIndex == n)) || (!weaponData.alternateFire)) {
+                    // pluck bullet out of object pool and release
+                    var bullet = objectPool.getBullet();
+                    bullet.startMe(this, 
+                                weaponData.frame, 
+                                weaponData.speed, 
+                                weaponData.damage,
+                                sprite.x + gunPoints[n].x, 
+                                sprite.y + gunPoints[n].y, 
+                                gunPoints[n].r);
+                } 
             }
+
+            // increment index of firing gun of next shot
+            firingGunIndex++;
+            if (firingGunIndex == gunPoints.length) firingGunIndex = 0;
 
             // reset fire frame counter
             fireCounter = 0;
@@ -208,6 +210,7 @@ var Player = function(){
 
     this.cease = function() {
         fireCounter = weaponData.freq;
+        firingGunIndex = 0;
     };
 
     this.killMe = function() {

@@ -166,7 +166,7 @@ var Background = function() {
 
         frameCounter++;
         // drop background shape every 100 ticks
-        if ((frameCounter % 100) === 0) {
+        if ((frameCounter % 150) === 0) {
             dropShape();
             frameCounter = 0;
         }

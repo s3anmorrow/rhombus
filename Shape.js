@@ -44,7 +44,7 @@ var Shape = function(){
     this.startMe = function(myType, myBehaviour, startX, startY, options) {
         // shape initialization
         type = myType;
-        points = gameConstants.POINTS[type];
+        points = gameConstants.SHAPE_POINTS[type];
         sprite.gotoAndStop(type);
         state = ShapeState.ATTACKING;
         behaviour = myBehaviour;
