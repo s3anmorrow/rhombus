@@ -250,6 +250,9 @@
 			case "playerHit":
 				background.setPower(e.power);
 				break;
+			case "playerKilled":
+				background.setLives(e.lives);
+				break;
 
 
 		}

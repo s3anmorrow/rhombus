@@ -1,12 +1,16 @@
 var Player = function(){
+
+    // TODO add invicibilty to player when first appears
+
     // custom events
     var killedEvent = new createjs.Event("gameEvent", true);
     killedEvent.id = "playerKilled";
+    killedEvent.lives = 0;
     var hitEvent = new createjs.Event("gameEvent", true);
     hitEvent.id = "playerHit";
     hitEvent.power = 0;
-
-
+    var gameOverEvent = new createjs.Event("gameEvent", true);
+    gameOverEvent.id = "gameOver";
 
     // set references to globals
     var stage = Globals.stage;
@@ -64,6 +68,9 @@ var Player = function(){
         state = PlayerState.ENTERING;
         fireCounter = 0;
         power = Globals.gameConstants.PLAYER_START_POWER;
+        hitEvent.target = null;
+        hitEvent.power = power;
+        sprite.dispatchEvent(hitEvent);
         sprite.gotoAndStop("playerEntrance");
 
         // center the player sprite
@@ -246,9 +253,19 @@ var Player = function(){
         sprite.gotoAndPlay("playerKilled");
         sprite.addEventListener("animationend",function(e){
             e.remove();
+            lives--;
             killedEvent.target = null;
+            killedEvent.lives = lives;
             sprite.dispatchEvent(killedEvent);
-            _this.startMe();
+            if (lives <= 0) {
+                // game over!
+                sprite.stop();
+                sprite.y = -2000;
+                gameOverEvent.target = null;
+                sprite.dispatchEvent(gameOverEvent);
+            } else {
+                _this.startMe();
+            }
         });
     };
 
