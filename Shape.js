@@ -1,5 +1,8 @@
 var Shape = function(){
     // custom events
+    var killedEvent = new createjs.Event("gameEvent", true);
+    killedEvent.id = "shapeKilled";
+    killedEvent.points = 0;
 
 
     // set references to globals
@@ -11,7 +14,7 @@ var Shape = function(){
     // private property variables
     var type = "";
     var shooter = false;
-    var points = 100;
+    var points = 0;
     
     // private game variables
     var _this = this;
@@ -25,8 +28,6 @@ var Shape = function(){
     var sprite = assetManager.getSprite("assets");
     // make sprite public for easy access
     this.sprite = sprite;
-    // shape's explosion sprite
-    var explosionSprite = assetManager.getSprite("assets");
     // the behaviour function that will be called in updateMe()
     var behaviour = null;
 
@@ -52,6 +53,7 @@ var Shape = function(){
         // shape initialization
         type = myType;
         points = gameConstants.SHAPE_POINTS[type];
+        killedEvent.points = points;
         sprite.gotoAndStop(type);
         state = ShapeState.ATTACKING;
         behaviour = myBehaviour;
@@ -74,8 +76,7 @@ var Shape = function(){
         // remove Shape
 		sprite.stop();
 		sprite.y = -2000;
-		stage.removeChild(sprite);
-        stage.removeChild(explosionSprite);        
+		stage.removeChild(sprite);    
 		// return this object to the object pool
 		objectPool.dispose(this);
     };
@@ -89,21 +90,23 @@ var Shape = function(){
 
     };
 
-    this.killMe = function(points) {
+    this.killMe = function(earnPoints) {
         state = ShapeState.KILLED;
-
+        sprite.rotation = 0;
         // position sprite and bitmaptext
-        if ((points === undefined) || (points === true)) explosionSprite.gotoAndPlay("explosion" + points);
-        else explosionSprite.gotoAndPlay("explosionNoPoints");
-        explosionSprite.x = sprite.x;
-        explosionSprite.y = sprite.y; 
-        explosionSprite.addEventListener("animationend",function(e){
+        if ((earnPoints === undefined) || (earnPoints === true)) {
+            sprite.gotoAndPlay("explosion" + points);
+            killedEvent.target = null;
+            sprite.dispatchEvent(killedEvent);
+        } else {
+            sprite.gotoAndPlay("explosionNoPoints");
+        }
+        sprite.addEventListener("animationend",function(e){
             e.remove();
             _this.stopMe();
         });
 
-        stage.removeChild(sprite); 
-        stage.addChild(explosionSprite);     
+        //stage.removeChild(sprite); 
     };
 
     this.fireMe = function() {

@@ -128,9 +128,8 @@ var Background = function() {
         shapes = [];
     };
 
-    this.adjustLives = function(amount){
-        if (amount === undefined) amount = -1;
-        lives+=amount;
+    this.setLives = function(amount){
+        lives=amount;
         refreshScoreBoard();
     };
 
@@ -139,9 +138,8 @@ var Background = function() {
         refreshScoreBoard();
     };
 
-    this.adjustPower = function(amount) {
-        if (amount === undefined) amount = -1;
-        power+=amount;
+    this.setPower = function(amount) {
+        power=amount;
         refreshScoreBoard();
     };
 

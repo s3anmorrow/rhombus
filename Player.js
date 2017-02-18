@@ -1,5 +1,11 @@
 var Player = function(){
     // custom events
+    var killedEvent = new createjs.Event("gameEvent", true);
+    killedEvent.id = "playerKilled";
+    var hitEvent = new createjs.Event("gameEvent", true);
+    hitEvent.id = "playerHit";
+    hitEvent.power = 0;
+
 
 
     // set references to globals
@@ -11,6 +17,8 @@ var Player = function(){
     // public property variables
 	var state = 0;
     var distance = 0;
+    var power = Globals.gameConstants.PLAYER_START_POWER;
+    var lives = Globals.gameConstants.PLAYER_START_LIVES;
 
     // the current speeds of movement of player
     var speedX = 0;
@@ -55,6 +63,7 @@ var Player = function(){
         // initialization
         state = PlayerState.ENTERING;
         fireCounter = 0;
+        power = Globals.gameConstants.PLAYER_START_POWER;
         sprite.gotoAndStop("playerEntrance");
 
         // center the player sprite
@@ -86,6 +95,7 @@ var Player = function(){
         sprite.gotoAndStop("playerEntrance");
         fireCounter = 0;
         state = PlayerState.ENTERING;
+        lives =  Globals.gameConstants.PLAYER_START_LIVES;
         sprite.x = startX;
         sprite.y = startY;
     };
@@ -214,12 +224,21 @@ var Player = function(){
 
     this.hitMe = function() {
         state = PlayerState.HIT;
-        sprite.gotoAndPlay("playerHit");
-        sprite.addEventListener("animationend",function(e){
-            e.remove();
-            state = PlayerState.IDLE;
-            sprite.gotoAndPlay("playerIdle");
-        });
+        power--;
+        if (power <= 0) {
+            this.killMe();
+        } else {
+            sprite.gotoAndPlay("playerHit");
+            // update event object
+            hitEvent.target = null;
+            hitEvent.power = power;
+            sprite.dispatchEvent(hitEvent);
+            sprite.addEventListener("animationend",function(e){
+                e.remove();
+                state = PlayerState.IDLE;
+                sprite.gotoAndPlay("playerIdle");
+            });
+        }
     };
 
     this.killMe = function() {
@@ -227,6 +246,8 @@ var Player = function(){
         sprite.gotoAndPlay("playerKilled");
         sprite.addEventListener("animationend",function(e){
             e.remove();
+            killedEvent.target = null;
+            sprite.dispatchEvent(killedEvent);
             _this.startMe();
         });
     };

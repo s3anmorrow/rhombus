@@ -85,19 +85,15 @@
 		triangle.startMe();
 		*/
 
-
 		waveFactory.levelMe();
-
-
-
 
 		player = objectPool.getPlayer();
 		player.startMe();
-		player.setWeapon("single");
+		player.setWeapon("double");
 
 
 		// game event listener for all events that control gameplay
-		stage.addEventListener("onGameEvent", onGameEvent);
+		stage.addEventListener("gameEvent", onGameEvent, true);
 		// change stage of game
 		state = Globals.gameStates.STATE_PLAYING;
 
@@ -106,7 +102,7 @@
 
 	function stopGame(win) {
 		// kill game event listener
-		stage.removeEventListener("onGameEvent", onGameEvent);
+		stage.removeEventListener("gameEvent", onGameEvent), true;
 
 		state = Globals.gameStates.STATE_GAMEOVER;
 	}
@@ -248,6 +244,13 @@
 
 		// what type of event has occurred?
 		switch (e.id){
+			case "shapeKilled":
+				background.adjustPoints(e.points);
+				break;
+			case "playerHit":
+				background.setPower(e.power);
+				break;
+
 
 		}
 	}

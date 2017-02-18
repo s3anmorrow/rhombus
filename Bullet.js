@@ -126,7 +126,7 @@ var Bullet = function() {
 				}
 			} else if (owner.constructor.name == "Shape") {
 				// Shape's bullet
-				if ((player.getState() !== PlayerState.KILLED) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
+				if ((player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
 					player.hitMe();
 					this.killMe(true);
 				}
