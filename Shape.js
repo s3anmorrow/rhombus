@@ -1,4 +1,7 @@
 var Shape = function(){
+    // custom events
+
+
     // set references to globals
     var stage = Globals.stage;
     var assetManager = Globals.assetManager;
@@ -30,6 +33,10 @@ var Shape = function(){
     // ----------------------------------------------- private methods
     this.setShooter = function(value) {
         shooter = value;
+    };
+
+    this.getState = function() {
+        return state;
     }
 
     // ----------------------------------------------- event handlers
@@ -56,21 +63,21 @@ var Shape = function(){
         sprite.y = startY;
         sprite.rotation = 0;
         // add options object to sprite for setting up behaviour function
-        if (options != undefined) {
+        if (options !== undefined) {
             sprite.behaviour = options;
             sprite.behaviour.ready = false;
         }
         stage.addChild(sprite);
-    }
+    };
 
     this.stopMe = function() {
         // remove Shape
 		sprite.stop();
-		//sprite.y = -2000;
+		sprite.y = -2000;
+		stage.removeChild(sprite);
+        stage.removeChild(explosionSprite);        
 		// return this object to the object pool
 		objectPool.dispose(this);
-		stage.removeChild(sprite);
-        stage.removeChild(explosionSprite);
     };
 
     this.resetMe = function() {
@@ -82,17 +89,18 @@ var Shape = function(){
 
     };
 
-    this.killMe = function() {
+    this.killMe = function(points) {
         state = ShapeState.KILLED;
+
+        // position sprite and bitmaptext
+        if ((points === undefined) || (points === true)) explosionSprite.gotoAndPlay("explosion" + points);
+        else explosionSprite.gotoAndPlay("explosionNoPoints");
+        explosionSprite.x = sprite.x;
+        explosionSprite.y = sprite.y; 
         explosionSprite.addEventListener("animationend",function(e){
             e.remove();
             _this.stopMe();
         });
-
-        // position sprite and bitmaptext
-        explosionSprite.gotoAndPlay("explosion" + points);
-        explosionSprite.x = sprite.x;
-        explosionSprite.y = sprite.y; 
 
         stage.removeChild(sprite); 
         stage.addChild(explosionSprite);     
@@ -109,13 +117,19 @@ var Shape = function(){
         // release the bullet!
         var bullet = objectPool.getBullet();
         bullet.startMe(this, "bulletEnemy", 6, 2, sprite.x, sprite.y, targetAngle);
-    }
+    };
 
     this.updateMe = function() {
         if (state == ShapeState.KILLED) return;
 
         // Step I : collision detection
-        // ???????????????
+        // has the shape collided with the player?
+        if ((state != ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
+            player.hitMe();
+            // kill shape with no points
+            this.killMe(false);
+        }
+        
 
         // Step II : Attacking
         // should the shape take a shot?

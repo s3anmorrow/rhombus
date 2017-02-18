@@ -1,4 +1,7 @@
 var Bullet = function() {
+	// custom events
+
+
 	// bullet state constants
 	var KILLED = BulletState.KILLED;
 	var MOVING = BulletState.MOVING;
@@ -26,6 +29,7 @@ var Bullet = function() {
 	var _this = this;
 	// access to pool objects
 	var shapePool = objectPool.shapePool;
+	var player = objectPool.playerPool[0];
 
 	// grab clip for bullet
 	var sprite = assetManager.getSprite("assets","bullet");
@@ -87,7 +91,7 @@ var Bullet = function() {
 			sprite.gotoAndPlay("bulletExplosion");
 			sprite.addEventListener("animationend",function(e){
 				e.remove();
-				this.stopMe();
+				_this.stopMe();
 			});
 		} else {
 			this.stopMe();
@@ -96,148 +100,39 @@ var Bullet = function() {
 
 	this.updateMe = function(){
 		// STEP I : Bullet Behaviour
-		// move ball x and y position
-		sprite.x += xDisplace;
-		sprite.y += yDisplace;
 		if (state == BulletState.MOVING) {
+
+			// move bullet x and y position
+			sprite.x += xDisplace;
+			sprite.y += yDisplace;			
 
 			// check if bullet off the screen
 			if ((sprite.y > stageBottom) || ((sprite.x < stageLeft) || (sprite.x > stageRight) || (sprite.y < stageTop))) {
 				this.killMe();
 				return;
 			}
-		
 
-			//console.log("bullet: " + clip.x + " : " + ownerType + " ground: " + landscape.ground.x);
-
-			/*
 			// STEP II : collision detection
-			var n=0, length=0;
-			var plane=null, prison=null, tank=null, survivor=null;
-			if ((ownerType == "RedPlane") || (ownerType == "RedJeep") || (ownerType == "RedTank") || (ownerType == "RedBunker")) {
-				if (this.type != "Bomb") {
-					length = planePool.length;
-					for (n=1; n<length; n++) {
-						// has the bullet collided with any blue plane? (skip first one since that is the redPlane)
-						plane = planePool[n];
-						if ((plane.used) && (ndgmr.checkPixelCollision(clip, plane.clip, 0, true) !== false)) {
-							this.killMe();
-							plane.killMe();
-							return;
-						}
+			if (owner.constructor.name == "Player") {
+				// Player's bullet
+				var length = shapePool.length;
+				// has the bullet collided with a shape?
+				for (var n=0; n<length; n++) {	
+					var shape = shapePool[n];
+					if ((shape.used) && (shape.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, shape.sprite, 0, true))) {
+						shape.killMe();
+						this.killMe();
 					}
+				}
+			} else if (owner.constructor.name == "Shape") {
+				// Shape's bullet
+				if ((player.getState() !== PlayerState.KILLED) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
+					player.hitMe();
+					this.killMe(true);
 				}
 
-				length = tankPool.length;
-				for (n=0; n<length; n++) {
-					// has the bullet collided with any enemy tank or jeep?
-					tank = tankPool[n];
-					if ((tank.used) && (tank.state >= TankState.MOVING) && (tank.type == "BlueTank") && (ndgmr.checkPixelCollision(clip, tank.clip, 0, true) !== false)) {
-						this.killMe();
-						tank.killMe();
-						return;
-					}
-					jeep = jeepPool[n];
-					if ((jeep.used) && (jeep.state >= JeepState.MOVING) && (jeep.type == "BlueJeep") && (ndgmr.checkPixelCollision(clip, jeep.clip, 0, true) !== false)) {
-						this.killMe();
-						jeep.killMe();
-						return;
-					}
-				}
 			}
 
-			if (ownerType == "RedPlane") {
-				length = prisonPool.length;
-				for (n=0; n<length; n++) {
-					// has the bullet collided with any prison?
-					prison = prisonPool[n];
-					if ((prison.state == PrisonState.NORMAL) && (ndgmr.checkPixelCollision(clip, prison.clip, 0, true) !== false)) {
-						this.killMe();
-						prison.breakMe();
-						return;
-					}
-				}
-				if (this.type == "Bomb") {
-					// has the bomb collided with the blueFactory?
-					if (ndgmr.checkPixelCollision(clip, blueFactory.clip, 0, true) !== false) {
-						this.killMe();
-						blueFactory.killMe();
-						return;
-					}
-				}
-			}
-
-			if ((ownerType == "BluePlane") || (ownerType == "BlueJeep") || (ownerType == "BlueTank") || (ownerType == "BlueBunker")) {
-				if (this.type != "Bomb") {
-					// has the bullet collided with the redPlane?
-					if (ndgmr.checkPixelCollision(clip, redPlane.clip, 0, true) !== false) {
-						this.killMe();
-						redPlane.killMe();
-						return;
-					}
-
-					length = tankPool.length;
-					for (n=0; n<length; n++) {
-						// has the bullet collided with any enemy tanks?
-						tank = tankPool[n];
-						if ((tank.used) && (tank.state >= TankState.MOVING) && (tank.type == "RedTank") && (ndgmr.checkPixelCollision(clip, tank.clip, 0, true) !== false)) {
-							this.killMe();
-							tank.killMe();
-							return;
-						}
-						jeep = jeepPool[n];
-						if ((jeep.used) && (jeep.state >= JeepState.MOVING) && (jeep.type == "RedJeep") && (ndgmr.checkPixelCollision(clip, jeep.clip, 0, true) !== false)) {
-							this.killMe();
-							jeep.killMe();
-							return;
-						}
-					}
-				} else {
-					// has the bomb collided with the redFactory?
-					if (ndgmr.checkPixelCollision(clip, redFactory.clip, 0, true) !== false) {
-						this.killMe();
-						redFactory.killMe();
-						return;
-					}
-				}
-			}
-
-			// ANY vehicle bullet collision detection (if the bullet is still in use after previous checks)
-			// has the bullet collided with the ground?
-			if (ndgmr.checkPixelCollision(clip, landscape.ground,1,true) !== false) {
-				this.killMe();
-				return;
-			} else if (ndgmr.checkPixelCollision(clip, redBunker.clip, 0, true) !== false) {
-				this.killMe();
-				return;
-			} else if ((this.type != "Bomb") && (balloon.state == BalloonState.FLYING) && (ndgmr.checkPixelCollision(clip, balloon.clip, 0, true) !== false)) {
-				// balloon has been killed
-				this.killMe();
-				if (ownerType == "RedPlane") balloon.killMe(true);
-				else balloon.killMe();
-				return;
-			} else {
-				if ((ownerType != "RedBunker") && (ownerType != "BlueBunker")) {
-					length = survivorPool.length;
-					for (n=0; n<length; n++) {
-						// has the bullet collided with a survivor?
-						survivor = survivorPool[n];
-						if ((survivor.used) && (survivor.state != SurvivorState.KILLED) && (ownerType != "redTank") && (ndgmr.checkPixelCollision(clip, survivor.clip,0,true) !== false)) {
-							this.killMe();
-							survivor.killMe();
-							return;
-						}
-					}
-				}
-			}
-			*/
-
-		} else {
-			/*
-			// move the explosion with the landscape
-			explosionClip.x += xDisplace - landscape.getScrollDisplace();
-			explosionClip.y += yDisplace;
-			*/
 		}
 	};
 };

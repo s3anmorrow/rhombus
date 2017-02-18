@@ -79,7 +79,7 @@ var Background = function() {
         shape.speed = Globals.randomMe(1,3);
         shape.rotation = Globals.randomMe(50,180);        
         shape.x = Globals.randomMe(200,600);
-        if (dropY === undefined) shape.y = -shape.getBounds().height;
+        if (dropY === undefined) shape.y = -300;
         else shape.y = dropY;
         backgroundLayer.addChild(shape);
 
@@ -122,7 +122,7 @@ var Background = function() {
 
     this.stopMe = function() {
         for (var n=0; n<shapes.length; n++){
-            stage.removeChild(shapes[n]);
+            backgroundLayer.removeChild(shapes[n]);
             shapes[n] = null;
         }
         shapes = [];
@@ -157,8 +157,8 @@ var Background = function() {
             var shape = shapes[n];
             shape.y = shape.y + shape.speed;
             // is shape off the bottom of the stage?
-            if ((shape.y - shape.getBounds().height) > stageHeight) {
-                stage.removeChild(shape);
+            if ((shape.y - 300) > stageHeight) {
+                backgroundLayer.removeChild(shape);
                 // remove shape sprite from array
                 shapes.splice(n, 1);
             }

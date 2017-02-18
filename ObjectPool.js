@@ -87,7 +87,7 @@ var ObjectPool = function() {
 		}
 		updateList[o.usedIndex] = null;
 
-		//console.log("dispose " + o.constructor.name + " @ pool index " + o.poolIndex);
+		console.log("dispose " + o.constructor.name + " @ pool index " + o.poolIndex);
 	};
 
 };

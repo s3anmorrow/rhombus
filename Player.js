@@ -1,4 +1,6 @@
 var Player = function(){
+    // custom events
+
 
     // set references to globals
     var stage = Globals.stage;
@@ -27,14 +29,13 @@ var Player = function(){
     // get sprite for Player
     var sprite = assetManager.getSprite("assets","playerEntrance");
     sprite.stop();
+    // open up sprite to be public property for ease of access
+    this.sprite = sprite;
     // calculate spot where player stops when animating up into game
     var enteringStopY = stage.canvas.height - sprite.getBounds().height - 50;
     // calculating starting position of player sprite (center of stage)
     var startX = stage.canvas.width / 2;
     var startY = stage.canvas.height + sprite.getBounds().height;    
-
-    // open up sprite to be public property for ease of access
-    this.sprite = sprite;
 
     // other variables
     var _this = this;
@@ -91,7 +92,7 @@ var Player = function(){
 
     this.goLeft = function() {
         // exit if in entering or killed state
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.HIT)) return;
         if (state != PlayerState.MOVING_LEFT) {
             sprite.gotoAndStop("playerLeft");
             state = PlayerState.MOVING_LEFT;
@@ -110,7 +111,7 @@ var Player = function(){
     };
 
     this.goRight = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.HIT)) return;
         if (state != PlayerState.MOVING_RIGHT) {
             sprite.gotoAndStop("playerRight");
             state = PlayerState.MOVING_RIGHT;
@@ -125,7 +126,7 @@ var Player = function(){
     };     
 
     this.goUp = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.HIT)) return;
         if (state != PlayerState.MOVING_UP) {
             if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
             state = PlayerState.MOVING_UP;
@@ -140,7 +141,7 @@ var Player = function(){
     };
 
     this.goDown = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.HIT)) return;
         if (state != PlayerState.MOVING_DOWN) {
             if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
             state = PlayerState.MOVING_DOWN;
@@ -155,7 +156,7 @@ var Player = function(){
     };
 
     this.goIdle = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.IDLE)) return;
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.IDLE) || (state == PlayerState.HIT)) return;
 
         if (state == PlayerState.MOVING_LEFT) {
             if (speedX > 0) speedX--;
@@ -177,7 +178,6 @@ var Player = function(){
             sprite.gotoAndPlay("playerIdle");
         }
     };
-
 
     this.fire = function() {
         if (fireCounter == weaponData.freq) {
@@ -210,16 +210,25 @@ var Player = function(){
 
     this.cease = function() {
         fireCounter = weaponData.freq;
-        firingGunIndex = 0;
+    };
+
+    this.hitMe = function() {
+        state = PlayerState.HIT;
+        sprite.gotoAndPlay("playerHit");
+        sprite.addEventListener("animationend",function(e){
+            e.remove();
+            state = PlayerState.IDLE;
+            sprite.gotoAndPlay("playerIdle");
+        });
     };
 
     this.killMe = function() {
         state = PlayerState.KILLED;
+        sprite.gotoAndPlay("playerKilled");
         sprite.addEventListener("animationend",function(e){
             e.remove();
             _this.startMe();
         });
-        sprite.gotoAndPlay("playerKilled");
     };
 
     this.updateMe = function() {
@@ -239,4 +248,5 @@ var PlayerState = {
     "MOVING_UP":3,
     "MOVING_DOWN":4,
     "KILLED":5,
+    "HIT":6
 };

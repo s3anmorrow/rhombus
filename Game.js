@@ -93,7 +93,7 @@
 
 		player = objectPool.getPlayer();
 		player.startMe();
-		player.setWeapon("double");
+		player.setWeapon("single");
 
 
 		// game event listener for all events that control gameplay
