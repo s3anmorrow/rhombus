@@ -1,10 +1,7 @@
-var Shape = function(){
-
-    // TODO: alter shape so that multiple hits is required
-
+var Bigboss = function(){
     // custom events
     var killedEvent = new createjs.Event("gameEvent", true);
-    killedEvent.id = "shapeKilled";
+    killedEvent.id = "bigBossKilled";
     killedEvent.points = 0;
 
     // set references to globals
@@ -13,25 +10,27 @@ var Shape = function(){
     var objectPool = Globals.objectPool;
     var gameConstants = Globals.gameConstants;
 
-    // private property variables
+    // property variables
     var type = "";
-    
+    var points = 0;
+    var turrets = null;
+    var state = BossState.ATTACKING;
+
     // private game variables
     var _this = this;
-    var state = ShapeState.ATTACKING;
-    var points = 0;    
-    // control frequency of firing if shape is a shooter
-    var shooter = false;
-    var shootFrequency = -1;
+    // the moveFunction that will be called in updateMe()
+    var moveFunction = null;
     var frameCounter = 0;
     // reference to Player object (the target!)
     var player = objectPool.playerPool[0];
+
     // get shape's sprite
     var sprite = assetManager.getSprite("assets");
+
+    stage.addChild(sprite);
+
     // make sprite public for easy access
     this.sprite = sprite;
-    // the moveFunction that will be called in updateMe()
-    var moveFunction = null;
 
     // ----------------------------------------------- private methods
     this.getState = function() {
@@ -39,27 +38,31 @@ var Shape = function(){
     };
 
     // ----------------------------------------------- event handlers
+    /*
     function onFiringFinished(e) {
         // firing animation is complete
         e.remove(); 
         sprite.gotoAndStop(type);
     }
+    */
 
 
     // ----------------------------------------------- public methods
     this.startMe = function(myType, startX, startY, myShootData, myMovement) {
         // shape initialization
         frameCounter = 0;
-        points = gameConstants.SHAPE_POINTS[myType];
-        killedEvent.points = points;
-        state = ShapeState.ATTACKING;
+        //points = gameConstants.SHAPE_POINTS[myType];
+        //killedEvent.points = points;
+        state = BossState.ATTACKING;
 
+        /*
         // setup shape to be a shooter or not
         shooter = false;
         if (myShootData !== null) {
             shooter = true;
             shootFrequency = myShootData.freq;
         }
+        */
 
         // store type of Shape and jump to frame
         type = myType;
@@ -69,6 +72,22 @@ var Shape = function(){
         sprite.x = startX;
         sprite.y = startY;
         sprite.rotation = 0;
+
+        /*
+        var turrentPositions = value;
+
+        // add all turrets to big boss
+        for (var n=0; n<turrentPositions.length; n++) {
+            var position = turrentPositions[n];
+
+            console.log(moveFunction);
+
+            var turret = objectPool.getShape();
+            turret.startMe("circle", moveFunction, position.x, position.y);
+            turret.setShooter(true);
+        }
+        */
+
         // get reference to this shape's moveFunction
         moveFunction = MoveFunctions[myMovement.type];
         // add movement options object to sprite for setting up movement function
@@ -82,12 +101,14 @@ var Shape = function(){
     this.stopMe = function() {
         // remove Shape
 		sprite.stop();
+		sprite.y = -2000;
 		stage.removeChild(sprite);    
 		// return this object to the object pool
 		objectPool.dispose(this);
     };
 
     this.resetMe = function() {
+        //group = [];
         moveFunction = null;
 
         
@@ -96,7 +117,9 @@ var Shape = function(){
     };
 
     this.killMe = function(earnPoints) {
-        state = ShapeState.KILLED;
+        state = BossState.KILLED;
+        
+        /*
         sprite.rotation = 0;
         // position sprite and bitmaptext
         if ((earnPoints === undefined) || (earnPoints === true)) {
@@ -110,11 +133,13 @@ var Shape = function(){
             e.remove();
             _this.stopMe();
         });
+        */
 
         //stage.removeChild(sprite); 
     };
 
     this.fireMe = function() {
+        /*
         // play firing animation
         sprite.addEventListener("animationend", onFiringFinished);
         sprite.gotoAndPlay(type + "Fire");
@@ -125,30 +150,33 @@ var Shape = function(){
         // release the bullet!
         var bullet = objectPool.getBullet();
         bullet.startMe(this, "bulletEnemy", 6, 2, sprite.x, sprite.y, targetAngle);
+        */
     };
 
     this.updateMe = function() {
-        if (state == ShapeState.KILLED) return;
+        if (state == BossState.KILLED) return;
 
         // Step I : collision detection
         // has the shape collided with the player?
-        if ((state != ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
+        if ((state != BossState.KILLED) && (player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
             player.hitMe();
             // kill shape with no points
-            this.killMe(false);
+            //this.killMe(false);
         }
 
+        /*
         // Step II : Attacking
         // should the shape take a shot?
-        if (shooter) {  
+        if ((shooter) && (sprite.y > 300)) {  
             // can I fire on target now?
-			if (frameCounter >= shootFrequency) {              
+			if (frameCounter >= fireFrequency) {              
                 if (player.getState() != PlayerState.KILLED) {
                     this.fireMe();
                     frameCounter = 0;
                 }
             }
         }
+        */
         
         // STEP II : Movement
         // run move movement function (result is whether movement should still be active)
@@ -161,7 +189,7 @@ var Shape = function(){
 
 };
 
-var ShapeState = {
+var BossState = {
     "ATTACKING":0,
     "KILLED":1
 };

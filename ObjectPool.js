@@ -11,16 +11,19 @@ var ObjectPool = function() {
 	var SHAPE_MAX = 100;
 	var PLAYER_MAX = 1;
 	var BULLET_MAX = 200;
+	var BIGBOSS_MAX = 20;
 
 	// object pool arrays
 	var shapePool = [];
 	var playerPool = [];
 	var bulletPool = [];
+	var bigbossPool = [];
 
 	// direct public access to pools
 	this.shapePool = shapePool;
 	this.playerPool = playerPool;
 	this.bulletPool = bulletPool;
+	this.bigbossPool = bigbossPool;
 
 	// other
 	var index = 0;
@@ -60,6 +63,7 @@ var ObjectPool = function() {
 		constructObjects(playerPool, PLAYER_MAX, Player);
 		constructObjects(shapePool, SHAPE_MAX, Shape);
 		constructObjects(bulletPool, BULLET_MAX, Bullet);
+		constructObjects(bigbossPool, BIGBOSS_MAX, Bigboss);
 
 		console.log(">> object pools filled");
 	};
@@ -76,6 +80,10 @@ var ObjectPool = function() {
 		return getObject(bulletPool, BULLET_MAX);
 	};
 
+	this.getBigboss = function() {
+		return getObject(bigbossPool, BIGBOSS_MAX);
+	};
+
     this.dispose = function(o) {
 		// which type of game object are we disposing?
 		if (o.constructor.name == "Shape") {
@@ -84,6 +92,8 @@ var ObjectPool = function() {
 			playerPool[o.poolIndex].used = false;
 		} else if (o.constructor.name == "Bullet") {
 			bulletPool[o.poolIndex].used = false;	
+		} else if (o.constructor.name == "Bigboss") {
+			bigbossPool[o.poolIndex].used = false;	
 		}
 		updateList[o.usedIndex] = null;
 

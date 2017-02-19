@@ -1,6 +1,6 @@
 var Player = function(){
 
-    // TODO add invicibilty to player when first appears
+    // TODO: add invicibilty to player when first appears
 
     // custom events
     var killedEvent = new createjs.Event("gameEvent", true);
@@ -233,6 +233,9 @@ var Player = function(){
         state = PlayerState.HIT;
         power--;
         if (power <= 0) {
+            hitEvent.target = null;
+            hitEvent.power = power;
+            sprite.dispatchEvent(hitEvent);
             this.killMe();
         } else {
             sprite.gotoAndPlay("playerHit");

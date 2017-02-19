@@ -55,7 +55,7 @@ var Globals = {
 			"square":100,
 			"triangle":200,
 			"circle":50,
-			"rhombus":400
+			"rhombus":300
 		}
 	},
 	// frequent access global variables

@@ -4,7 +4,7 @@
 (function() {
 	"use strict";
 
-	// TODO pause game when lose focus (timers keep going)
+	// TODO: pause game when lose focus (timers keep going)
 
 	// game variables
 	var stage = null;
@@ -102,7 +102,7 @@
 
 	function stopGame(win) {
 		// kill game event listener
-		stage.removeEventListener("gameEvent", onGameEvent), true;
+		stage.removeEventListener("gameEvent", onGameEvent, true);
 
 		state = Globals.gameStates.STATE_GAMEOVER;
 	}
