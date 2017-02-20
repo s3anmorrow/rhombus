@@ -29,6 +29,8 @@ var Bullet = function() {
 	var _this = this;
 	// access to pool objects
 	var shapePool = objectPool.shapePool;
+	var bigbossPool = objectPool.bigbossPool;
+	var turretPool = objectPool.turretPool;
 	var player = objectPool.playerPool[0];
 
 	// grab clip for bullet
@@ -113,10 +115,10 @@ var Bullet = function() {
 			}
 
 			// STEP II : collision detection
+			// Player's bullet
 			if (owner.constructor.name == "Player") {
-				// Player's bullet
-				var length = shapePool.length;
 				// has the bullet collided with a shape?
+				var length = shapePool.length;
 				for (var n=0; n<length; n++) {	
 					var shape = shapePool[n];
 					if ((shape.used) && (shape.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, shape.sprite, 0, true))) {
@@ -124,7 +126,18 @@ var Bullet = function() {
 						this.killMe();
 					}
 				}
-			} else if (owner.constructor.name == "Shape") {
+
+				// has the bullet collided with a bigboss turret?
+				length = turretPool.length;
+				for (n=0; n<length; n++) {	
+					var turret = turretPool[n];
+					if ((turret.used) && (turret.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, turret.sprite, 0, true))) {
+						turret.killMe(damage);
+						this.killMe(true);
+					}
+				}
+
+			} else if ((owner.constructor.name == "Shape") || (owner.constructor.name == "Bigboss"))  {
 				// Shape's bullet
 				if ((player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
 					player.hitMe();

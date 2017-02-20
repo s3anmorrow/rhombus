@@ -38,14 +38,6 @@ var Shape = function(){
         return state;
     };
 
-    // ----------------------------------------------- event handlers
-    function onFiringFinished(e) {
-        // firing animation is complete
-        e.remove(); 
-        sprite.gotoAndStop(type);
-    }
-
-
     // ----------------------------------------------- public methods
     this.startMe = function(myType, startX, startY, myShootData, myMovement) {
         // shape initialization
@@ -116,8 +108,12 @@ var Shape = function(){
 
     this.fireMe = function() {
         // play firing animation
-        sprite.addEventListener("animationend", onFiringFinished);
         sprite.gotoAndPlay(type + "Fire");
+        sprite.addEventListener("animationend", function(e){
+            // firing animation is complete
+            e.remove(); 
+            sprite.gotoAndStop(type);
+        });
 
         // fire bullet!
         // get targetAngle of target relative to shape's sprite
@@ -141,7 +137,6 @@ var Shape = function(){
         // Step II : Attacking
         // should the shape take a shot?
         if (shooter) {  
-            // can I fire on target now?
 			if (frameCounter >= shootFrequency) {              
                 if (player.getState() != PlayerState.KILLED) {
                     this.fireMe();

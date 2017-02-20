@@ -23,7 +23,7 @@ var Globals = {
 				gunPoints:[{x:0,y:-20,r:270}],
 				alternateFire:false,
 				speed:14,
-				damage:2,
+				damage:1,
 				frame:"bullet"
 			},
 			"double":{
@@ -31,7 +31,7 @@ var Globals = {
 				gunPoints:[{x:-20,y:-5,r:270},{x:20,y:-5,r:270}],
 				alternateFire:true,
 				speed:20,
-				damage:2,
+				damage:1,
 				frame:"bullet"				
 			},
 			"spread":{

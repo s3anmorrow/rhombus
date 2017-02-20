@@ -12,9 +12,13 @@ var levelManifest = [
         */
         
 
-        {type:"bigboss_square", x:400, y:-200, dropped:0, count:1, spaced:4, 
-            turrets:[{x:100,y:10},{x:400,y:10}],
-            movement:{type:"downAndStop", speed:2, stopY:250, rotate:false}}
+        {type:"bigboss_square", x:400, y:-200, count:1, spaced:4, 
+            turrets:[
+                {type:"circle",x:10,y:10,hp:2,freq:50},
+                {type:"square",x:60,y:60,hp:2,freq:100},
+                {type:"circle",x:100,y:100,hp:2,freq:25}
+            ],
+            movement:{type:"downAndStop", speed:2, stopY:250, rotate:true}}
 
 
     ]

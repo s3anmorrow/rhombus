@@ -67,24 +67,24 @@ var WaveFactory = function(){
             if (wave !== null) {
                 wave.frameCount++;
                 if (wave.frameCount >= wave.spaced) {
-                    var shape;
                     // make a copy of the movement object of this wave (each shape uses it to store its own data)
                     var movementData = Object.assign({}, wave.movement);
                     // shooting data for this shape
-                    var shootData = null;
                     if (wave.type.indexOf("bigboss_") !== -1) {  
                         // drop bigboss into the game
-                        shape = objectPool.getBigboss();
-                        // add turrets to shape
-                        //shape.setTurrets(wave.turrets);
+                        var boss = objectPool.getBigboss();
+                        var turretData = wave.turrets;
+                        // start the boss shape and pass along required data
+                        boss.startMe(wave.type, wave.x, wave.y, turretData, movementData);
                     } else {
+                        var shootData = null;
                         // drop shape into the game
-                        shape = objectPool.getShape();
+                        var shape = objectPool.getShape();
                         // is this shape of this wave a shooter?
                         if (wave.shooters !== undefined) shootData = search(wave.shooters, "index", wave.dropped);
+                        // start the shape and pass along required data
+                        shape.startMe(wave.type, wave.x, wave.y, shootData, movementData);
                     }
-                    // start the shape and pass along required data
-                    shape.startMe(wave.type, wave.x, wave.y, shootData, movementData);
                     
                     wave.dropped++;
                     // if wave is complete set value to null
