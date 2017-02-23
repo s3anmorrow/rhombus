@@ -86,6 +86,8 @@ var Turret = function(){
             sprite.addEventListener("animationend",function(e){
                 e.remove();
                 _this.stopMe();
+                // a turret has been destroyed - notify its owner
+                owner.turretKilled();
             });
         }
     }

@@ -63,34 +63,34 @@ var WaveFactory = function(){
     this.updateMe = function() {
         // loop through all active waves
         for (var n=0; n<activeWaves.length; n++) {
-            var wave = activeWaves[n];
-            if (wave !== null) {
-                wave.frameCount++;
-                if (wave.frameCount >= wave.spaced) {
+            var activeWave = activeWaves[n];
+            if (activeWave !== null) {
+                activeWave.wave.frameCount++;
+                if (activeWave.wave.frameCount >= activeWave.wave.spaced) {
                     // make a copy of the movement object of this wave (each shape uses it to store its own data)
-                    var movementData = Object.assign({}, wave.movement);
+                    var movementData = Object.assign({}, activeWave.movement);
                     // shooting data for this shape
-                    if (wave.type.indexOf("bigboss_") !== -1) {  
+                    if (activeWave.type.indexOf("bigboss_") !== -1) {  
                         // drop bigboss into the game
                         var boss = objectPool.getBigboss();
-                        var turretData = wave.turrets;
+                        var turretData = activeWave.settings.turrets;
                         // start the boss shape and pass along required data
-                        boss.startMe(wave.type, wave.x, wave.y, turretData, movementData);
+                        boss.startMe(activeWave.type, activeWave.settings.x, activeWave.settings.y, activeWave.settings.points, turretData, movementData);
                     } else {
                         var shootData = null;
                         // drop shape into the game
                         var shape = objectPool.getShape();
                         // is this shape of this wave a shooter?
-                        if (wave.shooters !== undefined) shootData = search(wave.shooters, "index", wave.dropped);
+                        if (activeWave.settings.shooters !== undefined) shootData = search(activeWave.settings.shooters, "index", activeWave.wave.dropped);
                         // start the shape and pass along required data
-                        shape.startMe(wave.type, wave.x, wave.y, shootData, movementData);
+                        shape.startMe(activeWave.type, activeWave.settings.x, activeWave.settings.y, activeWave.settings.hp, shootData, movementData);
                     }
                     
-                    wave.dropped++;
+                    activeWave.wave.dropped++;
                     // if wave is complete set value to null
-                    if (wave.dropped >= wave.count) activeWaves[n] = null;
+                    if (activeWave.wave.dropped >= activeWave.wave.count) activeWaves[n] = null;
                     // reset frameCount for next drop
-                    wave.frameCount = 0;
+                    activeWave.wave.frameCount = 0;
                     
                 }
             }
@@ -104,8 +104,8 @@ var WaveFactory = function(){
         activeWaves.push(levelManifest[level][waveIndex]);
         
         // initializing wave object before starting wave
-        activeWaves[activeWaves.length - 1].frameCount = 0;
-        activeWaves[activeWaves.length - 1].dropped = 0;
+        activeWaves[activeWaves.length - 1].wave.frameCount = 0;
+        activeWaves[activeWaves.length - 1].wave.dropped = 0;
 
         waveIndex++;
         if (waveIndex > (levelManifest[level].length - 1)) {

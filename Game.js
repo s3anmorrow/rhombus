@@ -253,6 +253,10 @@
 			case "playerKilled":
 				background.setLives(e.lives);
 				break;
+			case "bigbossKilled":
+				background.adjustPoints(e.points);
+				break;
+			
 
 
 		}

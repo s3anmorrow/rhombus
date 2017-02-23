@@ -122,8 +122,8 @@ var Bullet = function() {
 				for (var n=0; n<length; n++) {	
 					var shape = shapePool[n];
 					if ((shape.used) && (shape.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, shape.sprite, 0, true))) {
-						shape.killMe();
-						this.killMe();
+						shape.killMe(damage,true);
+						this.killMe(true);
 					}
 				}
 

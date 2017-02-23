@@ -20,6 +20,7 @@ var Shape = function(){
     var _this = this;
     var state = ShapeState.ATTACKING;
     var points = 0;    
+    var hitPoints = 0;
     // control frequency of firing if shape is a shooter
     var shooter = false;
     var shootFrequency = -1;
@@ -39,12 +40,13 @@ var Shape = function(){
     };
 
     // ----------------------------------------------- public methods
-    this.startMe = function(myType, startX, startY, myShootData, myMovement) {
+    this.startMe = function(myType, startX, startY, myHitPoints, myShootData, myMovement) {
         // shape initialization
         frameCounter = 0;
         points = gameConstants.SHAPE_POINTS[myType];
         killedEvent.points = points;
         state = ShapeState.ATTACKING;
+        hitPoints = myHitPoints;
 
         // setup shape to be a shooter or not
         shooter = false;
@@ -87,23 +89,25 @@ var Shape = function(){
 
     };
 
-    this.killMe = function(earnPoints) {
-        state = ShapeState.KILLED;
-        sprite.rotation = 0;
-        // position sprite and bitmaptext
-        if ((earnPoints === undefined) || (earnPoints === true)) {
-            sprite.gotoAndPlay("explosion" + points);
-            killedEvent.target = null;
-            sprite.dispatchEvent(killedEvent);
-        } else {
-            sprite.gotoAndPlay("explosionNoPoints");
+    this.killMe = function(damage, pointsAwarded) {
+        // remove hitpoints according to bullet damage
+        hitPoints-=damage;
+        if (hitPoints <= 0) {
+            state = ShapeState.KILLED;
+            sprite.rotation = 0;
+            // position sprite and bitmaptext
+            if ((pointsAwarded === undefined) || (pointsAwarded === true)) {
+                sprite.gotoAndPlay("explosion" + points);
+                killedEvent.target = null;
+                sprite.dispatchEvent(killedEvent);
+            } else {
+                sprite.gotoAndPlay("explosionNoPoints");
+            }
+            sprite.addEventListener("animationend",function(e){
+                e.remove();
+                _this.stopMe();
+            });
         }
-        sprite.addEventListener("animationend",function(e){
-            e.remove();
-            _this.stopMe();
-        });
-
-        //stage.removeChild(sprite); 
     };
 
     this.fireMe = function() {

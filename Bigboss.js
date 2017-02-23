@@ -18,6 +18,8 @@ var Bigboss = function(){
     var type = "";
     var points = 0;
     var turrets = [];
+    var turretsActive = 0;
+    var turretsTotal = 0;
     var frameCounter = 0;
 
     // the moveFunction that will be called in updateMe()
@@ -42,16 +44,16 @@ var Bigboss = function(){
 
 
     // ----------------------------------------------- public methods
-    this.startMe = function(myType, startX, startY, myTurretData, myMovement) {
+    this.startMe = function(myType, startX, startY, myPoints, myTurretData, myMovement) {
         // shape initialization
         frameCounter = 0;
-        //points = gameConstants.SHAPE_POINTS[myType];
+        points = myPoints;
         //killedEvent.points = points;
         state = ShapeState.ATTACKING;
 
         // store type of Shape and jump to frame
         type = myType;
-        bodySprite.gotoAndStop(type);
+        bodySprite.gotoAndPlay(type);
         sprite.addChild(bodySprite);
 
         // position sprite
@@ -61,7 +63,9 @@ var Bigboss = function(){
 
         // add all turrets to big boss' body
         turrets = [];
-        for (var n=0; n<myTurretData.length; n++) {
+        turretsTotal = myTurretData.length;
+        turretsActive = turretsTotal;
+        for (var n=0; n<turretsTotal; n++) {
             var turretData = myTurretData[n];
             // get turret sprite and setup
             var turret = objectPool.getTurret();
@@ -87,7 +91,7 @@ var Bigboss = function(){
 
 
         // remove Shape
-		sprite.stop();
+		bodySprite.stop();
 		stage.removeChild(sprite);    
 		// return this object to the object pool
 		objectPool.dispose(this);
@@ -101,26 +105,24 @@ var Bigboss = function(){
 
     };
 
-    this.killMe = function(earnPoints) {
-        //state = ShapeState.KILLED;
-        
-        /*
-        sprite.rotation = 0;
-        // position sprite and bitmaptext
-        if ((earnPoints === undefined) || (earnPoints === true)) {
-            sprite.gotoAndPlay("explosion" + points);
-            killedEvent.target = null;
-            sprite.dispatchEvent(killedEvent);
-        } else {
-            sprite.gotoAndPlay("explosionNoPoints");
+    this.turretKilled = function(){
+        turretsActive--;
+        if (turretsActive <= 0) {
+            this.killMe();
         }
-        sprite.addEventListener("animationend",function(e){
+    }
+
+    this.killMe = function() {
+        state = ShapeState.KILLED;
+
+        bodySprite.gotoAndPlay("explosion_" + type);
+        killedEvent.target = null;
+        killedEvent.points = points;
+        sprite.dispatchEvent(killedEvent);
+        bodySprite.addEventListener("animationend",function(e){
             e.remove();
             _this.stopMe();
         });
-        */
-
-        //stage.removeChild(sprite); 
     };
 
     this.updateMe = function() {
