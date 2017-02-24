@@ -92,7 +92,7 @@ var WaveFactory = function(){
                     // make a copy of the movement object of this wave (each shape uses it to store its own data)
                     var movementData = Object.assign({}, activeWave.movement);
                     // shooting data for this shape
-                    if (activeWave.type.indexOf("bigboss_") !== -1) {  
+                    if (activeWave.type.indexOf("boss") !== -1) {  
                         // drop bigboss into the game
                         var boss = objectPool.getBigboss();
                         var turretData = activeWave.settings.turrets;

@@ -85,10 +85,9 @@ var Bigboss = function(){
     };
 
     this.stopMe = function() {
-        // TODO: clear out all turrets
-        // ???????????
-        // remove event listener of turret!
-
+        // clear out all turrets
+        for (var n=0; n<turrets.length; n++) turrets[n].stopMe();
+        turrets = null;
 
         // remove Shape
 		bodySprite.stop();

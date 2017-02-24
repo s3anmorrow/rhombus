@@ -21,7 +21,18 @@ var MoveFunctions = {
             sprite.moveData.ready = true;
         }
         if (sprite.moveData.rotate) sprite.rotation++;
-        if (sprite.y < sprite.moveData.stopY) sprite.y+=sprite.moveData.speed;
+        if (sprite.y < sprite.moveData.stopAt) sprite.y+=sprite.moveData.speed;
+        return true;
+    },
+
+    rightAndStop:function(sprite){
+        if (!sprite.moveData.ready) {
+            if (sprite.moveData.speed === undefined) sprite.moveData.speed = 2;
+            if (sprite.moveData.rotate === undefined) sprite.moveData.rotate = false;
+            sprite.moveData.ready = true;
+        }
+        if (sprite.moveData.rotate) sprite.rotation++;
+        if (sprite.x < sprite.moveData.stopAt) sprite.x+=sprite.moveData.speed;
         return true;
     },
 
