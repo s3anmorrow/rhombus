@@ -1,18 +1,19 @@
 var levelManifest = [
     [
 
-        
-        // LEVEL 1
         /*
+        // LEVEL 1
         {type:"circle", 
             wave:{count:5, spaced:30},
             settings:{x:500, y:0, hp:4, shooters:[{index:0, freq:48}]}, 
-            movement:{type:"down",speed:2}
+            movement:{type:"down",speed:2},
+            time:5
         },
         {type:"square", 
-            wave:{count:2, spaced:20},
+            wave:{count:10, spaced:20},
             settings:{x:300, y:0, hp:3, shooters:[{index:0, freq:48},{index:1, freq:48}]},
-            movement:{type:"looping", r:225, cx:300, cy:300, dir:"down", loops:3, speed:4}
+            movement:{type:"looping", r:225, cx:300, cy:300, dir:"down", loops:3, speed:4},
+            time:10
         },
         */
         
@@ -26,7 +27,8 @@ var levelManifest = [
                     {type:"square",x:150,y:150,hp:1,freq:100}
                 ]
             },
-            movement:{type:"downAndStop", speed:2, stopY:250, rotate:true}
+            movement:{type:"downAndStop", speed:2, stopY:250, rotate:true},
+            time:10
         }
 
     ]

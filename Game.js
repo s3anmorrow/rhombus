@@ -85,7 +85,8 @@
 		triangle.startMe();
 		*/
 
-		waveFactory.levelMe();
+		// start the waves
+		waveFactory.startMe();
 
 		player = objectPool.getPlayer();
 		player.startMe();
@@ -210,6 +211,10 @@
 		state = Globals.gameStates.STATE_INTRO;
 		//console.log(">> intro gameScreen ready");
 
+		// listen for loss of focus on browser and pause game
+		window.addEventListener("blur", onPause);
+        window.addEventListener("focus", onResume);
+
 		// setup listener for ticker to actually update the stage
 		createjs.Ticker.useRAF = true;
 		// set framerate
@@ -260,6 +265,16 @@
 
 
 		}
+	}
+
+	function onPause(e) {
+		createjs.Ticker.setPaused(true);
+		createjs.Ticker.removeEventListener("tick", onTick);
+	}
+
+	function onResume(e) {
+		createjs.Ticker.setPaused(false);
+		createjs.Ticker.addEventListener("tick", onTick);
 	}
 
 	// game loop method
