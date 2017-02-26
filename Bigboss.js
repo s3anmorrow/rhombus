@@ -31,6 +31,7 @@ var Bigboss = function(){
     // get shape's sprite
     var sprite = new createjs.Container();
     var bodySprite = assetManager.getSprite("assets");
+    var explosionSprite = assetManager.getSprite("assets");
 
     // make sprite public for easy access
     this.sprite = sprite;
@@ -40,16 +41,14 @@ var Bigboss = function(){
         return state;
     };
 
-    // ----------------------------------------------- event handlers
-
-
     // ----------------------------------------------- public methods
     this.startMe = function(myType, startX, startY, myPoints, myTurretData, myMovement) {
         // shape initialization
         frameCounter = 0;
         points = myPoints;
-        //killedEvent.points = points;
         state = ShapeState.ATTACKING;
+        // get explosion sprite ready to play
+        explosionSprite.gotoAndStop("bossExplosion" + points);
 
         // store type of Shape and jump to frame
         type = myType;
@@ -91,7 +90,10 @@ var Bigboss = function(){
 
         // remove Shape
 		bodySprite.stop();
-		stage.removeChild(sprite);    
+        explosionSprite.stop();
+        sprite.removeChild(explosionSprite);
+        stage.removeChild(sprite);
+
 		// return this object to the object pool
 		objectPool.dispose(this);
     };
@@ -114,12 +116,29 @@ var Bigboss = function(){
     this.killMe = function() {
         state = ShapeState.KILLED;
 
-        bodySprite.gotoAndPlay("explosion_" + type);
-        killedEvent.target = null;
-        killedEvent.points = points;
-        sprite.dispatchEvent(killedEvent);
+        // position explosion sprite overtop of bigboss
+        explosionSprite.x = bodySprite.x;
+        explosionSprite.y = bodySprite.y;
+        // adjust rotation so explosion points text is not rotated
+        explosionSprite.rotation = 360 - sprite.rotation;
+        
+        //sprite.removeChild(bodySprite);
+        bodySprite.gotoAndPlay(type + "Kill");
         bodySprite.addEventListener("animationend",function(e){
             e.remove();
+            bodySprite.stop();
+        });
+
+        // add explosion to sprite
+        sprite.addChild(explosionSprite);
+        explosionSprite.play();
+        explosionSprite.addEventListener("animationend",function(e){
+            e.remove();
+            // dispatch custom event that big boss is killed
+            killedEvent.target = null;
+            killedEvent.points = points;
+            sprite.dispatchEvent(killedEvent);
+            // shut down this game object
             _this.stopMe();
         });
     };

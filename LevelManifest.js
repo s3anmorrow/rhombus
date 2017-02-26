@@ -18,7 +18,7 @@ var levelManifest = [
         }
         */
         
-        {type:"bossDecagon", 
+        {type:"bossTriangle", 
             wave:{count:1, spaced:4},
             settings:{x:-200, y:250, points:1000,
                 turrets:[   

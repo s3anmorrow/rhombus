@@ -4,7 +4,10 @@
 (function() {
 	"use strict";
 
-	// TODO: pause game when lose focus (timers keep going)
+	// TODO: powerups and new guns
+	// TODO: different bullet types for shapes
+	// TODO: small bosses
+
 
 	// game variables
 	var stage = null;
@@ -296,7 +299,6 @@
 
 		// monitor gamepadManager for any buttons / joystick changes
 		//gamepadManager.monitorMe(state);
-		
 
 		// STEP II : UPDATING STEP
 		// scroll through all used objects in game and update them all

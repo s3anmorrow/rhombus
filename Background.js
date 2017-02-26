@@ -16,6 +16,7 @@ var Background = function() {
     var stageHeight = Globals.stage.canvas.height;
     var frameCounter = 0;
     var shapes = [];
+    var nextBackgroundShape = 1;
     // separate layer to drop background shapes on
     var backgroundLayer = new createjs.Container();
     var scoreLayer = new createjs.Container();
@@ -75,7 +76,7 @@ var Background = function() {
     // --------------------------------------------------------- private methods
     function dropShape(dropY) {
         // randomly select properties
-        var shape = assetManager.getSprite("assets","backgroundShape" + Globals.randomMe(1,4));
+        var shape = assetManager.getSprite("assets","backgroundShape" + nextBackgroundShape);
         shape.speed = Globals.randomMe(1,3);
         shape.rotation = Globals.randomMe(50,180);        
         shape.x = Globals.randomMe(200,600);
@@ -85,6 +86,9 @@ var Background = function() {
 
         // add to array for reference in updateMe
         shapes.push(shape);
+
+        nextBackgroundShape++
+        if (nextBackgroundShape > 4) nextBackgroundShape = 1;
     }
 
     function refreshScoreBoard() {
@@ -113,10 +117,9 @@ var Background = function() {
         refreshScoreBoard();
 
         // drop default startup shapes
-        dropShape(-200);
+        dropShape(-300);
         dropShape(0);
-        dropShape(200);
-        dropShape(400);
+        dropShape(300);
         dropShape(600);
     };
 

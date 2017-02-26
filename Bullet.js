@@ -74,9 +74,9 @@ var Bullet = function() {
 		// remove bullet
 		sprite.stop();
 		sprite.y = -2000;
+		stage.removeChild(sprite);
 		// return this object to the object pool
 		objectPool.dispose(_this);
-		stage.removeChild(sprite);
 	};
 
 	this.killMe = function(explode) {

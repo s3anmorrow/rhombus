@@ -124,7 +124,7 @@ var Shape = function(){
         var targetAngle = Math.floor(180 + (Math.atan2(sprite.y - player.sprite.y, sprite.x - player.sprite.x) * 57.2957795));
         // release the bullet!
         var bullet = objectPool.getBullet();
-        bullet.startMe(this, "bulletEnemy", 6, 2, sprite.x, sprite.y, targetAngle);
+        bullet.startMe(this, "bulletSmall", 6, 2, sprite.x, sprite.y, targetAngle);
     };
 
     this.updateMe = function() {
