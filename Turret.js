@@ -76,7 +76,7 @@ var Turret = function(){
         // remove hitpoints according to bullet damage
         hitPoints-=damage;
 
-        // add smoke damage sprite?
+        // show damage?
         if (hitPoints <= halfHitPoints) {
             type = type + "Damage";
             sprite.gotoAndStop(type);

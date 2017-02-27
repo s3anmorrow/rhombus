@@ -21,6 +21,7 @@ var Shape = function(){
     var state = ShapeState.ATTACKING;
     var points = 0;    
     var hitPoints = 0;
+    var halfHitPoints = 0;
     // control frequency of firing if shape is a shooter
     var shooter = false;
     var shootFrequency = -1;
@@ -47,6 +48,7 @@ var Shape = function(){
         killedEvent.points = points;
         state = ShapeState.ATTACKING;
         hitPoints = myHitPoints;
+        halfHitPoints = hitPoints/2;
 
         // setup shape to be a shooter or not
         shooter = false;
@@ -92,6 +94,13 @@ var Shape = function(){
     this.killMe = function(damage, pointsAwarded) {
         // remove hitpoints according to bullet damage
         hitPoints-=damage;
+
+        // show damage?
+        if (hitPoints <= halfHitPoints) {
+            type = type + "Damage";
+            sprite.gotoAndStop(type);
+        }
+
         if (hitPoints <= 0) {
             state = ShapeState.KILLED;
             sprite.rotation = 0;
