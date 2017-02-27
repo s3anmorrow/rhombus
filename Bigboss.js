@@ -47,13 +47,15 @@ var Bigboss = function(){
         frameCounter = 0;
         points = myPoints;
         state = ShapeState.ATTACKING;
-        // get explosion sprite ready to play
-        explosionSprite.gotoAndStop("bossExplosion" + points);
 
         // store type of Shape and jump to frame
         type = myType;
         bodySprite.gotoAndPlay(type);
         sprite.addChild(bodySprite);
+
+        // get explosion sprite ready to play
+        if (type.indexOf("Mini") != -1) explosionSprite.gotoAndStop("bossMiniExplosion" + points);        
+        else explosionSprite.gotoAndStop("bossExplosion" + points);        
 
         // position sprite
         sprite.x = startX;

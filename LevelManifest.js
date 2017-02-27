@@ -37,7 +37,7 @@ var levelManifest = [
 
         {type:"bossMiniHexagon", 
             wave:{count:1, spaced:4},
-            settings:{x:400, y:-100, points:1000,
+            settings:{x:400, y:-100, points:200,
                 turrets:[   
                     {type:"circle",x:0,y:0,hp:4,freq:25},
                 ]
