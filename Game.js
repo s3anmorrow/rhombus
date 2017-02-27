@@ -4,10 +4,14 @@
 (function() {
 	"use strict";
 
-	// TODO: powerups and new guns
+	// TODO: powerups and new guns (invisible)
 	// TODO: different bullet types for shapes
 	// TODO: small bosses
-
+	// TODO: add aircraft carrier release boss
+	// TODO: player and big boss collision detection
+	// TODO: add behaviour for kamakazee shape
+	// TODO: add invicibility to player
+	// TODO: add shield feature
 
 	// game variables
 	var stage = null;
@@ -93,7 +97,7 @@
 
 		player = objectPool.getPlayer();
 		player.startMe();
-		player.setWeapon("single");
+		player.setWeapon("double");
 
 
 		// game event listener for all events that control gameplay

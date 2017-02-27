@@ -18,6 +18,7 @@ var Turret = function(){
     var type = "";
     var points = 0;
     var hitPoints = 0;
+    var halfHitPoints = 0;
     var owner = null;
     var shootFreq = 0;
     var frameCounter = 0;
@@ -35,10 +36,6 @@ var Turret = function(){
     };
 
     // ----------------------------------------------- event handlers
-    function onFiringFinished(e) {
-        // firing animation is complete
-        e.target.gotoAndStop(e.target.type);
-    };
 
     // ----------------------------------------------- public methods
     this.startMe = function(myType, startX, startY, myHitPoints, freq, myOwner) {
@@ -48,6 +45,7 @@ var Turret = function(){
         owner = myOwner;
         shootFreq = freq;
         hitPoints = myHitPoints;
+        halfHitPoints = hitPoints/2;
 
         // store type of Shape and jump to frame
         type = myType;
@@ -77,6 +75,13 @@ var Turret = function(){
     this.killMe = function(damage) {
         // remove hitpoints according to bullet damage
         hitPoints-=damage;
+
+        // add smoke damage sprite?
+        if (hitPoints <= halfHitPoints) {
+            type = type + "Damage";
+            sprite.gotoAndStop(type);
+        }
+
         if (hitPoints <= 0) {
             state = ShapeState.KILLED;
             sprite.gotoAndPlay("explosionNoPoints");

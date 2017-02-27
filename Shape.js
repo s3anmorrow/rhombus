@@ -40,10 +40,10 @@ var Shape = function(){
     };
 
     // ----------------------------------------------- public methods
-    this.startMe = function(myType, startX, startY, myHitPoints, myShootData, myMovement) {
+    this.startMe = function(myType, startX, startY, myPoints, myHitPoints, myShootData, myMovement) {
         // shape initialization
         frameCounter = 0;
-        points = gameConstants.SHAPE_POINTS[myType];
+        points = myPoints;
         killedEvent.points = points;
         state = ShapeState.ATTACKING;
         hitPoints = myHitPoints;

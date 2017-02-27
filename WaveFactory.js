@@ -105,7 +105,7 @@ var WaveFactory = function(){
                         // is this shape of this wave a shooter?
                         if (activeWave.settings.shooters !== undefined) shootData = search(activeWave.settings.shooters, "index", activeWave.wave.dropped);
                         // start the shape and pass along required data
-                        shape.startMe(activeWave.type, activeWave.settings.x, activeWave.settings.y, activeWave.settings.hp, shootData, movementData);
+                        shape.startMe(activeWave.type, activeWave.settings.x, activeWave.settings.y, activeWave.settings.points,activeWave.settings.hp, shootData, movementData);
                     }
                     
                     activeWave.wave.dropped++;

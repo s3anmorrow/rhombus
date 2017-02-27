@@ -29,7 +29,7 @@ var Globals = {
 			"double":{
 				freq:6,
 				gunPoints:[{x:-20,y:-5,r:270},{x:20,y:-5,r:270}],
-				alternateFire:true,
+				alternateFire:false,
 				speed:20,
 				damage:1,
 				frame:"bullet"				
@@ -50,12 +50,6 @@ var Globals = {
 				damage:0.5,
 				frame:"laser"				
 			}
-		},
-		SHAPE_POINTS:{
-			"square":100,
-			"triangle":200,
-			"circle":50,
-			"rhombus":300
 		}
 	},
 	// frequent access global variables
