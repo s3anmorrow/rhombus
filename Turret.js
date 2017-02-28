@@ -107,6 +107,7 @@ var Turret = function(){
         var turretPoint = owner.sprite.localToGlobal(sprite.x,sprite.y);
         // get targetAngle of target relative to shape's sprite
         var targetAngle = Math.floor(180 + (Math.atan2(turretPoint.y - player.sprite.y, turretPoint.x - player.sprite.x) * 57.2957795));
+
         // release the bullet!
         var bullet = objectPool.getBullet();
         bullet.startMe(owner, "bulletSmall", 6, 2, turretPoint.x, turretPoint.y, targetAngle);

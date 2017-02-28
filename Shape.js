@@ -70,6 +70,8 @@ var Shape = function(){
         // add movement options object to sprite for setting up movement function
         if (myMovement !== undefined) {
             sprite.moveData = myMovement;
+            // attach reference to player object - for kamikaze move function
+            sprite.moveData.player = player;
             sprite.moveData.ready = false;
         }
         stage.addChild(sprite);
@@ -142,9 +144,9 @@ var Shape = function(){
         // Step I : collision detection
         // has the shape collided with the player?
         if ((state != ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
-            player.hitMe();
+            player.hitMe(hitPoints);
             // kill shape with no points
-            this.killMe(false);
+            this.killMe(hitPoints, false);
         }
 
         // Step II : Attacking

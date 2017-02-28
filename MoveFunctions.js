@@ -9,6 +9,7 @@ var MoveFunctions = {
             if (sprite.moveData.speed === undefined) sprite.moveData.speed = 2;
             sprite.moveData.ready = true;
         }
+        if (sprite.moveData.rotate) sprite.rotation++;
         sprite.y+=sprite.moveData.speed;
         if (sprite.y > Globals.stage.canvas.height + sprite.getBounds().height) return false;
         return true;
@@ -41,6 +42,7 @@ var MoveFunctions = {
             if (sprite.moveData.speed === undefined) sprite.moveData.speed = 2;
             sprite.moveData.ready = true;
         }
+        if (sprite.moveData.rotate) sprite.rotation++;
         sprite.y-=sprite.moveData.speed;
         if (sprite.y <= -sprite.getBounds().height) return false;
         return true;
@@ -51,6 +53,7 @@ var MoveFunctions = {
             if (sprite.moveData.speed === undefined) sprite.moveData.speed = 2;
             sprite.moveData.ready = true;
         }
+        if (sprite.moveData.rotate) sprite.rotation++;
         sprite.x-=sprite.moveData.speed;
         if (sprite.x <= -sprite.getBounds().width) return false;
         return true;
@@ -61,10 +64,33 @@ var MoveFunctions = {
             if (sprite.moveData.speed === undefined) sprite.moveData.speed = 2;
             sprite.moveData.ready = true;
         }
+        if (sprite.moveData.rotate) sprite.rotation++;
         sprite.x+=sprite.moveData.speed;
         if (sprite.x >= Globals.stage.canvas.width + sprite.getBounds().width) return false;
         return true;
     },    
+
+    kamikaze:function(sprite) {
+        if (!sprite.moveData.ready) {
+            if (sprite.moveData.speed === undefined) sprite.moveData.speed = 2;
+            sprite.moveData.ready = true;
+        }
+
+        if (sprite.moveData.rotate) sprite.rotation++;
+
+        // calculate angle to move towards player
+        var r = Math.floor(180 + (Math.atan2(sprite.y - sprite.moveData.player.sprite.y, sprite.x - sprite.moveData.player.sprite.x) * 57.2957795));
+        var xDisplace = Globals.cosTable[r] * sprite.moveData.speed;
+		var yDisplace = Globals.sinTable[r] * sprite.moveData.speed;
+
+        // move sprite on diagonal
+        sprite.x = sprite.x + xDisplace;
+        sprite.y = sprite.y + yDisplace;
+
+        // no need to check for shape off stage with this MoveFunction as it follows the player
+        return true;
+    },    
+
 
     diagonal:function(sprite) {
         if (!sprite.moveData.ready) {
@@ -94,6 +120,7 @@ var MoveFunctions = {
             sprite.moveData.ready = true;
         }
         if (sprite.moveData.dir == "down") {
+            if (sprite.moveData.rotate) sprite.rotation++;
             if (sprite.moveData.stage === 0) {
                 sprite.y+=sprite.moveData.speed;
                 if (sprite.y >= sprite.moveData.y) sprite.moveData.stage = 1;
@@ -103,6 +130,7 @@ var MoveFunctions = {
             }
             return true;
         } else {
+            if (sprite.moveData.rotate) sprite.rotation++;
             if (sprite.moveData.stage === 0) {
                 sprite.y-=sprite.moveData.speed;
                 if (sprite.y <= sprite.moveData.y) sprite.moveData.stage = 1;

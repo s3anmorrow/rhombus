@@ -5,13 +5,14 @@
 	"use strict";
 
 	// TODO: powerups and new guns (invisible)
-	// TODO: different bullet types for shapes
-	// TODO: small bosses
 	// TODO: add aircraft carrier release boss
-	// TODO: player and big boss collision detection
-	// TODO: add behaviour for kamakazee shape
 	// TODO: add invicibility to player
 	// TODO: add shield feature
+	// TODO: implement lookup tables for Trig
+
+	// CURRENT BRANCH WORK
+	// TODO: different bullet types for shapes	
+	// TODO: player and big boss collision detection	
 
 	// game variables
 	var stage = null;

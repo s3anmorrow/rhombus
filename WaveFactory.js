@@ -42,7 +42,7 @@ var WaveFactory = function(){
                 // release new wave
 
                 // initializing next wave object before starting wave
-                activeLevel[waveIndex].wave.frameCount = 0;
+                activeLevel[waveIndex].wave.frameCount = activeLevel[waveIndex].wave.spaced;
                 activeLevel[waveIndex].wave.dropped = 0;
                 activeWaves.push(activeLevel[waveIndex]);
 

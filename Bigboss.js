@@ -80,6 +80,8 @@ var Bigboss = function(){
         // add movement options object to sprite for setting up movement function
         if (myMovement !== undefined) {
             sprite.moveData = myMovement;
+            // attach reference to player object - for kamikaze move function
+            sprite.moveData.player = player;
             sprite.moveData.ready = false;
         }
         stage.addChild(sprite);

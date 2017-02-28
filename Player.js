@@ -229,9 +229,10 @@ var Player = function(){
         fireCounter = weaponData.freq;
     };
 
-    this.hitMe = function() {
+    this.hitMe = function(powerLoss) {
         state = PlayerState.HIT;
-        power--;
+        if (powerLoss === undefined) powerLoss = 1;
+        power-=powerLoss;
         if (power <= 0) {
             hitEvent.target = null;
             hitEvent.power = power;
