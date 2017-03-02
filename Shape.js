@@ -25,6 +25,7 @@ var Shape = function(){
     // control frequency of firing if shape is a shooter
     var shooter = false;
     var shootFrequency = -1;
+    var bulletType = 1;
     var frameCounter = 0;
     // reference to Player object (the target!)
     var player = objectPool.playerPool[0];
@@ -55,6 +56,8 @@ var Shape = function(){
         if (myShootData !== null) {
             shooter = true;
             shootFrequency = myShootData.freq;
+            if (myShootData.bulletType != undefined) bulletType = myShootData.bulletType;
+            else bulletType = 1;
         }
 
         // store type of Shape and jump to frame
@@ -135,7 +138,7 @@ var Shape = function(){
         var targetAngle = Math.floor(180 + (Math.atan2(sprite.y - player.sprite.y, sprite.x - player.sprite.x) * 57.2957795));
         // release the bullet!
         var bullet = objectPool.getBullet();
-        bullet.startMe(this, "bulletSmall", 6, 2, sprite.x, sprite.y, targetAngle);
+        bullet.startMe(this, "bullet" + bulletType, 6, 2, sprite.x, sprite.y, targetAngle);
     };
 
     this.updateMe = function() {
