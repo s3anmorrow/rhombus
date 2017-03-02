@@ -37,6 +37,28 @@ var MoveFunctions = {
         return true;
     },
 
+    leftAndStop:function(sprite){
+        if (!sprite.moveData.ready) {
+            if (sprite.moveData.speed === undefined) sprite.moveData.speed = 2;
+            if (sprite.moveData.rotate === undefined) sprite.moveData.rotate = false;
+            sprite.moveData.ready = true;
+        }
+        if (sprite.moveData.rotate) sprite.rotation++;
+        if (sprite.x > sprite.moveData.stopAt) sprite.x-=sprite.moveData.speed;
+        return true;
+    },
+
+    upAndStop:function(sprite){
+        if (!sprite.moveData.ready) {
+            if (sprite.moveData.speed === undefined) sprite.moveData.speed = 2;
+            if (sprite.moveData.rotate === undefined) sprite.moveData.rotate = false;
+            sprite.moveData.ready = true;
+        }
+        if (sprite.moveData.rotate) sprite.rotation++;
+        if (sprite.y > sprite.moveData.stopAt) sprite.y-=sprite.moveData.speed;
+        return true;
+    },
+
     up:function(sprite){
         if (!sprite.moveData.ready) {
             if (sprite.moveData.speed === undefined) sprite.moveData.speed = 2;
@@ -90,7 +112,6 @@ var MoveFunctions = {
         // no need to check for shape off stage with this MoveFunction as it follows the player
         return true;
     },    
-
 
     diagonal:function(sprite) {
         if (!sprite.moveData.ready) {

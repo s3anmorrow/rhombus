@@ -6,8 +6,8 @@ var levelManifest = [
         
         {type:"circle", 
             wave:{count:1, spaced:50},
-            settings:{x:500, y:-30, hp:3, points:100, shooters:[{index:0, freq:100, bulletType:1}]}, 
-            movement:{type:"down",speed:4},
+            settings:{x:400, y:800, hp:3, points:100, shooters:[{index:0, freq:100, bulletType:1}]}, 
+            movement:{type:"upAndStop",speed:4, stopAt:200},
             time:5
         }/*,
         {type:"pentagon", 
