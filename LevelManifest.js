@@ -7,7 +7,7 @@ var levelManifest = [
         {type:"circle", 
             wave:{count:1, spaced:50},
             settings:{x:400, y:800, hp:3, points:100, shooters:[{index:0, freq:100, bulletType:1}]}, 
-            movement:{type:"upAndStop",speed:4, stopAt:200},
+            movement:{type:"upAndStop",speed:4, stopAt:400},
             time:5
         }/*,
         {type:"pentagon", 
@@ -18,16 +18,15 @@ var levelManifest = [
         },
         */
         
-
         {type:"bossHexagon", 
             wave:{count:1, spaced:4},
             settings:{x:-200, y:250, points:1000,
                 turrets:[   
-                    {type:"circle",x:0,y:0,hp:4,freq:100,bulletType:1},
+                    {type:"circle",x:0,y:0,hp:4,freq:100},
                     {type:"square",x:100,y:100,hp:4,freq:150,bulletType:2},
-                    {type:"square",x:-100,y:100,hp:4,freq:50,bulletType:3},
+                    {type:"square",x:-100,y:100,hp:4,freq:50,bulletType:2},
                     {type:"square",x:100,y:-100,hp:4,freq:200,bulletType:2},
-                    {type:"circle",x:-100,y:-100,hp:4,freq:125,bulletType:1}
+                    {type:"circle",x:-100,y:-100,hp:4,freq:125}
                 ]
             },
             movement:{type:"rightAndStop", speed:2, stopAt:400, rotate:true},

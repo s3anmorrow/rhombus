@@ -10,9 +10,6 @@
 	// TODO: add shield feature
 	// TODO: implement lookup tables for Trig
 
-	// CURRENT BRANCH WORK
-	// TODO: player and big boss collision detection	
-
 	// game variables
 	var stage = null;
 	var canvas = null;

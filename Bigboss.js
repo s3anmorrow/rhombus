@@ -154,15 +154,12 @@ var Bigboss = function(){
 
         // TODO: add bounce back when player collides with shape
 
-        /*
         // Step I : collision detection
-        // has the shape collided with the player?
+        // has the bigboss collided with the player?
         if ((state != ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(bodySprite, player.sprite, 0, true))) {
-            player.hitMe();
-            // kill shape with no points
-            //this.killMe(false);
+            // immediate death!
+            player.killMe();
         }
-        */
         
         // STEP II : Movement
         // run move movement function (result is whether movement should still be active)
