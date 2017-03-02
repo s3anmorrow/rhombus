@@ -70,7 +70,9 @@ var Bigboss = function(){
             var turretData = myTurretData[n];
             // get turret sprite and setup
             var turret = objectPool.getTurret();
-            turret.startMe(turretData.type, turretData.x, turretData.y, turretData.hp, turretData.freq, this);
+            var bulletType = 1;
+            if (turretData.bulletType !== undefined) bulletType = turretData.bulletType;
+            turret.startMe(turretData.type, turretData.x, turretData.y, turretData.hp, turretData.freq, bulletType, this);
             // push turret into array
             turrets.push(turret);
         }

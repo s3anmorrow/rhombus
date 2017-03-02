@@ -11,7 +11,6 @@
 	// TODO: implement lookup tables for Trig
 
 	// CURRENT BRANCH WORK
-	// TODO: different bullet types for shapes	
 	// TODO: player and big boss collision detection	
 
 	// game variables

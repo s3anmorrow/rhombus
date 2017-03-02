@@ -21,6 +21,7 @@ var Turret = function(){
     var halfHitPoints = 0;
     var owner = null;
     var shootFreq = 0;
+    var bulletType = 1;
     var frameCounter = 0;
     // reference to Player object (the target!)
     var player = objectPool.playerPool[0];    
@@ -38,7 +39,7 @@ var Turret = function(){
     // ----------------------------------------------- event handlers
 
     // ----------------------------------------------- public methods
-    this.startMe = function(myType, startX, startY, myHitPoints, freq, myOwner) {
+    this.startMe = function(myType, startX, startY, myHitPoints, freq, myBulletType, myOwner) {
         // shape initialization
         frameCounter = 0;
         state = ShapeState.ATTACKING;
@@ -46,6 +47,7 @@ var Turret = function(){
         shootFreq = freq;
         hitPoints = myHitPoints;
         halfHitPoints = hitPoints/2;
+        bulletType = myBulletType;
 
         // store type of Shape and jump to frame
         type = myType;
@@ -110,7 +112,7 @@ var Turret = function(){
 
         // release the bullet!
         var bullet = objectPool.getBullet();
-        bullet.startMe(owner, "bulletSmall", 6, 2, turretPoint.x, turretPoint.y, targetAngle);
+        bullet.startMe(owner, "bullet" + bulletType, 6, 2, turretPoint.x, turretPoint.y, targetAngle);
     };
 
     this.updateMe = function() {
