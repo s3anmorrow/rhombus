@@ -258,6 +258,10 @@ var Player = function(){
         sprite.addEventListener("animationend",function(e){
             e.remove();
             lives--;
+            power = 0;
+            hitEvent.target = null;
+            hitEvent.power = power;
+            sprite.dispatchEvent(hitEvent);
             killedEvent.target = null;
             killedEvent.lives = lives;
             sprite.dispatchEvent(killedEvent);

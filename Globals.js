@@ -1,12 +1,5 @@
 var Globals = {
-	gameStates:{
-		STATE_SETUP:-1,
-		STATE_INTRO:0,
-		STATE_INSTRUCT:1,
-		STATE_CREDITS:2,
-		STATE_PLAYING:3,
-		STATE_GAMEOVER:4
-	},    
+
     gameConstants:{
 		FRAME_RATE:30,
 		PLAYER_SPEED:12,
@@ -59,6 +52,8 @@ var Globals = {
 	// lookup tables for trig in Globals object for global access
 	sinTable:[],
 	cosTable:[],
+	gameState:0,
+
 	// frequent access methods
 	// ??????????????????/ possibly not need this below with lookup tables
 	// converts degrees to radians for Trig calc

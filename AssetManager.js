@@ -16,7 +16,7 @@ var AssetManager = function(stage) {
 
 	// construct custom event object and initialize it
 	var eventAllLoaded = new createjs.Event("onAllAssetsLoaded");
-	var eventScreensLoaded = new createjs.Event("onScreensLoaded");
+	var eventAssetLoaded = new createjs.Event("onAssetLoaded");
 
 	// ------------------------------------------------------ event handlers
 	function onLoaded(e) {
@@ -51,6 +51,10 @@ var AssetManager = function(stage) {
         }
 		// increment asset counter
 		counter++;
+		// an asset has been loaded
+		eventAssetLoaded.target = null;
+		eventAssetLoaded.id = e.item.id;
+        stage.dispatchEvent(eventAssetLoaded);
     }
 
 	//called if there is an error loading the spriteSheet (usually due to a 404)
@@ -90,6 +94,10 @@ var AssetManager = function(stage) {
 		return sprite;
 	};
 
+	this.getProgress = function() {
+		return (counter/total);
+	};
+
     this.getSpriteSheet = function(id) {
         return spriteSheets[id];
     };
@@ -125,7 +133,7 @@ var AssetManager = function(stage) {
         preloader.addEventListener("fileload", onLoaded);
         preloader.addEventListener("error", onError);
         preloader.addEventListener("complete", onComplete);
-		preloader.setMaxConnections(5);
+		preloader.setMaxConnections(1);
 		// load first spritesheet to start preloading process
 		preloader.loadManifest(manifest);
 	};

@@ -1,8 +1,9 @@
-var Background = function() {
+var Screen = function() {
     // set references to globals
     var stage = Globals.stage;
     var assetManager = Globals.assetManager;
     var objectPool = Globals.objectPool;
+    var gameStates = Globals.gameStates;
 
     // public properties
     var score = 0;
@@ -19,64 +20,79 @@ var Background = function() {
     var nextBackgroundShape = 1;
     // separate layer to drop background shapes on
     var backgroundLayer = new createjs.Container();
-    var scoreLayer = new createjs.Container();
 
     // color the background of the game with a shape
-    background = new createjs.Shape();
+    var background = new createjs.Shape();
     background.graphics.beginFill("#000022").drawRect(0,0,800,800);
     background.cache(0,0,800,800);
     backgroundLayer.addChild(background);
     stage.addChild(backgroundLayer);
 
-    // setup up scoreboard
-    var txtScore = new createjs.BitmapText("0",assetManager.getSpriteSheet("assets"));
-    txtScore.letterSpacing = 2;
-    scoreLayer.addChild(txtScore);
+    // setup loading screen
+    var loadingScreen = new createjs.Container();
+    var loadingScreenSprite = assetManager.getSprite("ui","loadScreen");
+    loadingScreen.addChild(loadingScreenSprite);
+    // add progress bar to loading screen
+    var progressBarBack = new createjs.Shape();
+    progressBarBack.alpha = 0.3;
+    progressBarBack.graphics.beginFill("#FFFFFF").drawRect(315,425,178,10);
+    loadingScreen.addChild(progressBarBack);
+    progressBar = new createjs.Shape();
+    progressBar.graphics.beginFill("#FFFFFF").drawRect(315,425,0,10);
+    loadingScreen.addChild(progressBar);
 
-    var txtHighScore = new createjs.BitmapText("0",assetManager.getSpriteSheet("assets"));
-    txtHighScore.letterSpacing = 4;
-    txtHighScore.scaleX = 0.5;
-    txtHighScore.scaleY = 0.5;
-    txtHighScore.x = 5;
-    txtHighScore.y = 65;
-    scoreLayer.addChild(txtHighScore);
+    // setup intro screen
+    var introScreen = new createjs.Container();
+    var introScreenSprite = assetManager.getSprite("ui","introScreen");
+    introScreen.addChild(introScreenSprite);
 
-    var iconLives = assetManager.getSprite("assets","iconLives");
-    iconLives.x = 8;
-    iconLives.y = 106;
-    scoreLayer.addChild(iconLives);
+    // setup game screen
+    var gameScreen = new createjs.Container();
+    // add scoreboard sprites and bitmaptext
+    var txtScore = new createjs.BitmapText("!",assetManager.getSpriteSheet("ui"));
+    txtScore.letterSpacing = 4;
+    txtScore.x = 10;
+    gameScreen.addChild(txtScore);
 
-    var txtLives = new createjs.BitmapText("0",assetManager.getSpriteSheet("assets"));
-    txtLives.scaleX = 0.5;
-    txtLives.scaleY = 0.5;
-    txtLives.x = 55;
-    txtLives.y = 98;
-    scoreLayer.addChild(txtLives);
+    var txtHighScore = new createjs.BitmapText("0",assetManager.getSpriteSheet("ui"));
+    txtHighScore.letterSpacing = 2;
+    txtHighScore.x = 15;
+    txtHighScore.y = 90;
+    gameScreen.addChild(txtHighScore);
+
+    var iconLives = assetManager.getSprite("ui","iconLives");
+    iconLives.x = 20;
+    iconLives.y = 135;
+    gameScreen.addChild(iconLives);
+
+    var txtLives = new createjs.BitmapText("0",assetManager.getSpriteSheet("ui"));
+    txtLives.x = 70;
+    txtLives.y = 125;
+    gameScreen.addChild(txtLives);
 
     var powerBlocks = [];
     for (var n=0; n<Globals.gameConstants.PLAYER_MAX_POWER; n++) {
-        var block = assetManager.getSprite("assets","iconPower");
-        block.x = 7 + (13 * n);
-        block.y = 138;
-        scoreLayer.addChild(block);
+        var block = assetManager.getSprite("ui","iconPower");
+        block.x = 18 + (18 * n);
+        block.y = 170;
+        gameScreen.addChild(block);
         powerBlocks.push(block);
     }
 
     var txtSpecialAmmo = new createjs.BitmapText("0",assetManager.getSpriteSheet("assets"));
     txtSpecialAmmo.scaleX = 0.5;
     txtSpecialAmmo.scaleY = 0.5;
-    txtSpecialAmmo.x = 8;
+    txtSpecialAmmo.x = 18;
     txtSpecialAmmo.y = 150;
-    scoreLayer.addChild(txtSpecialAmmo);    
 
-    scoreLayer.x = 10;
-    scoreLayer.y = 10;
-    stage.addChild(scoreLayer);
+
+    //gameScreen.x = 10;
+    //gameScreen.y = 0;
     
     // --------------------------------------------------------- private methods
     function dropShape(dropY) {
         // randomly select properties
-        var shape = assetManager.getSprite("assets","backgroundShape" + nextBackgroundShape);
+        var shape = assetManager.getSprite("ui","backgroundShape" + nextBackgroundShape);
         shape.speed = Globals.randomMe(1,3);
         shape.rotation = Globals.randomMe(50,180);        
         shape.x = Globals.randomMe(200,600);
@@ -87,13 +103,29 @@ var Background = function() {
         // add to array for reference in updateMe
         shapes.push(shape);
 
-        nextBackgroundShape++
+        nextBackgroundShape++;
         if (nextBackgroundShape > 4) nextBackgroundShape = 1;
     }
 
     function refreshScoreBoard() {
         // update scoreboard
-        txtScore.text = String(score);
+        var encodedScore = String(score);
+        encodedScore = encodedScore.replace(/[0-9]/g, function(match, offset, string) {
+            switch (match) {
+                case "0": return ")";
+                case "1": return "!";
+                case "2": return "@";
+                case "3": return "#";
+                case "4": return "$";
+                case "5": return "%";
+                case "6": return "^";
+                case "7": return "&";
+                case "8": return "*";
+                case "9": return "(";
+            }
+        });
+        txtScore.text = encodedScore;
+
         txtLives.text = String(lives);
         txtHighScore.text = String(highScore);
         for (var n=1; n<=powerBlocks.length; n++) { 
@@ -123,12 +155,30 @@ var Background = function() {
         dropShape(600);
     };
 
+    this.setScreen = function(which) {
+        stage.removeChild(loadingScreen);
+        stage.removeChild(introScreen);
+        stage.removeChild(gameScreen);
+
+        if (which == "loadScreen") stage.addChild(loadingScreen);
+        else if (which == "introScreen") stage.addChild(introScreen);
+        else if (which == "gameScreen") stage.addChild(gameScreen);
+
+    };
+
     this.stopMe = function() {
         for (var n=0; n<shapes.length; n++){
             backgroundLayer.removeChild(shapes[n]);
             shapes[n] = null;
         }
         shapes = [];
+    };
+
+    this.updateProgress = function(){
+        // update progress bar
+		progressBar.graphics.clear();
+		progressBar.graphics.beginFill("#FFFFFF").drawRect(315,425,(178 * assetManager.getProgress()),10);
+		stage.update();
     };
 
     this.setLives = function(amount){
@@ -153,6 +203,7 @@ var Background = function() {
     };
 
     this.updateMe = function() {
+
         // move all background shapes
         for (var n=0; n<shapes.length; n++){
             var shape = shapes[n];
