@@ -11,6 +11,7 @@ var Screen = function() {
     var highScore = 0;
     var power = 0;
     var specialAmmo = 0;
+    var gamePad = false;
 
     // private variables
     var moving = false;
@@ -45,13 +46,27 @@ var Screen = function() {
     var introScreen = new createjs.Container();
     var introScreenSprite = assetManager.getSprite("ui","introScreen");
     introScreen.addChild(introScreenSprite);
+    var prompt = assetManager.getSprite("ui","spacebar");
+    prompt.x = 200;
+    prompt.y = 600;
+    introScreen.addChild(prompt);
+
+    // setup gameover screen
+    var gameoverScreen = new createjs.Container();
+    var gameoverScreenSprite = assetManager.getSprite("ui","gameoverScreen");
+    gameoverScreen.addChild(gameoverScreenSprite);
+
+    // setup highscore screen
+    var highscoreScreen = new createjs.Container();
+    var ghighscoreScreenSprite = assetManager.getSprite("ui","highscoreScreen");
+    highscoreScreen.addChild(ghighscoreScreenSprite);
 
     // setup game screen
     var gameScreen = new createjs.Container();
     // add scoreboard sprites and bitmaptext
     var txtScore = new createjs.BitmapText("!",assetManager.getSpriteSheet("ui"));
     txtScore.letterSpacing = 4;
-    txtScore.x = 10;
+    txtScore.x = 8;
     gameScreen.addChild(txtScore);
 
     var txtHighScore = new createjs.BitmapText("0",assetManager.getSpriteSheet("ui"));
@@ -84,10 +99,6 @@ var Screen = function() {
     txtSpecialAmmo.scaleY = 0.5;
     txtSpecialAmmo.x = 18;
     txtSpecialAmmo.y = 150;
-
-
-    //gameScreen.x = 10;
-    //gameScreen.y = 0;
     
     // --------------------------------------------------------- private methods
     function dropShape(dropY) {
@@ -135,9 +146,8 @@ var Screen = function() {
         txtSpecialAmmo.text = String(specialAmmo);
     }
 
-
     // --------------------------------------------------------- public methods
-    this.startMe = function() {        
+    this.startMe = function(gamePadPresent) {        
         // initialization
         moving = true;
         frameCounter = 0;
@@ -146,6 +156,10 @@ var Screen = function() {
         highScore = 126628;
         lives = Globals.gameConstants.PLAYER_START_LIVES;
         power = Globals.gameConstants.PLAYER_START_POWER;
+        gamePad = gamePadPresent;
+        if (gamePad) {
+            prompt.gotoAndStop("startButton");
+        }
         refreshScoreBoard();
 
         // drop default startup shapes
@@ -159,10 +173,12 @@ var Screen = function() {
         stage.removeChild(loadingScreen);
         stage.removeChild(introScreen);
         stage.removeChild(gameScreen);
+        stage.removeChild(gameoverScreen);
 
         if (which == "loadScreen") stage.addChild(loadingScreen);
         else if (which == "introScreen") stage.addChild(introScreen);
         else if (which == "gameScreen") stage.addChild(gameScreen);
+        else if (which == "gameoverScreen") stage.addChild(gameoverScreen);
 
     };
 

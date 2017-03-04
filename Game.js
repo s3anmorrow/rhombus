@@ -7,6 +7,7 @@
 	// TODO: powerups and new guns (invisible)
 	// TODO: add invicibility to player
 	// TODO: add shield feature	
+
 	// TODO: add aircraft carrier release boss (Turret that releases shapes instead of bullets!)
 	// TODO: implement lookup tables for Trig
 
@@ -98,6 +99,10 @@
 		stage.addEventListener("onAssetLoaded", onAssetLoaded);
 		stage.addEventListener("onAllAssetsLoaded", onSetup);
 
+		// construct gamepadManager
+		gamepadManager = new GamepadManager();
+		gamepadManager.setup(gamepadManifest);
+
 		// listen for loss of focus on browser and pause game
 		window.addEventListener("blur", onPause);
         window.addEventListener("focus", onResume);
@@ -134,7 +139,6 @@
 		// grant global access to object pool
 		Globals.objectPool = objectPool;
 		objectPool.init();
-
 		// get reference to updateList from objectPool object
 		updateList = objectPool.getUpdateList();
 
@@ -144,19 +148,13 @@
 		// construct WaveFactory to control enemy waves
 		waveFactory = new WaveFactory();
 
-		/*
-		// construct gamepadManager
-		gamepadManager = new GamepadManager();
-		gamepadManager.setup(gamepadManifest);
-		*/
-
 		// setup event listeners for keyboard keys
 		document.addEventListener("keydown", onKeyDown);
 		document.addEventListener("keyup", onKeyUp);
 
 		// change state of game
 		Globals.gameState = GameStates.INTRO;
-		//console.log(">> intro gameScreen ready");
+		console.log(">> intro gameScreen ready");
 
 
 		// ???????????????? temporary start
