@@ -11,11 +11,11 @@ var HighScoreScreen = function() {
     selector.x = 102;
     selector.y = 344;
     screen.addChild(selector);
-    var txtCurrentScore = new createjs.BitmapText("",assetManager.getSpriteSheet("ui"));
+    var txtCurrentScore = new createjs.BitmapText("",assetManager.getSpriteSheet("charset30"));
     txtCurrentScore.letterSpacing = 4;
     txtCurrentScore.y = 220;
     screen.addChild(txtCurrentScore);
-    var txtInitials = new createjs.BitmapText("",assetManager.getSpriteSheet("ui"));
+    var txtInitials = new createjs.BitmapText("",assetManager.getSpriteSheet("charset80"));
     txtInitials.letterSpacing = 8;
     txtInitials.y = 585;
     screen.addChild(txtInitials);
@@ -30,8 +30,6 @@ var HighScoreScreen = function() {
     function centerMe(displayObj) {
         displayObj.x = (stage.canvas.width/2) - (displayObj.getBounds().width/2);
     }
-
-
 
     // ------------------------------------------------- public methods
     this.showMe = function(score) {

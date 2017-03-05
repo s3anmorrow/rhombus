@@ -52,27 +52,9 @@ var GameScreen = function() {
     // --------------------------------------------------------- private methods
     function refreshScoreBoard() {
         // update scoreboard
-        var encodedScore = String(score);
-        /*
-        encodedScore = encodedScore.replace(/[0-9]/g, function(match, offset, string) {
-            switch (match) {
-                case "0": return ")";
-                case "1": return "!";
-                case "2": return "@";
-                case "3": return "#";
-                case "4": return "$";
-                case "5": return "%";
-                case "6": return "^";
-                case "7": return "&";
-                case "8": return "*";
-                case "9": return "(";
-            }
-        });
-        */
-        txtScore.text = encodedScore;
-
+        txtScore.text = Globals.commaUpScore(score);
         txtLives.text = String(lives);
-        txtHighScore.text = String(highScore);
+        txtHighScore.text = Globals.commaUpScore(highScore);
         for (var n=1; n<=powerBlocks.length; n++) { 
             if (n <= power) powerBlocks[n-1].alpha = 1;
             else powerBlocks[n-1].alpha = 0.3;

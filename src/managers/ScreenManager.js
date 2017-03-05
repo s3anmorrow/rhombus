@@ -76,15 +76,13 @@ var ScreenManager = function() {
     };
 
     this.setScreen = function(which) {
-        loadScreen.hideMe();
         introScreen.hideMe();
         gameScreen.hideMe();
         highScoreScreen.hideMe();
         stage.removeChild(gameoverScreen);
 
         // add corresponding screen container and setup
-        if (which == "loadScreen") loadScreen.showMe();
-        else if (which == "introScreen") introScreen.showMe();
+        if (which == "introScreen") introScreen.showMe();
         else if (which == "gameScreen") gameScreen.showMe();
         else if (which == "highScoreScreen") highScoreScreen.showMe(gameScreen.getScore());
         else if (which == "gameoverScreen") stage.addChild(gameoverScreen);

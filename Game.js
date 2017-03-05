@@ -149,11 +149,11 @@
 		document.addEventListener("keydown", onKeyDown);
 		document.addEventListener("keyup", onKeyUp);
 
-		//Globals.gameState = GameStates.HIGHSCORE;
-		//screenManager.setScreen("highScoreScreen");
-
 		// now that all assets are loaded - start screenManager
 		screenManager.startMe();
+
+		//Globals.gameState = GameStates.HIGHSCORE;
+		//screenManager.setScreen("highScoreScreen");
 
 		// set screen to introduction
 		screenManager.setScreen("introScreen");
