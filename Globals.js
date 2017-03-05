@@ -1,5 +1,13 @@
 var Globals = {
-
+	// frequent access global variables
+	stage:null,
+    assetManager:null,
+    objectPool:null,
+	// lookup tables for trig in Globals object for global access
+	sinTable:[],
+	cosTable:[],
+	gameState:0,
+	// game constants used throughout
     gameConstants:{
 		FRAME_RATE:30,
 		PLAYER_SPEED:12,
@@ -45,14 +53,6 @@ var Globals = {
 			}
 		}
 	},
-	// frequent access global variables
-	stage:null,
-    assetManager:null,
-    objectPool:null,
-	// lookup tables for trig in Globals object for global access
-	sinTable:[],
-	cosTable:[],
-	gameState:0,
 
 	// frequent access methods
 	// ??????????????????/ possibly not need this below with lookup tables

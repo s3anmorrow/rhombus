@@ -141,10 +141,7 @@
 		objectPool.init();
 		// get reference to updateList from objectPool object
 		updateList = objectPool.getUpdateList();
-
-		// set screen to introduction
-		screen.setScreen("introScreen");
-
+		
 		// construct WaveFactory to control enemy waves
 		waveFactory = new WaveFactory();
 
@@ -152,8 +149,13 @@
 		document.addEventListener("keydown", onKeyDown);
 		document.addEventListener("keyup", onKeyUp);
 
+		Globals.gameState = GameStates.HIGHSCORE;
+		screen.setScreen("highscoreScreen");
+
+		// set screen to introduction
+		//screen.setScreen("introScreen");
 		// change state of game
-		Globals.gameState = GameStates.INTRO;
+		//Globals.gameState = GameStates.INTRO;
 		console.log(">> intro gameScreen ready");
 
 
@@ -182,6 +184,12 @@
 			else if (e.keyCode == 37) leftKey = false;
 			else if (e.keyCode == 39) rightKey = false;
 			else if (e.keyCode == 32) fireKey = false;
+		} else if (Globals.gameState == GameStates.HIGHSCORE) {			
+			if (e.keyCode == 40) screen.moveSelector("down");
+			else if (e.keyCode == 38) screen.moveSelector("up");
+			else if (e.keyCode == 37) screen.moveSelector("left");
+			else if (e.keyCode == 39) screen.moveSelector("right");
+			else if (e.keyCode == 32) screen.selectInitial();
 		}
 		e.preventDefault();
 	}
@@ -268,4 +276,4 @@ var GameStates = {
 	PLAYING:1,
 	HIGHSCORE:2,
 	GAMEOVER:3
-}
+};

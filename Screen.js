@@ -30,17 +30,17 @@ var Screen = function() {
     stage.addChild(backgroundLayer);
 
     // setup loading screen
-    var loadingScreen = new createjs.Container();
-    var loadingScreenSprite = assetManager.getSprite("ui","loadScreen");
-    loadingScreen.addChild(loadingScreenSprite);
+    var loadScreen = new createjs.Container();
+    var loadScreenSprite = assetManager.getSprite("ui","loadScreen");
+    loadScreen.addChild(loadScreenSprite);
     // add progress bar to loading screen
     var progressBarBack = new createjs.Shape();
     progressBarBack.alpha = 0.3;
     progressBarBack.graphics.beginFill("#FFFFFF").drawRect(315,425,178,10);
-    loadingScreen.addChild(progressBarBack);
+    loadScreen.addChild(progressBarBack);
     progressBar = new createjs.Shape();
     progressBar.graphics.beginFill("#FFFFFF").drawRect(315,425,0,10);
-    loadingScreen.addChild(progressBar);
+    loadScreen.addChild(progressBar);
 
     // setup intro screen
     var introScreen = new createjs.Container();
@@ -58,8 +58,26 @@ var Screen = function() {
 
     // setup highscore screen
     var highscoreScreen = new createjs.Container();
-    var ghighscoreScreenSprite = assetManager.getSprite("ui","highscoreScreen");
-    highscoreScreen.addChild(ghighscoreScreenSprite);
+    var highscoreScreenSprite = assetManager.getSprite("ui","highscoreScreen");
+    highscoreScreen.addChild(highscoreScreenSprite);
+    var selector = assetManager.getSprite("ui","selector");
+    selector.x = 102;
+    selector.y = 344;
+    highscoreScreen.addChild(selector);
+    var txtCurrentScore = new createjs.BitmapText("",assetManager.getSpriteSheet("ui"));
+    txtCurrentScore.letterSpacing = 4;
+    txtCurrentScore.y = 220;
+    highscoreScreen.addChild(txtCurrentScore);
+    var txtInitials = new createjs.BitmapText("",assetManager.getSpriteSheet("ui"));
+    txtInitials.letterSpacing = 8;
+    txtInitials.y = 585;
+    highscoreScreen.addChild(txtInitials);
+    // 2D array of characters for entering initials for highscore
+    var charList = [["A","B","C","D","E","F","G","H","I","J","K"],
+                    ["L","M","N","O","P","Q","R","S","T","U","V"],
+                    ["W","X","Y","Z","","","","","","-1","1"]];
+    var rowIndex = 0;
+    var charIndex = 0;
 
     // setup game screen
     var gameScreen = new createjs.Container();
@@ -146,6 +164,10 @@ var Screen = function() {
         txtSpecialAmmo.text = String(specialAmmo);
     }
 
+    function centerMe(displayObj) {
+        displayObj.x = (stage.canvas.width/2) - (displayObj.getBounds().width/2);
+    }
+
     // --------------------------------------------------------- public methods
     this.startMe = function(gamePadPresent) {        
         // initialization
@@ -157,9 +179,6 @@ var Screen = function() {
         lives = Globals.gameConstants.PLAYER_START_LIVES;
         power = Globals.gameConstants.PLAYER_START_POWER;
         gamePad = gamePadPresent;
-        if (gamePad) {
-            prompt.gotoAndStop("startButton");
-        }
         refreshScoreBoard();
 
         // drop default startup shapes
@@ -170,16 +189,27 @@ var Screen = function() {
     };
 
     this.setScreen = function(which) {
-        stage.removeChild(loadingScreen);
+        stage.removeChild(loadScreen);
         stage.removeChild(introScreen);
         stage.removeChild(gameScreen);
         stage.removeChild(gameoverScreen);
+        stage.removeChild(highscoreScreen);
 
-        if (which == "loadScreen") stage.addChild(loadingScreen);
-        else if (which == "introScreen") stage.addChild(introScreen);
-        else if (which == "gameScreen") stage.addChild(gameScreen);
+        // add corresponding screen container and setup
+        if (which == "loadScreen") stage.addChild(loadScreen);
+        else if (which == "introScreen") {
+            prompt.gotoAndStop("spacebar");
+            if (gamePad) prompt.gotoAndStop("startButton");
+            stage.addChild(introScreen);
+        } else if (which == "gameScreen") stage.addChild(gameScreen);
         else if (which == "gameoverScreen") stage.addChild(gameoverScreen);
-
+        else if (which == "highscoreScreen") {
+            rowIndex = 0;
+            charIndex = 0;
+            txtCurrentScore.text = String(score);
+            centerMe(txtCurrentScore);
+            stage.addChild(highscoreScreen);
+        }
     };
 
     this.stopMe = function() {
@@ -190,6 +220,7 @@ var Screen = function() {
         shapes = [];
     };
 
+    // loading methods
     this.updateProgress = function(){
         // update progress bar
 		progressBar.graphics.clear();
@@ -197,6 +228,77 @@ var Screen = function() {
 		stage.update();
     };
 
+    // highscore methods
+    this.moveSelector = function(which) {
+        switch(which) {
+            case "right":
+                selector.x+=60;
+                charIndex++;
+                if (charIndex > 10) {
+                    selector.x = 102;
+                    charIndex = 0;
+                }
+                if (charList[rowIndex][charIndex] === "") {
+                    selector.x+=300;
+                    charIndex+=5;
+                }
+                break;
+            case "left":
+                selector.x-=60;
+                charIndex--;
+                if (charIndex < 0) {
+                    selector.x = 702;
+                    charIndex = 10;
+                }
+                if (charList[rowIndex][charIndex] === "") {
+                    selector.x-=300;
+                    charIndex-=5;
+                }
+                break;
+            case "up":
+                selector.y-=70;
+                rowIndex--;
+                // off top - move back to bottom
+                if (rowIndex < 0) {
+                    selector.y = 484;
+                    rowIndex = 2;
+                }
+                if (charList[rowIndex][charIndex] === "") {
+                    selector.y-=70;
+                    rowIndex = 1;
+                }
+                break;
+            case "down":
+                selector.y+=70;
+                rowIndex++;
+                // off bottom - scroll back to top
+                if ((rowIndex > 2) || (charList[rowIndex][charIndex] === "")) {
+                    selector.y = 344;
+                    rowIndex = 0;
+                }
+                break;
+        }
+    };
+
+    this.selectInitial = function(){
+        // get selected initial character
+        var char = charList[rowIndex][charIndex];
+        var initials = txtInitials.text;
+
+        if (char == "1") {
+            console.log("!!! submit initials !!!");
+
+        } else if ((char == "-1") && (initials.length > 0)) {
+            txtInitials.text = initials.substring(0, initials.length - 1);
+            // center initials on stage
+            if (txtInitials.text != "") centerMe(txtInitials);
+        } else if (initials.length < 3) {
+            txtInitials.text += char;
+            centerMe(txtInitials);
+        }
+    };
+
+    // game methods
     this.setLives = function(amount){
         lives=amount;
         refreshScoreBoard();
@@ -219,7 +321,6 @@ var Screen = function() {
     };
 
     this.updateMe = function() {
-
         // move all background shapes
         for (var n=0; n<shapes.length; n++){
             var shape = shapes[n];
