@@ -95,7 +95,9 @@ var Player = function(){
 
     this.stopMe = function() {
         stage.removeChild(sprite);
-
+        sprite.stop();
+        // return this object to the object pool
+		objectPool.dispose(this);
     };
 
     this.resetMe = function() {

@@ -15,30 +15,30 @@ var GameScreen = function() {
     // add scoreboard sprites and bitmaptext
     var txtScore = new createjs.BitmapText("0",assetManager.getSpriteSheet("charset80"));
     txtScore.letterSpacing = 4;
-    txtScore.x = 8;
+    txtScore.x = 7;
     screen.addChild(txtScore);
 
     var txtHighScore = new createjs.BitmapText("0",assetManager.getSpriteSheet("charset30"));
     txtHighScore.letterSpacing = 2;
     txtHighScore.x = 15;
-    txtHighScore.y = 90;
+    txtHighScore.y = 94;
     screen.addChild(txtHighScore);
 
     var iconLives = assetManager.getSprite("ui","iconLives");
     iconLives.x = 20;
-    iconLives.y = 135;
+    iconLives.y = 139;
     screen.addChild(iconLives);
 
     var txtLives = new createjs.BitmapText("0",assetManager.getSpriteSheet("charset30"));
     txtLives.x = 70;
-    txtLives.y = 125;
+    txtLives.y = 129;
     screen.addChild(txtLives);
 
     var powerBlocks = [];
     for (var n=0; n<Globals.gameConstants.PLAYER_MAX_POWER; n++) {
         var block = assetManager.getSprite("ui","iconPower");
         block.x = 18 + (18 * n);
-        block.y = 170;
+        block.y = 174;
         screen.addChild(block);
         powerBlocks.push(block);
     }
@@ -47,7 +47,7 @@ var GameScreen = function() {
     txtSpecialAmmo.scaleX = 0.5;
     txtSpecialAmmo.scaleY = 0.5;
     txtSpecialAmmo.x = 18;
-    txtSpecialAmmo.y = 150;
+    txtSpecialAmmo.y = 154;
 
     // --------------------------------------------------------- private methods
     function refreshScoreBoard() {

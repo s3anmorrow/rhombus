@@ -28,9 +28,10 @@ var ScreenManager = function() {
     var highScoreScreen = null;
 
     // setup gameover screen
-    var gameoverScreen = new createjs.Container();
-    var gameoverScreenSprite = assetManager.getSprite("ui","gameoverScreen");
-    gameoverScreen.addChild(gameoverScreenSprite);
+    var gameOverScreen = new createjs.Container();
+    this.gameOver = gameOverScreen;
+    var gameOverScreenSprite = assetManager.getSprite("ui","gameOverScreen");
+    gameOverScreen.addChild(gameOverScreenSprite);
     
     // --------------------------------------------------------- private methods
     function dropShape(dropY) {
@@ -79,13 +80,16 @@ var ScreenManager = function() {
         introScreen.hideMe();
         gameScreen.hideMe();
         highScoreScreen.hideMe();
-        stage.removeChild(gameoverScreen);
+        stage.removeChild(gameOverScreen);
 
         // add corresponding screen container and setup
         if (which == "introScreen") introScreen.showMe();
         else if (which == "gameScreen") gameScreen.showMe();
         else if (which == "highScoreScreen") highScoreScreen.showMe(gameScreen.getScore());
-        else if (which == "gameoverScreen") stage.addChild(gameoverScreen);
+        else if (which == "gameOverScreen") {
+            gameScreen.showMe();
+            stage.addChild(gameOverScreen);
+        }
     };
 
     this.stopBackground = function() {

@@ -10,6 +10,7 @@
 
 	// TODO: add aircraft carrier release boss (Turret that releases shapes instead of bullets!)
 	// TODO: implement lookup tables for Trig
+	// TODO: check all getBounds() references - processor heavy
 
 	// game variables
 	var stage = null;
@@ -42,8 +43,10 @@
 		// start the waves
 		waveFactory.startMe();
 
-		player = objectPool.getPlayer();
+		if (player == null) player = objectPool.getPlayer();
+		player.resetMe();
 		player.startMe();
+		// !!!!!!!!!! TESTING
 		player.setWeapon("double");
 
 
@@ -63,16 +66,14 @@
 	}
 
 	function resetGame() {
-		/*
 		// scroll through all used elements and return them to the objectPool (with exceptions)
 		var length = updateList.length;
 		var object = null;
 		for (var n=0; n<length; n++) {
 			object = updateList[n];
 			// remove everything except the clouds
-			if ((object !== null) && (!(object instanceof Cloud))) object.removeMe();
+			if (object !== null) object.stopMe();
 		}
-		*/
 
 		Globals.gameState = GameStates.INTRO;
 	}
@@ -191,6 +192,10 @@
 			else if (e.keyCode == 37) screenManager.highScore.moveSelector("left");
 			else if (e.keyCode == 39) screenManager.highScore.moveSelector("right");
 			else if (e.keyCode == 32) screenManager.highScore.selectInitial();
+		} else if (Globals.gameState == GameStates.GAMEOVER) {
+			// !!!!!!!!!!!!!!! check if highscore
+			resetGame();
+			if (e.keyCode == 32) screenManager.setScreen("introScreen");
 		}
 		e.preventDefault();
 	}
@@ -212,9 +217,10 @@
 			case "bigbossKilled":
 				screenManager.game.adjustPoints(e.points);
 				break;
-			
-
-
+			case "gameOver":
+				Globals.gameState = GameStates.GAMEOVER;
+				screenManager.setScreen("gameOverScreen");
+				break;
 		}
 	}
 
