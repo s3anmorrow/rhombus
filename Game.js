@@ -23,7 +23,7 @@
 	// array of all game objects currently in use and thus need update() called in ticker
 	var updateList = null;
 	// game objects
-	var screen = null;
+	var screenManager = null;
 	var assetManager = null;
 	var gamepadManager = null;
 	var objectPool = null;
@@ -36,7 +36,7 @@
 	// ------------------------------------------------------------ private methods
 	function startGame() {
 		// initialization
-		screen.setScreen("gameScreen");
+		screenManager.setScreen("gameScreen");
 
 
 		// start the waves
@@ -102,6 +102,7 @@
 		// construct gamepadManager
 		gamepadManager = new GamepadManager();
 		gamepadManager.setup(gamepadManifest);
+		Globals.gamepadManager = gamepadManager;
 
 		// listen for loss of focus on browser and pause game
 		window.addEventListener("blur", onPause);
@@ -119,13 +120,12 @@
 		// check if UI spritesheet has loaded completely - if so display loading screen
 		if (e.id === "ui") {
 			// display preloading message
-			screen = new Screen();
-			screen.setScreen("loadScreen");
-			screen.startMe();
+			screenManager = new ScreenManager();
+			screenManager.startBackground();
 			Globals.gameState = GameStates.SETUP;
 		}
 
-		if (screen !== null) screen.updateProgress();
+		if (screenManager !== null) screenManager.load.updateProgress();
 	}
 
 	function onSetup() {
@@ -149,15 +149,16 @@
 		document.addEventListener("keydown", onKeyDown);
 		document.addEventListener("keyup", onKeyUp);
 
-		Globals.gameState = GameStates.HIGHSCORE;
-		screen.setScreen("highscoreScreen");
+		//Globals.gameState = GameStates.HIGHSCORE;
+		//screenManager.setScreen("highScoreScreen");
+
+		// now that all assets are loaded - start screenManager
+		screenManager.startMe();
 
 		// set screen to introduction
-		//screen.setScreen("introScreen");
-		// change state of game
-		//Globals.gameState = GameStates.INTRO;
+		screenManager.setScreen("introScreen");
+		Globals.gameState = GameStates.INTRO;
 		console.log(">> intro gameScreen ready");
-
 
 		// ???????????????? temporary start
 		//startGame();
@@ -185,11 +186,11 @@
 			else if (e.keyCode == 39) rightKey = false;
 			else if (e.keyCode == 32) fireKey = false;
 		} else if (Globals.gameState == GameStates.HIGHSCORE) {			
-			if (e.keyCode == 40) screen.moveSelector("down");
-			else if (e.keyCode == 38) screen.moveSelector("up");
-			else if (e.keyCode == 37) screen.moveSelector("left");
-			else if (e.keyCode == 39) screen.moveSelector("right");
-			else if (e.keyCode == 32) screen.selectInitial();
+			if (e.keyCode == 40) screenManager.highScore.moveSelector("down");
+			else if (e.keyCode == 38) screenManager.highScore.moveSelector("up");
+			else if (e.keyCode == 37) screenManager.highScore.moveSelector("left");
+			else if (e.keyCode == 39) screenManager.highScore.moveSelector("right");
+			else if (e.keyCode == 32) screenManager.highScore.selectInitial();
 		}
 		e.preventDefault();
 	}
@@ -200,16 +201,16 @@
 		// what type of event has occurred?
 		switch (e.id){
 			case "shapeKilled":
-				screen.adjustPoints(e.points);
+				screenManager.game.adjustPoints(e.points);
 				break;
 			case "playerHit":
-				screen.setPower(e.power);
+				screenManager.game.setPower(e.power);
 				break;
 			case "playerKilled":
-				screen.setLives(e.lives);
+				screenManager.game.setLives(e.lives);
 				break;
 			case "bigbossKilled":
-				screen.adjustPoints(e.points);
+				screenManager.game.adjustPoints(e.points);
 				break;
 			
 
@@ -259,8 +260,8 @@
 			waveFactory.updateMe();
 			player.updateMe();
 		}
-		// screen needs updating for all gameGameStates except initalization
-		if (Globals.gameState !== GameStates.INITIALIZE) screen.updateMe();		
+		// screenManager needs updating for all gameGameStates except initalization
+		if (Globals.gameState !== GameStates.INITIALIZE) screenManager.updateMe();		
 
 		// STEP III : RENDERING
 		// update the stage!

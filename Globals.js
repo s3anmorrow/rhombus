@@ -3,6 +3,7 @@ var Globals = {
 	stage:null,
     assetManager:null,
     objectPool:null,
+	gamepadManager:null,
 	// lookup tables for trig in Globals object for global access
 	sinTable:[],
 	cosTable:[],

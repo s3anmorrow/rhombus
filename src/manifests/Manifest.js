@@ -9,6 +9,22 @@ var gameManifest = [
         id:"ui"
     }, 
     {
+        src:"lib/charset30.json",
+        forSpritesheet:"charset30"
+    },
+    {
+        src:"lib/charset30.png",
+        id:"charset30"
+    },
+    {
+        src:"lib/charset80.json",
+        forSpritesheet:"charset80"
+    },
+    {
+        src:"lib/charset80.png",
+        id:"charset80"
+    },
+    {
         src:"lib/assets.json",
         forSpritesheet:"assets"
     },
