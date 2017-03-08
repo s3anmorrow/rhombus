@@ -8,7 +8,7 @@ var IntroScreen = function() {
     var screenSprite = assetManager.getSprite("ui","introScreen");
     screen.addChild(screenSprite);
     var prompt = assetManager.getSprite("ui","spacebar");
-    prompt.x = 180;
+    prompt.x = 240;
     prompt.y = 600;
     screen.addChild(prompt);
 
@@ -34,7 +34,7 @@ var IntroScreen = function() {
 
         dropY+=52;
     }
-    highScores.x = 180;
+    highScores.x = 240;
     highScores.y = 318;
     screen.addChild(highScores);
 

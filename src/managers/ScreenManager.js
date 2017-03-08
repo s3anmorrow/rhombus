@@ -78,7 +78,7 @@ var ScreenManager = function() {
 
     this.setScreen = function(which) {
         introScreen.hideMe();
-        gameScreen.hideMe();
+        if (which != "gameOverScreen") gameScreen.hideMe();
         highScoreScreen.hideMe();
         stage.removeChild(gameOverScreen);
 
@@ -86,10 +86,7 @@ var ScreenManager = function() {
         if (which == "introScreen") introScreen.showMe();
         else if (which == "gameScreen") gameScreen.showMe();
         else if (which == "highScoreScreen") highScoreScreen.showMe(gameScreen.getScore());
-        else if (which == "gameOverScreen") {
-            gameScreen.showMe();
-            stage.addChild(gameOverScreen);
-        }
+        else if (which == "gameOverScreen") stage.addChild(gameOverScreen);
     };
 
     this.stopBackground = function() {

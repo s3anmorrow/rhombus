@@ -37,6 +37,7 @@ var Player = function(){
 
     // private game variables
     var fireCounter = 0;
+    var weaponType = "";
     var weaponData = null;
     // get sprite for Player
     var sprite = assetManager.getSprite("assets","playerEntrance");
@@ -55,6 +56,7 @@ var Player = function(){
     // --------------------------------------------------------- get/set methods
     this.setWeapon = function(type){
         // update bullet data
+        weaponType = type;
         weaponData = gameConstants.PLAYER_WEAPONS[type];
     };
 
@@ -207,10 +209,11 @@ var Player = function(){
                 if (((weaponData.alternateFire) && (firingGunIndex == n)) || (!weaponData.alternateFire)) {
                     // pluck bullet out of object pool and release
                     var bullet = objectPool.getBullet();
-                    bullet.startMe(this, 
+                    bullet.startMe(weaponType, this, 
                                 weaponData.frame, 
                                 weaponData.speed, 
                                 weaponData.damage,
+                                weaponData.invincible,
                                 sprite.x + gunPoints[n].x, 
                                 sprite.y + gunPoints[n].y, 
                                 gunPoints[n].r);
@@ -223,8 +226,10 @@ var Player = function(){
 
             // reset fire frame counter
             fireCounter = 0;
+            // if not set to auto set fireCounter one past frequency so it never happens again
+            if (!weaponData.auto) fireCounter = weaponData.freq + 1;
         }
-        fireCounter++;
+        if (weaponData.auto) fireCounter++;
     };
 
     this.cease = function() {

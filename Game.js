@@ -7,10 +7,13 @@
 	// TODO: powerups and new guns (invisible)
 	// TODO: add invicibility to player
 	// TODO: add shield feature	
+	// TODO: bug with de-acceleartion out of bounds
+	// TODO: bounce bullet
 
 	// TODO: add aircraft carrier release boss (Turret that releases shapes instead of bullets!)
 	// TODO: implement lookup tables for Trig
-	// TODO: check all getBounds() references - processor heavy
+	// TODO: check all getBounds() references - processor heavy (MoveFunctions)
+	// TODO: add loading screen while all the JS loads before preload kicks in
 
 	// game variables
 	var stage = null;
@@ -47,7 +50,7 @@
 		player.resetMe();
 		player.startMe();
 		// !!!!!!!!!! TESTING
-		player.setWeapon("double");
+		player.setWeapon("laser");
 
 
 		// game event listener for all events that control gameplay
@@ -162,7 +165,7 @@
 		console.log(">> intro gameScreen ready");
 
 		// ???????????????? temporary start
-		//startGame();
+		startGame();
 
 	}
 

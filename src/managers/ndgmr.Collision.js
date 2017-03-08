@@ -65,10 +65,12 @@ this.ndgmr = this.ndgmr || {};
         imageData1, imageData2,
         pixelIntersection;
 
-    areObjectsCloseEnough = _collisionDistancePrecheck(bitmap1,bitmap2);
-    if ( !areObjectsCloseEnough ) {
-      return false;
-    }
+    //this is currently not working correctly if one of the objects is rotated
+    //calculating a bounding-box as precheck won't enhance performance here.
+    //areObjectsCloseEnough = _collisionDistancePrecheck(bitmap1,bitmap2);
+    //if ( !areObjectsCloseEnough ) {
+    //  return false;
+    //}
 
     intersection = checkRectCollision(bitmap1,bitmap2);
     if ( !intersection ) {
@@ -80,9 +82,9 @@ this.ndgmr = this.ndgmr || {};
 
     //setting the canvas size
     collisionCanvas.width  = intersection.width;
-    collisionCanvas.height = intersection.height;
+    collisionCanvas.height = intersection.height; 
     collisionCanvas2.width  = intersection.width;
-    collisionCanvas2.height = intersection.height;
+    collisionCanvas2.height = intersection.height; 
 
     imageData1 = _intersectingImagePart(intersection,bitmap1,collisionCtx,1);
     imageData2 = _intersectingImagePart(intersection,bitmap2,collisionCtx2,2);
@@ -104,6 +106,7 @@ this.ndgmr = this.ndgmr || {};
   }
   ndgmr.checkPixelCollision = checkPixelCollision;
 
+  //this is currently not working correctly if one of the objects is rotated
   var _collisionDistancePrecheck = function(bitmap1,bitmap2) {
     var ir1,ir2,b1,b2;
 
@@ -118,8 +121,8 @@ this.ndgmr = this.ndgmr || {};
          : bitmap2.spriteSheet.getFrame(bitmap2.currentFrame).rect;
     
     //precheck if objects are even close enough
-    return ( Math.abs(b2.x-b1.x) < ir2.width * Math.abs(bitmap2.scaleX) +ir1.width * Math.abs(bitmap1.scaleX)
-          && Math.abs(b2.y-b1.y) < ir2.height* Math.abs(bitmap2.scaleY) +ir1.height* Math.abs(bitmap2.scaleY) )
+    return ( Math.abs(b2.x-b1.x) < ir2.width *bitmap2.scaleX+ir1.width *bitmap1.scaleX
+          && Math.abs(b2.y-b1.y) < ir2.height*bitmap2.scaleY+ir1.height*bitmap2.scaleY )
   }
 
   var _intersectingImagePart = function(intersetion,bitmap,ctx,i) {
@@ -129,13 +132,29 @@ this.ndgmr = this.ndgmr || {};
       image = bitmap.image;
     } else if ( bitmap instanceof createjs.Sprite ) {
     frame = bitmap.spriteSheet.getFrame( bitmap.currentFrame )
-      frameName = frame.image.src + ':' +
-                  frame.rect.x + ':' + frame.rect.y + ':' +
-                  frame.rect.width  + ':' + frame.rect.height;// + ':' + frame.rect.regX  + ':' + frame.rect.regY
+      frameName = frame.image.src + ':' + 
+                  frame.rect.x + ':' + frame.rect.y + ':' + 
+                  frame.rect.width  + ':' + frame.rect.height;// + ':' + frame.rect.regX  + ':' + frame.rect.regY 
       if ( cachedBAFrames[frameName] ) {
         image = cachedBAFrames[frameName];
       } else {
         cachedBAFrames[frameName] = image = createjs.SpriteSheetUtils.extractFrame(bitmap.spriteSheet,bitmap.currentFrame);
+      }
+    } else if ( bitmap instanceof createjs.MovieClip ) {
+      var mBitmap;
+      if(bitmap.instance.instance != undefined) {
+        mBitmap = bitmap.instance.instance; 
+      } else if (bitmap.instance != undefined) {		  
+        mBitmap = bitmap.instance; 
+      }
+      frame = mBitmap.spriteSheet.getFrame( mBitmap.currentFrame )
+      frameName = frame.image.src + ':' + 
+                  frame.rect.x + ':' + frame.rect.y + ':' + 
+                  frame.rect.width  + ':' + frame.rect.height;// + ':' + frame.rect.regX  + ':' + frame.rect.regY 
+      if ( cachedBAFrames[frameName] ) {
+        image = cachedBAFrames[frameName];
+      } else {
+        cachedBAFrames[frameName] = image = createjs.SpriteSheetUtils.extractFrame(mBitmap.spriteSheet,mBitmap.currentFrame);
       }
     }
 
@@ -254,7 +273,7 @@ this.ndgmr = this.ndgmr || {};
       if ( bounds.y == Infinity ) bounds.y = 0;
       if ( bounds.x2 == Infinity ) bounds.x2 = 0;
       if ( bounds.y2 == Infinity ) bounds.y2 = 0;
-
+      
       bounds.width = bounds.x2 - bounds.x;
       bounds.height = bounds.y2 - bounds.y;
       delete bounds.x2;

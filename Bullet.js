@@ -16,8 +16,10 @@ var Bullet = function() {
 
 	// private variables
 	// state of bullet
+	var type = "";
 	var state = 0;
 	var damage = 0;
+	var invincible = false;
 	var canvas = Globals.stage.canvas;
 	var stageLeft = -10;
 	var stageRight = canvas.width + 10;
@@ -44,9 +46,11 @@ var Bullet = function() {
 	
 
 	// ------------------------------------------------------ public methods
-	this.startMe = function(myOwner, spriteFrame, speed, myDamage, x, y, r) {
+	this.startMe = function(myType, myOwner, spriteFrame, speed, myDamage, myInvincible, x, y, r) {
 		// initialization
+		type = myType;
 		owner = myOwner;
+		invincible = myInvincible;
 		//ownerType = owner.type;
 
 		state = BulletState.MOVING;
@@ -55,6 +59,12 @@ var Bullet = function() {
 		xDisplace = Globals.cosTable[r] * speed;
 		yDisplace = Globals.sinTable[r] * speed;
 		sprite.gotoAndStop(spriteFrame);
+		if (type == "laser") {
+			sprite.play();
+			sprite.addEventListener("animationend",function(){
+				_this.stopMe();
+			});
+		}
 		sprite.x = x;
 		sprite.y = y;
 		sprite.rotation = r;
@@ -65,7 +75,7 @@ var Bullet = function() {
 		else createjs.Sound.play("BlueFire");
 		*/
 
-		// place bullet on displaylist behind the owner
+		// place bullet below the owner on displaylist
 		var index = stage.getChildIndex(owner.sprite);
 		stage.addChildAt(sprite, index);
 	};
@@ -104,9 +114,14 @@ var Bullet = function() {
 		// STEP I : Bullet Behaviour
 		if (state == BulletState.MOVING) {
 
-			// move bullet x and y position
-			sprite.x += xDisplace;
-			sprite.y += yDisplace;			
+			// different bullet type behaviours
+			if (type == "laser") {
+				sprite.x = owner.sprite.x;
+			} else {
+				// move bullet x and y position
+				sprite.x += xDisplace;
+				sprite.y += yDisplace;			
+			}
 
 			// check if bullet off the screen
 			if ((sprite.y > stageBottom) || ((sprite.x < stageLeft) || (sprite.x > stageRight) || (sprite.y < stageTop))) {
@@ -123,7 +138,7 @@ var Bullet = function() {
 					var shape = shapePool[n];
 					if ((shape.used) && (shape.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, shape.sprite, 0, true))) {
 						shape.killMe(damage,true);
-						this.killMe(true);
+						if (!invincible) this.killMe(true);
 					}
 				}
 
@@ -133,12 +148,13 @@ var Bullet = function() {
 					var turret = turretPool[n];
 					if ((turret.used) && (turret.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, turret.sprite, 0, true))) {
 						turret.killMe(damage);
-						this.killMe(true);
+						if (!invincible) this.killMe(true);
 					}
 				}
 
+			// Shape or Turret's bullet
 			} else if ((owner.constructor.name == "Shape") || (owner.constructor.name == "Bigboss"))  {
-				// Shape's bullet
+				
 				if ((player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
 					player.hitMe();
 					this.killMe(true);

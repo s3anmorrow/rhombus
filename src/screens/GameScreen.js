@@ -44,10 +44,9 @@ var GameScreen = function() {
     }
 
     var txtSpecialAmmo = new createjs.BitmapText("0",assetManager.getSpriteSheet("charset30"));
-    txtSpecialAmmo.scaleX = 0.5;
-    txtSpecialAmmo.scaleY = 0.5;
     txtSpecialAmmo.x = 18;
-    txtSpecialAmmo.y = 154;
+    txtSpecialAmmo.y = 190;
+    screen.addChild(txtSpecialAmmo);
 
     // --------------------------------------------------------- private methods
     function refreshScoreBoard() {
