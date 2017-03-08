@@ -50,7 +50,7 @@
 		player.resetMe();
 		player.startMe();
 		// !!!!!!!!!! TESTING
-		player.setWeapon("laser");
+		player.setWeapon("heavy");
 
 
 		// game event listener for all events that control gameplay

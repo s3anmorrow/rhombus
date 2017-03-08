@@ -100,8 +100,8 @@ var Shape = function(){
         // remove hitpoints according to bullet damage
         hitPoints-=damage;
 
-        // show damage?
-        if (hitPoints <= halfHitPoints) {
+        // show damage if not done already?
+        if ((hitPoints <= halfHitPoints) && (sprite.currentAnimation.indexOf("Damage") == -1)) {
             type = type + "Damage";
             sprite.gotoAndStop(type);
         }
@@ -120,6 +120,13 @@ var Shape = function(){
             sprite.addEventListener("animationend",function(e){
                 e.remove();
                 _this.stopMe();
+            });
+        } else {
+            // play damage explosion
+            if (sprite.currentAnimation != (type + "Hit")) sprite.gotoAndPlay(type + "Hit");
+            sprite.addEventListener("animationend", function(e) {
+                e.remove();
+                sprite.gotoAndStop(type);
             });
         }
     };

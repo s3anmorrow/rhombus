@@ -3,12 +3,11 @@ var levelManifest = [
 
         
         // LEVEL 1
-        /*
         {type:"circle", 
-            wave:{count:5, spaced:20},
+            wave:{count:1, spaced:20},
             //settings:{x:400, y:800, hp:3, points:100, shooters:[{index:0, freq:100, bulletType:1}]}, 
             settings:{x:400, y:800, hp:3, points:100, shooters:[]}, 
-            movement:{type:"up",speed:4},
+            movement:{type:"upAndStop",speed:4, stopAt:300},
             time:5
         }/*,
         {type:"pentagon", 

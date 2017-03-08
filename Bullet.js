@@ -64,9 +64,12 @@ var Bullet = function() {
 		sprite.gotoAndStop(spriteFrame);
 		if (type == "laser") {
 			sprite.play();
-			sprite.addEventListener("animationend",function(){
+			sprite.addEventListener("animationend",function(e){
+				e.remove();
 				_this.stopMe();
 			});
+		} else if (type == "bounce") {
+			sprite.play();
 		}
 		sprite.x = x;
 		sprite.y = y;
