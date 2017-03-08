@@ -61,7 +61,7 @@ var Globals = {
 				frame:"rapidBullet"				
 			},
 			"laser":{
-				freq:1,
+				freq:0,
 				gunPoints:[{x:0,y:-28,r:270}],
 				alternateFire:false,
 				auto:false,
@@ -71,14 +71,14 @@ var Globals = {
 				frame:"laserBullet"				
 			},
 			"bounce":{
-				freq:1,
-				gunPoints:[{x:0,y:-20,r:270}],
-				alternateFire:false,
-				auto:true,
-				speed:10,
+				freq:0,
+				gunPoints:[{x:0,y:-20,r:270},{x:-20,y:-5,r:260},{x:20,y:-5,r:280}],
+				alternateFire:true,
+				auto:false,
+				speed:6,
 				damage:0.5,
-				invincible:false,
-				frame:"rapidBullet"				
+				invincible:true,
+				frame:"bounceBullet"				
 			}
 		}
 	},

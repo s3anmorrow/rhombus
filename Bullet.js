@@ -20,6 +20,8 @@ var Bullet = function() {
 	var state = 0;
 	var damage = 0;
 	var invincible = false;
+	var speed = 0;
+	var bounces = 0;
 	var canvas = Globals.stage.canvas;
 	var stageLeft = -10;
 	var stageRight = canvas.width + 10;
@@ -46,12 +48,13 @@ var Bullet = function() {
 	
 
 	// ------------------------------------------------------ public methods
-	this.startMe = function(myType, myOwner, spriteFrame, speed, myDamage, myInvincible, x, y, r) {
+	this.startMe = function(myType, myOwner, spriteFrame, mySpeed, myDamage, myInvincible, x, y, r) {
 		// initialization
 		type = myType;
 		owner = myOwner;
 		invincible = myInvincible;
-		//ownerType = owner.type;
+		speed = mySpeed;
+		bounces = 0;
 
 		state = BulletState.MOVING;
 		//distance = 0;
@@ -111,9 +114,9 @@ var Bullet = function() {
 	};
 
 	this.updateMe = function(){
-		// STEP I : Bullet Behaviour
 		if (state == BulletState.MOVING) {
 
+			// STEP I : Bullet Movement
 			// different bullet type behaviours
 			if (type == "laser") {
 				sprite.x = owner.sprite.x;
@@ -123,13 +126,28 @@ var Bullet = function() {
 				sprite.y += yDisplace;			
 			}
 
+			// STEP II : Bullet removal if off stage
 			// check if bullet off the screen
-			if ((sprite.y > stageBottom) || ((sprite.x < stageLeft) || (sprite.x > stageRight) || (sprite.y < stageTop))) {
-				this.killMe();
-				return;
+			if (type == "bounce") {
+				// make bullets bounce off edges of stage
+				if ((sprite.y > stageBottom) || (sprite.y < stageTop)) {
+					yDisplace = yDisplace * -1;
+					bounces++;
+				} else if ((sprite.x < stageLeft) || (sprite.x > stageRight)) {
+					xDisplace = xDisplace * -1;
+					bounces++;
+				}
+				sprite.x += xDisplace;
+				sprite.y += yDisplace;
+				if (bounces >= 3) this.stopMe();
+			} else {
+				if ((sprite.y > stageBottom) || ((sprite.x < stageLeft) || (sprite.x > stageRight) || (sprite.y < stageTop))) {
+					this.killMe();
+					return;
+				}
 			}
 
-			// STEP II : collision detection
+			// STEP III : collision detection
 			// Player's bullet
 			if (owner.constructor.name == "Player") {
 				// has the bullet collided with a shape?

@@ -19,7 +19,7 @@ var levelManifest = [
         },
         */
         
-        
+        /*
         {type:"bossHexagon", 
             wave:{count:1, spaced:4},
             settings:{x:-200, y:250, points:1000,
@@ -34,6 +34,7 @@ var levelManifest = [
             movement:{type:"rightAndStop", speed:2, stopAt:400, rotate:true},
             time:1
         }
+        */
         
 
         /*
