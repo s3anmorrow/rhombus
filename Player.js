@@ -9,6 +9,9 @@ var Player = function(){
     var hitEvent = new createjs.Event("gameEvent", true);
     hitEvent.id = "playerHit";
     hitEvent.power = 0;
+    var fireEvent = new createjs.Event("gameEvent", true);
+    fireEvent.id = "playerFired";
+    fireEvent.ammo = ammo;
     var gameOverEvent = new createjs.Event("gameEvent", true);
     gameOverEvent.id = "gameOver";
 
@@ -34,6 +37,7 @@ var Player = function(){
     var minY = gameConstants.PLAYER_MIN_Y;
     var maxY = gameConstants.PLAYER_MAX_Y;
     var firingGunIndex = 0;
+    var ammo = 0;
 
     // private game variables
     var fireCounter = 0;
@@ -58,6 +62,11 @@ var Player = function(){
         // update bullet data
         weaponType = type;
         weaponData = gameConstants.PLAYER_WEAPONS[type];
+        ammo = weaponData.ammo;
+
+        fireEvent.target = null;
+        fireEvent.ammo = ammo;
+        sprite.dispatchEvent(fireEvent);
     };
 
     this.getState = function() {
@@ -193,6 +202,21 @@ var Player = function(){
             sprite.y+=speedY;
         }    
 
+        // if player is decelerrating into a stage boundary, stop player dead
+        if (sprite.y < minY) {
+            sprite.y = minY;
+            speedY = 0;
+        } else if (sprite.y > maxY) {
+            sprite.y = maxY;
+            speedY = 0;
+        } else if (sprite.x < minX) {
+            sprite.x = minX;
+            speedX = 0;
+        } else if (sprite.x > maxX) {
+            sprite.x = maxX;
+            speedX = 0;
+        }
+
         // has the player finished decelerration?
         if ((speedX === 0) && (speedY === 0)) {
             state = PlayerState.IDLE;
@@ -217,6 +241,13 @@ var Player = function(){
                                 sprite.x + gunPoints[n].x, 
                                 sprite.y + gunPoints[n].y, 
                                 gunPoints[n].r);
+                    ammo--;
+                    // player just fired a bullet - dispatch event
+                    fireEvent.target = null;
+                    fireEvent.ammo = ammo;
+                    sprite.dispatchEvent(fireEvent);
+                    // out of ammo?
+                    if (ammo <= 0) this.setWeapon("single");
                 } 
             }
 

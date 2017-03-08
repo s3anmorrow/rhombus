@@ -14,7 +14,7 @@ var Globals = {
 		PLAYER_SPEED:12,
 		PLAYER_MIN_X:20,
 		PLAYER_MAX_X:780,
-		PLAYER_MIN_Y:400,
+		PLAYER_MIN_Y:40,
 		PLAYER_MAX_Y:750,
 		PLAYER_START_POWER:6,
 		PLAYER_MAX_POWER:6,
@@ -28,6 +28,7 @@ var Globals = {
 				speed:14,
 				damage:1,
 				invincible:false,
+				ammo:100,
 				frame:"bullet"
 			},
 			"double":{
@@ -37,6 +38,7 @@ var Globals = {
 				auto:true,
 				speed:20,
 				damage:1,
+				ammo:100,
 				invincible:false,
 				frame:"bullet"				
 			},
@@ -47,6 +49,7 @@ var Globals = {
 				auto:false,
 				speed:20,
 				damage:0.5,
+				ammo:100,
 				invincible:false,
 				frame:"spread"				
 			},
@@ -57,6 +60,7 @@ var Globals = {
 				auto:false,
 				speed:10,
 				damage:5,
+				ammo:10,
 				invincible:false,
 				frame:"bullet2"
 			},
@@ -67,6 +71,7 @@ var Globals = {
 				auto:true,
 				speed:10,
 				damage:0.3,
+				ammo:100,
 				invincible:false,
 				frame:"rapidBullet"				
 			},
@@ -77,6 +82,7 @@ var Globals = {
 				auto:false,
 				speed:0,
 				damage:0.2,
+				ammo:100,
 				invincible:true,
 				frame:"laserBullet"				
 			},
@@ -87,6 +93,7 @@ var Globals = {
 				auto:false,
 				speed:6,
 				damage:0.5,
+				ammo:100,
 				invincible:true,
 				frame:"bounceBullet"				
 			}

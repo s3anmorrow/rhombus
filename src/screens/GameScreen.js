@@ -8,7 +8,7 @@ var GameScreen = function() {
     var lives = 0;
     var highScore = 0;
     var power = 0;
-    var specialAmmo = 0;
+    var ammo = 0;
 
     // setup game screen
     var screen = new createjs.Container();
@@ -43,10 +43,11 @@ var GameScreen = function() {
         powerBlocks.push(block);
     }
 
-    var txtSpecialAmmo = new createjs.BitmapText("0",assetManager.getSpriteSheet("charset30"));
-    txtSpecialAmmo.x = 18;
-    txtSpecialAmmo.y = 190;
-    screen.addChild(txtSpecialAmmo);
+    var txtAmmo = new createjs.BitmapText("0",assetManager.getSpriteSheet("charset30"));
+    txtAmmo.letterSpacing = 2;
+    txtAmmo.x = 18;
+    txtAmmo.y = 190;
+    screen.addChild(txtAmmo);
 
     // --------------------------------------------------------- private methods
     function refreshScoreBoard() {
@@ -58,7 +59,7 @@ var GameScreen = function() {
             if (n <= power) powerBlocks[n-1].alpha = 1;
             else powerBlocks[n-1].alpha = 0.3;
         }
-        txtSpecialAmmo.text = String(specialAmmo);
+        txtAmmo.text = String(ammo);
     }
 
     // ------------------------------------------------- get/set methods
@@ -96,9 +97,8 @@ var GameScreen = function() {
         refreshScoreBoard();
     };
 
-    this.adjustSpecialAmmo = function(amount) {
-        if (amount === undefined) amount = -1;
-        specialAmmo+=amount;
+    this.setAmmo = function(amount) {
+        ammo=amount;
         refreshScoreBoard();
     };
 

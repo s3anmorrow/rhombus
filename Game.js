@@ -7,9 +7,7 @@
 	// TODO: powerups and new guns (invisible)
 	// TODO: add invicibility to player
 	// TODO: add shield feature	
-	// TODO: bug with de-acceleartion out of bounds
-	// TODO: bounce bullet
-
+	
 	// TODO: add aircraft carrier release boss (Turret that releases shapes instead of bullets!)
 	// TODO: implement lookup tables for Trig
 	// TODO: check all getBounds() references - processor heavy (MoveFunctions)
@@ -39,8 +37,11 @@
 
 	// ------------------------------------------------------------ private methods
 	function startGame() {
+		// game event listener for all events that control gameplay
+		stage.addEventListener("gameEvent", onGameEvent, true);
 		// initialization
 		screenManager.setScreen("gameScreen");
+
 
 
 		// start the waves
@@ -49,12 +50,13 @@
 		if (player == null) player = objectPool.getPlayer();
 		player.resetMe();
 		player.startMe();
+
 		// !!!!!!!!!! TESTING
 		player.setWeapon("heavy");
+		//screenManager.game.setAmmo(10);
+		// !!!!!!!!!!!!!!!!!!
 
-
-		// game event listener for all events that control gameplay
-		stage.addEventListener("gameEvent", onGameEvent, true);
+		
 		// change stage of game
 		Globals.gameState = GameStates.PLAYING;
 
@@ -217,6 +219,9 @@
 			case "playerKilled":
 				screenManager.game.setLives(e.lives);
 				break;
+			case "playerFired":
+				screenManager.game.setAmmo(e.ammo);
+				break;				
 			case "bigbossKilled":
 				screenManager.game.adjustPoints(e.points);
 				break;
