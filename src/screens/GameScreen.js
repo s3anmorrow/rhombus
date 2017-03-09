@@ -9,6 +9,7 @@ var GameScreen = function() {
     var highScore = 0;
     var power = 0;
     var ammo = 0;
+    var weaponType = "";
 
     // setup game screen
     var screen = new createjs.Container();
@@ -45,9 +46,14 @@ var GameScreen = function() {
 
     var txtAmmo = new createjs.BitmapText("0",assetManager.getSpriteSheet("charset30"));
     txtAmmo.letterSpacing = 2;
-    txtAmmo.x = 18;
+    txtAmmo.x = 50;
     txtAmmo.y = 190;
     screen.addChild(txtAmmo);
+
+    var weaponIcon = assetManager.getSprite("assets","iconSingle");
+    weaponIcon.x = 18;
+    weaponIcon.y = 196;
+    screen.addChild(weaponIcon);
 
     // --------------------------------------------------------- private methods
     function refreshScoreBoard() {
@@ -59,7 +65,12 @@ var GameScreen = function() {
             if (n <= power) powerBlocks[n-1].alpha = 1;
             else powerBlocks[n-1].alpha = 0.3;
         }
-        txtAmmo.text = String(ammo);
+
+        // update weapon icon
+        weaponIcon.gotoAndStop("iconWeapon_" + weaponType);
+        // is there infinite ammo?
+        if (ammo == -1) txtAmmo.text = "@";
+        else txtAmmo.text = String(ammo);
     }
 
     // ------------------------------------------------- get/set methods
@@ -93,12 +104,13 @@ var GameScreen = function() {
     };
 
     this.setPower = function(amount) {
-        power=amount;
+        power = amount;
         refreshScoreBoard();
     };
 
-    this.setAmmo = function(amount) {
-        ammo=amount;
+    this.setAmmo = function(amount, type) {
+        ammo = amount;
+        weaponType = type;
         refreshScoreBoard();
     };
 

@@ -66,6 +66,7 @@ var Player = function(){
 
         fireEvent.target = null;
         fireEvent.ammo = ammo;
+        fireEvent.weaponType = weaponType;
         sprite.dispatchEvent(fireEvent);
     };
 
@@ -241,13 +242,18 @@ var Player = function(){
                                 sprite.x + gunPoints[n].x, 
                                 sprite.y + gunPoints[n].y, 
                                 gunPoints[n].r);
-                    ammo--;
-                    // player just fired a bullet - dispatch event
-                    fireEvent.target = null;
-                    fireEvent.ammo = ammo;
-                    sprite.dispatchEvent(fireEvent);
-                    // out of ammo?
-                    if (ammo <= 0) this.setWeapon("single");
+                    
+                    // only track ammo used if not infinite ammo
+                    if (ammo != -1) {
+                        ammo--;
+                        // player just fired a bullet - dispatch event
+                        fireEvent.target = null;
+                        fireEvent.ammo = ammo;
+                        fireEvent.weaponType = weaponType;
+                        sprite.dispatchEvent(fireEvent);
+                        // out of ammo?
+                        if (ammo <= 0) this.setWeapon("single");
+                    }
                 } 
             }
 

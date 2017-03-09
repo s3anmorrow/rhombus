@@ -28,7 +28,7 @@ var Globals = {
 				speed:14,
 				damage:1,
 				invincible:false,
-				ammo:100,
+				ammo:-1,
 				frame:"bullet"
 			},
 			"double":{

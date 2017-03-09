@@ -52,7 +52,7 @@
 		player.startMe();
 
 		// !!!!!!!!!! TESTING
-		player.setWeapon("heavy");
+		player.setWeapon("spread");
 		//screenManager.game.setAmmo(10);
 		// !!!!!!!!!!!!!!!!!!
 
@@ -220,7 +220,7 @@
 				screenManager.game.setLives(e.lives);
 				break;
 			case "playerFired":
-				screenManager.game.setAmmo(e.ammo);
+				screenManager.game.setAmmo(e.ammo, e.weaponType);
 				break;				
 			case "bigbossKilled":
 				screenManager.game.adjustPoints(e.points);
