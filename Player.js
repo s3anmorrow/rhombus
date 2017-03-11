@@ -3,15 +3,15 @@ var Player = function(){
     // TODO: add invicibilty to player when first appears
 
     // custom events
-    var killedEvent = new createjs.Event("gameEvent", true);
-    killedEvent.id = "playerKilled";
-    killedEvent.lives = 0;
-    var hitEvent = new createjs.Event("gameEvent", true);
-    hitEvent.id = "playerHit";
-    hitEvent.power = 0;
-    var fireEvent = new createjs.Event("gameEvent", true);
-    fireEvent.id = "playerFired";
-    fireEvent.ammo = ammo;
+    var livesChangeEvent = new createjs.Event("gameEvent", true);
+    livesChangeEvent.id = "playerLivesChange";
+    livesChangeEvent.lives = 0;
+    var powerChangeEvent = new createjs.Event("gameEvent", true);
+    powerChangeEvent.id = "playerPowerChange";
+    powerChangeEvent.power = 0;
+    var ammoChangeEvent = new createjs.Event("gameEvent", true);
+    ammoChangeEvent.id = "playerAmmoChange";
+    ammoChangeEvent.ammo = ammo;
     var gameOverEvent = new createjs.Event("gameEvent", true);
     gameOverEvent.id = "gameOver";
 
@@ -22,11 +22,13 @@ var Player = function(){
     var gameConstants = Globals.gameConstants;
 
     // public property variables
-	var state = 0;
-    var distance = 0;
-    var power = Globals.gameConstants.PLAYER_START_POWER;
-    var lives = Globals.gameConstants.PLAYER_START_LIVES;
+    var power = gameConstants.PLAYER_START_POWER;
+    var lives = gameConstants.PLAYER_START_LIVES;
+    var state = 0;
 
+    // other private game variables
+    var firingGunIndex = 0;
+    var ammo = 0;
     // the current speeds of movement of player
     var speedX = 0;
     var targetSpeedX = gameConstants.PLAYER_SPEED;
@@ -36,16 +38,15 @@ var Player = function(){
     var maxX = gameConstants.PLAYER_MAX_X;
     var minY = gameConstants.PLAYER_MIN_Y;
     var maxY = gameConstants.PLAYER_MAX_Y;
-    var firingGunIndex = 0;
-    var ammo = 0;
-
-    // private game variables
     var fireCounter = 0;
     var weaponType = "";
     var weaponData = null;
+
     // get sprite for Player
     var sprite = assetManager.getSprite("assets","playerEntrance");
     sprite.stop();
+    var shieldSprite = assetManager.getSprite("assets","playerShield");
+    shieldSprite.stop();
     // open up sprite to be public property for ease of access
     this.sprite = sprite;
     // calculate spot where player stops when animating up into game
@@ -63,15 +64,39 @@ var Player = function(){
         weaponType = type;
         weaponData = gameConstants.PLAYER_WEAPONS[type];
         ammo = weaponData.ammo;
-
-        fireEvent.target = null;
-        fireEvent.ammo = ammo;
-        fireEvent.weaponType = weaponType;
-        sprite.dispatchEvent(fireEvent);
+        // dispatch event so game screen can display new weapontype/ammo
+        ammoChangeEvent.target = null;
+        ammoChangeEvent.ammo = ammo;
+        ammoChangeEvent.weaponType = weaponType;
+        sprite.dispatchEvent(ammoChangeEvent);
     };
 
     this.getState = function() {
         return state;
+    };
+
+    this.getPower = function() {
+        return power;
+    };
+
+    this.getLives = function() {
+        return lives;
+    };
+
+    this.setPower = function(myPower) {
+        power = myPower;
+        if (power > gameConstants.PLAYER_START_POWER) power = gameConstants.PLAYER_START_POWER;
+        // dispatch event so game screen can display updated power bars
+        powerChangeEvent.target = null;
+        powerChangeEvent.power = power;
+        sprite.dispatchEvent(powerChangeEvent);
+    };
+
+    this.setLives = function(myLives) {
+        lives = myLives;
+        livesChangeEvent.target = null;
+        livesChangeEvent.lives = lives;
+        sprite.dispatchEvent(livesChangeEvent);
     };
 
     // --------------------------------------------------------- public methods
@@ -79,10 +104,7 @@ var Player = function(){
         // initialization
         state = PlayerState.ENTERING;
         fireCounter = 0;
-        power = Globals.gameConstants.PLAYER_START_POWER;
-        hitEvent.target = null;
-        hitEvent.power = power;
-        sprite.dispatchEvent(hitEvent);
+        this.setPower(Globals.gameConstants.PLAYER_START_POWER);
         sprite.gotoAndStop("playerEntrance");
 
         // center the player sprite
@@ -125,9 +147,9 @@ var Player = function(){
 
     this.goLeft = function() {
         // exit if in entering or killed state
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.HIT)) return;
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         if (state != PlayerState.MOVING_LEFT) {
-            sprite.gotoAndStop("playerLeft");
+            if (state != PlayerState.HIT) sprite.gotoAndStop("playerLeft");
             state = PlayerState.MOVING_LEFT;
         }
         // no vertical movement now
@@ -144,9 +166,9 @@ var Player = function(){
     };
 
     this.goRight = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.HIT)) return;
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         if (state != PlayerState.MOVING_RIGHT) {
-            sprite.gotoAndStop("playerRight");
+            if (state != PlayerState.HIT) sprite.gotoAndStop("playerRight");
             state = PlayerState.MOVING_RIGHT;
         }
         speedY = 0;
@@ -159,9 +181,9 @@ var Player = function(){
     };     
 
     this.goUp = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.HIT)) return;
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         if (state != PlayerState.MOVING_UP) {
-            if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
+            if ((sprite.currentAnimation != "playerIdle") && (state != PlayerState.HIT)) sprite.gotoAndPlay("playerIdle");
             state = PlayerState.MOVING_UP;
         }
         speedX = 0;
@@ -174,9 +196,9 @@ var Player = function(){
     };
 
     this.goDown = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.HIT)) return;
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         if (state != PlayerState.MOVING_DOWN) {
-            if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
+            if ((sprite.currentAnimation != "playerIdle") && (state != PlayerState.HIT)) sprite.gotoAndPlay("playerIdle");
             state = PlayerState.MOVING_DOWN;
         }
         speedX = 0;
@@ -189,7 +211,7 @@ var Player = function(){
     };
 
     this.goIdle = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.IDLE) || (state == PlayerState.HIT)) return;
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.IDLE)) return;
 
         if (state == PlayerState.MOVING_LEFT) {
             if (speedX > 0) speedX--;
@@ -221,13 +243,14 @@ var Player = function(){
         }
 
         // has the player finished decelerration?
-        if ((speedX === 0) && (speedY === 0)) {
+        if ((speedX === 0) && (speedY === 0) && (state != PlayerState.HIT)) {
             state = PlayerState.IDLE;
             sprite.gotoAndPlay("playerIdle");
         }
     };
 
     this.fire = function() {
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         if (fireCounter == weaponData.freq) {
             var gunPoints = weaponData.gunPoints;
             // loop through all gunPoints and add bullet
@@ -249,10 +272,10 @@ var Player = function(){
                     if (ammo != -1) {
                         ammo--;
                         // player just fired a bullet - dispatch event
-                        fireEvent.target = null;
-                        fireEvent.ammo = ammo;
-                        fireEvent.weaponType = weaponType;
-                        sprite.dispatchEvent(fireEvent);
+                        ammoChangeEvent.target = null;
+                        ammoChangeEvent.ammo = ammo;
+                        ammoChangeEvent.weaponType = weaponType;
+                        sprite.dispatchEvent(ammoChangeEvent);
                         // out of ammo?
                         if (ammo <= 0) this.setWeapon("single");
                     }
@@ -278,18 +301,12 @@ var Player = function(){
     this.hitMe = function(powerLoss) {
         state = PlayerState.HIT;
         if (powerLoss === undefined) powerLoss = 1;
-        power-=powerLoss;
+        this.setPower(power - powerLoss);
         if (power <= 0) {
-            hitEvent.target = null;
-            hitEvent.power = power;
-            sprite.dispatchEvent(hitEvent);
             this.killMe();
         } else {
             sprite.gotoAndPlay("playerHit");
             // update event object
-            hitEvent.target = null;
-            hitEvent.power = power;
-            sprite.dispatchEvent(hitEvent);
             sprite.addEventListener("animationend",function(e){
                 e.remove();
                 state = PlayerState.IDLE;
@@ -303,14 +320,8 @@ var Player = function(){
         sprite.gotoAndPlay("playerKilled");
         sprite.addEventListener("animationend",function(e){
             e.remove();
-            lives--;
-            power = 0;
-            hitEvent.target = null;
-            hitEvent.power = power;
-            sprite.dispatchEvent(hitEvent);
-            killedEvent.target = null;
-            killedEvent.lives = lives;
-            sprite.dispatchEvent(killedEvent);
+            _this.setPower(0);
+            _this.setLives(lives - 1);
             if (lives <= 0) {
                 // game over!
                 sprite.stop();
@@ -324,8 +335,67 @@ var Player = function(){
     };
 
     this.updateMe = function() {
+        // which direction is player moving?
+        if (state == PlayerState.IDLE) {
 
 
+
+
+        } else {
+            // currently decelerating
+            if (state == PlayerState.MOVING_LEFT) {
+                if (speedX > 0) speedX--;
+                sprite.x-=speedX;
+            } else if (state == PlayerState.MOVING_RIGHT) {
+                if (speedX > 0) speedX--;
+                sprite.x+=speedX;
+            } else if (state == PlayerState.MOVING_UP) {
+                if (speedY > 0) speedY--;
+                sprite.y-=speedY;
+            } else if (state == PlayerState.MOVING_DOWN) {
+                if (speedY > 0) speedY--;
+                sprite.y+=speedY;
+            }    
+
+            // if player is decelerrating into a stage boundary, stop player dead
+            if (sprite.y < minY) {
+                sprite.y = minY;
+                speedY = 0;
+            } else if (sprite.y > maxY) {
+                sprite.y = maxY;
+                speedY = 0;
+            } else if (sprite.x < minX) {
+                sprite.x = minX;
+                speedX = 0;
+            } else if (sprite.x > maxX) {
+                sprite.x = maxX;
+                speedX = 0;
+            }
+
+            // has the player finished decelerration?
+            if ((speedX === 0) && (speedY === 0) && (state != PlayerState.HIT)) {
+                state = PlayerState.IDLE;
+                sprite.gotoAndPlay("playerIdle");
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        /*
+        stage.addChild(shieldSprite);
+        shieldSprite.x = sprite.x;
+        shieldSprite.y = sprite.y;
+        */
 
 
     };
@@ -335,10 +405,10 @@ var Player = function(){
 var PlayerState = {
     "ENTERING":-1,
     "IDLE":0,
-    "MOVING_LEFT":1,
-    "MOVING_RIGHT":2,
-    "MOVING_UP":3,
-    "MOVING_DOWN":4,
-    "KILLED":5,
-    "HIT":6
+    "MOVING_LEFT":2,
+    "MOVING_RIGHT":3,
+    "MOVING_UP":4,
+    "MOVING_DOWN":5,
+    "KILLED":6,
+    "HIT":7
 };

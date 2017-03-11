@@ -11,7 +11,8 @@ var Globals = {
 	// game constants used throughout
     gameConstants:{
 		FRAME_RATE:30,
-		PLAYER_SPEED:12,
+		HIGHSCORE_SCRIPT:"",
+		PLAYER_SPEED:14,
 		PLAYER_MIN_X:20,
 		PLAYER_MAX_X:780,
 		PLAYER_MIN_Y:40,
@@ -23,36 +24,47 @@ var Globals = {
 		POWERUPS:{
 			"powerupDouble":{
 				kind:"weapon",
-				id:"double"
+				data:"double"
 			},
 			"powerupSpread":{
 				kind:"weapon",
-				id:"spread"
+				data:"spread"
 			},
 			"powerupHeavy":{
 				kind:"weapon",
-				id:"heavy"
+				data:"heavy"
 			},
 			"powerupRapid":{
 				kind:"weapon",
-				id:"rapid"
+				data:"rapid"
 			},
 			"powerupLaser":{
 				kind:"weapon",
-				id:"laser"
+				data:"laser"
 			},
 			"powerupBounce":{
 				kind:"weapon",
-				id:"bounce"
+				data:"bounce"
 			},
 			"powerupShieid":{
-
+				kind:"shield",
+				data:3
 			},
-			"powerupEnergy":{
-				
+			"powerupPower":{
+				kind:"power",
+				data:1
 			},
-			"powerupLives":{
-				
+			"powerupHalfPower":{
+				kind:"power",
+				data:3
+			},
+			"powerupFullPower":{
+				kind:"power",
+				data:6
+			},
+			"powerupLife":{
+				kind:"life",
+				data:"1"
 			}
 		},
 		PLAYER_WEAPONS:{

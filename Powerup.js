@@ -62,14 +62,18 @@ var Powerup = function(){
         // has the player collided with the powerup?
         if ((state != ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
             state = ShapeState.KILLED;
+            sprite.alpha = 1;
 
             var powerupData = gameConstants.POWERUPS[type];
             if (powerupData.kind == "weapon") {
                 // change weapontype of player
-                var weaponType = powerupData.id;
+                var weaponType = powerupData.data;
                 player.setWeapon(weaponType);
-            } else {
-
+            } else if (powerupData.kind == "power") {
+                // player power boost granted
+                player.setPower(player.getPower() + powerupData.data);
+            } else if (powerupData.kind == "shield") {
+                // player shields granted
 
             }
 

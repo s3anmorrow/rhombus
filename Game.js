@@ -12,6 +12,7 @@
 	// TODO: implement lookup tables for Trig
 	// TODO: check all getBounds() references - processor heavy (MoveFunctions)
 	// TODO: add loading screen while all the JS loads before preload kicks in
+	// TODO: bug - why first bullet causes pause
 
 	// game variables
 	var stage = null;
@@ -208,13 +209,13 @@
 			case "shapeKilled":
 				screenManager.game.adjustPoints(e.points);
 				break;
-			case "playerHit":
+			case "playerPowerChange":
 				screenManager.game.setPower(e.power);
 				break;
-			case "playerKilled":
+			case "playerLivesChange":
 				screenManager.game.setLives(e.lives);
 				break;
-			case "playerFired":
+			case "playerAmmoChange":
 				screenManager.game.setAmmo(e.ammo, e.weaponType);
 				break;				
 			case "bigbossKilled":
