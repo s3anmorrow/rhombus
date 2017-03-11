@@ -180,9 +180,7 @@ var Bullet = function() {
 					player.hitMe();
 					this.killMe(true);
 				}
-
 			}
-
 		}
 	};
 };

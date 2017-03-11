@@ -104,8 +104,19 @@ var WaveFactory = function(){
                         var shape = objectPool.getShape();
                         // is this shape of this wave a shooter?
                         if (activeWave.settings.shooters !== undefined) shootData = search(activeWave.settings.shooters, "index", activeWave.wave.dropped);
+                        // does this shape drop a powerup?
+                        var powerupType = "";
+                        var powerupIndex = activeWave.powerup.index;
+                        if (activeWave.wave.dropped == powerupIndex) powerupType = activeWave.powerup.type;
                         // start the shape and pass along required data
-                        shape.startMe(activeWave.type, activeWave.settings.x, activeWave.settings.y, activeWave.settings.points,activeWave.settings.hp, shootData, movementData);
+                        shape.startMe(activeWave.type, 
+                                      activeWave.settings.x, 
+                                      activeWave.settings.y, 
+                                      activeWave.settings.points,
+                                      activeWave.settings.hp,
+                                      powerupType, 
+                                      shootData, 
+                                      movementData);
                     }
                     
                     activeWave.wave.dropped++;

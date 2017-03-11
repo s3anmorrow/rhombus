@@ -13,6 +13,7 @@ var ObjectPool = function() {
 	var BULLET_MAX = 200;
 	var BIGBOSS_MAX = 20;
 	var TURRET_MAX = 50;
+	var POWERUP_MAX = 5;
 
 	// object pool arrays
 	var shapePool = [];
@@ -20,6 +21,7 @@ var ObjectPool = function() {
 	var bulletPool = [];
 	var bigbossPool = [];
 	var turretPool = [];
+	var powerupPool = [];
 
 	// direct public access to pools
 	this.shapePool = shapePool;
@@ -27,6 +29,7 @@ var ObjectPool = function() {
 	this.bulletPool = bulletPool;
 	this.bigbossPool = bigbossPool;
 	this.turretPool = turretPool;
+	this.powerupPool = powerupPool;
 
 	// other
 	var index = 0;
@@ -68,6 +71,7 @@ var ObjectPool = function() {
 		constructObjects(bulletPool, BULLET_MAX, Bullet);
 		constructObjects(bigbossPool, BIGBOSS_MAX, Bigboss);
 		constructObjects(turretPool, TURRET_MAX, Turret);
+		constructObjects(powerupPool, POWERUP_MAX, Powerup);
 
 		console.log(">> object pools filled");
 	};
@@ -92,6 +96,10 @@ var ObjectPool = function() {
 		return getObject(turretPool, TURRET_MAX);
 	};
 
+	this.getPowerup = function() {
+		return getObject(powerupPool, POWERUP_MAX);
+	};
+
     this.dispose = function(o) {
 		// which type of game object are we disposing?
 		if (o.constructor.name == "Shape") {
@@ -104,6 +112,8 @@ var ObjectPool = function() {
 			bigbossPool[o.poolIndex].used = false;	
 		} else if (o.constructor.name == "Turret") {
 			turretPool[o.poolIndex].used = false;	
+		} else if (o.constructor.name == "Powerup") {
+			powerupPool[o.poolIndex].used = false;	
 		}
 		updateList[o.usedIndex] = null;
 

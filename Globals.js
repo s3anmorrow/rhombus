@@ -19,6 +19,42 @@ var Globals = {
 		PLAYER_START_POWER:6,
 		PLAYER_MAX_POWER:6,
 		PLAYER_START_LIVES:3,
+		POWERUP_DURATION:45,
+		POWERUPS:{
+			"powerupDouble":{
+				kind:"weapon",
+				id:"double"
+			},
+			"powerupSpread":{
+				kind:"weapon",
+				id:"spread"
+			},
+			"powerupHeavy":{
+				kind:"weapon",
+				id:"heavy"
+			},
+			"powerupRapid":{
+				kind:"weapon",
+				id:"rapid"
+			},
+			"powerupLaser":{
+				kind:"weapon",
+				id:"laser"
+			},
+			"powerupBounce":{
+				kind:"weapon",
+				id:"bounce"
+			},
+			"powerupShieid":{
+
+			},
+			"powerupEnergy":{
+				
+			},
+			"powerupLives":{
+				
+			}
+		},
 		PLAYER_WEAPONS:{
 			"single":{
 				freq:8,
@@ -44,14 +80,14 @@ var Globals = {
 			},
 			"spread":{
 				freq:4,
-				gunPoints:[{x:0,y:-20,r:270},{x:-20,y:-5,r:260},{x:20,y:-5,r:280}],
+				gunPoints:[{x:0,y:-20,r:270},{x:-20,y:-5,r:250},{x:20,y:-5,r:290}],
 				alternateFire:false,
 				auto:false,
 				speed:20,
 				damage:0.5,
 				ammo:100,
 				invincible:false,
-				frame:"spread"				
+				frame:"spreadBullet"				
 			},
 			"heavy":{
 				freq:8,

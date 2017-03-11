@@ -103,6 +103,8 @@ var Player = function(){
             });
 
         stage.addChild(sprite);
+        // have to do this here since it dispatched event from sprite and needs to be on stage
+        this.setWeapon("single");
     };
 
     this.stopMe = function() {

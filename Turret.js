@@ -119,7 +119,7 @@ var Turret = function(){
 
         // release the bullet!
         var bullet = objectPool.getBullet();
-        bullet.startMe(owner, "bullet" + bulletType, 6, 2, turretPoint.x, turretPoint.y, targetAngle);
+        bullet.startMe("bullet" + bulletType, owner, "bullet" + bulletType, 6, 2, false, turretPoint.x, turretPoint.y, targetAngle);
     };
 
     this.updateMe = function() {

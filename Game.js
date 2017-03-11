@@ -51,11 +51,6 @@
 		player.resetMe();
 		player.startMe();
 
-		// !!!!!!!!!! TESTING
-		player.setWeapon("spread");
-		//screenManager.game.setAmmo(10);
-		// !!!!!!!!!!!!!!!!!!
-
 		
 		// change stage of game
 		Globals.gameState = GameStates.PLAYING;

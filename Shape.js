@@ -1,7 +1,4 @@
 var Shape = function(){
-
-    // TODO: alter shape so that multiple hits is required
-
     // custom events
     var killedEvent = new createjs.Event("gameEvent", true);
     killedEvent.id = "shapeKilled";
@@ -22,6 +19,7 @@ var Shape = function(){
     var points = 0;    
     var hitPoints = 0;
     var halfHitPoints = 0;
+    var powerupType = "";
     // control frequency of firing if shape is a shooter
     var shooter = false;
     var shootFrequency = -1;
@@ -42,7 +40,7 @@ var Shape = function(){
     };
 
     // ----------------------------------------------- public methods
-    this.startMe = function(myType, startX, startY, myPoints, myHitPoints, myShootData, myMovement) {
+    this.startMe = function(myType, startX, startY, myPoints, myHitPoints, myPowerupType, myShootData, myMovement) {
         // shape initialization
         frameCounter = 0;
         points = myPoints;
@@ -50,6 +48,7 @@ var Shape = function(){
         state = ShapeState.ATTACKING;
         hitPoints = myHitPoints;
         halfHitPoints = hitPoints/2;
+        powerupType = myPowerupType;
 
         // setup shape to be a shooter or not
         shooter = false;
@@ -109,7 +108,7 @@ var Shape = function(){
         if (hitPoints <= 0) {
             state = ShapeState.KILLED;
             sprite.rotation = 0;
-            // position sprite and bitmaptext
+            // position explosion sprite
             if ((pointsAwarded === undefined) || (pointsAwarded === true)) {
                 sprite.gotoAndPlay("explosion" + points);
                 killedEvent.target = null;
@@ -119,6 +118,11 @@ var Shape = function(){
             }
             sprite.addEventListener("animationend",function(e){
                 e.remove();
+                if (powerupType != "") {
+                    // release the powerup
+                    var powerup = objectPool.getPowerup();
+                    powerup.startMe(powerupType, sprite.x, sprite.y);
+                }
                 _this.stopMe();
             });
         } else {
@@ -145,7 +149,7 @@ var Shape = function(){
         var targetAngle = Math.floor(180 + (Math.atan2(sprite.y - player.sprite.y, sprite.x - player.sprite.x) * 57.2957795));
         // release the bullet!
         var bullet = objectPool.getBullet();
-        bullet.startMe(this, "bullet" + bulletType, 6, 2, sprite.x, sprite.y, targetAngle);
+        bullet.startMe("bullet" + bulletType, this, "bullet" + bulletType, 6, 2, false, sprite.x, sprite.y, targetAngle);
     };
 
     this.updateMe = function() {
@@ -155,7 +159,8 @@ var Shape = function(){
         // has the shape collided with the player?
         if ((state != ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
             player.hitMe(hitPoints);
-            // kill shape with no points
+            // kill shape with no points and no powerups
+            powerupType = "";
             this.killMe(hitPoints, false);
         }
 
