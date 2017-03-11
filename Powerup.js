@@ -30,7 +30,9 @@ var Powerup = function(){
         sprite.y = startY;
         sprite.alpha = 1;
         // tween powerup wiggling back and forth
-        createjs.Tween.get(sprite,{useTicks:true, loop:true}).to({x:startX-5}, 8).to({x:startX}, 8);
+        createjs.Tween.get(sprite,{useTicks:true, loop:true})
+            .to({x:startX-5}, 8)
+            .to({x:startX}, 8);
 
         stage.addChild(sprite);
     };
@@ -48,6 +50,7 @@ var Powerup = function(){
     };
 
     this.killMe = function() {
+        createjs.Tween.removeTweens(sprite);
         sprite.gotoAndPlay("powerupKill");
         sprite.addEventListener("animationend", function(e){
             _this.stopMe();
@@ -75,6 +78,9 @@ var Powerup = function(){
             } else if (powerupData.kind == "shield") {
                 // player shields granted - eanble for certain amount of time
                 player.shieldMe(powerupData.data);
+            } else if (powerupData.kind == "life") {
+                // player gets extra life
+                player.setLives(player.getLives() + powerupData.data);
             }
 
             this.killMe();

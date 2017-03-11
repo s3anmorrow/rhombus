@@ -1,7 +1,4 @@
 var Player = function(){
-
-    // TODO: add invicibilty to player when first appears
-
     // custom events
     var livesChangeEvent = new createjs.Event("gameEvent", true);
     livesChangeEvent.id = "playerLivesChange";
@@ -84,10 +81,6 @@ var Player = function(){
         return power;
     };
 
-    this.getLives = function() {
-        return lives;
-    };
-
     this.setPower = function(myPower) {
         power = myPower;
         if (power > gameConstants.PLAYER_START_POWER) power = gameConstants.PLAYER_START_POWER;
@@ -95,6 +88,10 @@ var Player = function(){
         powerChangeEvent.target = null;
         powerChangeEvent.power = power;
         sprite.dispatchEvent(powerChangeEvent);
+    };
+
+    this.getLives = function() {
+        return lives;
     };
 
     this.setLives = function(myLives) {
@@ -129,6 +126,7 @@ var Player = function(){
                     sprite.stop();
                     state = PlayerState.IDLE;
                     sprite.gotoAndPlay("playerIdle");
+                    _this.shieldMe(1.5,1);
                 });
                 sprite.play();
             });
@@ -263,12 +261,13 @@ var Player = function(){
         }
     };
 
-    this.shieldMe = function(duration) {
+    this.shieldMe = function(duration,fadeout) {
         shieldEnabled = true;
         shieldCounter = 0;
+        if (fadeout == undefined) fadeout = 2;
 
         // determine fadeout and kill times
-        shieldFadeTime = (duration - 2) * gameConstants.FRAME_RATE;
+        shieldFadeTime = (duration - fadeout) * gameConstants.FRAME_RATE;
         shieldKillTime = duration * gameConstants.FRAME_RATE;
 
         shieldSprite.x = sprite.x;
@@ -367,6 +366,7 @@ var Player = function(){
                 }
             } else {
                 // times up - remove shields
+                createjs.Tween.removeTweens(shieldSprite);
                 shieldEnabled = false;
                 stage.removeChild(shieldSprite);        
             }

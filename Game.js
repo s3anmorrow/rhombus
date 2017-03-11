@@ -4,9 +4,7 @@
 (function() {
 	"use strict";
 
-	// TODO: powerups and new guns (invisible)
 	// TODO: add invicibility to player
-	// TODO: add shield feature	
 	
 	// TODO: add aircraft carrier release boss (Turret that releases shapes instead of bullets!)
 	// TODO: implement lookup tables for Trig

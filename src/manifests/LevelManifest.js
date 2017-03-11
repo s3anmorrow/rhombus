@@ -7,7 +7,7 @@ var levelManifest = [
             wave:{count:3, spaced:20},
             settings:{x:400, y:800, hp:3, points:100, shooters:[{index:0, freq:100, bulletType:1}]}, 
             movement:{type:"up",speed:2},
-            powerup:{type:"powerupShield",index:2},
+            powerup:{type:"powerupLife",index:2},
             time:5
         }/*,
         {type:"pentagon", 

@@ -48,10 +48,12 @@ var Globals = {
 			},
 			"powerupShield":{
 				kind:"shield",
-				data:6
+				// duration of shield in seconds
+				data:10
 			},
 			"powerupPower":{
 				kind:"power",
+				// number of power cubes
 				data:1
 			},
 			"powerupHalfPower":{
@@ -64,7 +66,8 @@ var Globals = {
 			},
 			"powerupLife":{
 				kind:"life",
-				data:"1"
+				// the number of lives
+				data:1
 			}
 		},
 		PLAYER_WEAPONS:{
