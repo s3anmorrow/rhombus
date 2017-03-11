@@ -73,8 +73,8 @@ var Powerup = function(){
                 // player power boost granted
                 player.setPower(player.getPower() + powerupData.data);
             } else if (powerupData.kind == "shield") {
-                // player shields granted
-
+                // player shields granted - eanble for certain amount of time
+                player.shieldMe(powerupData.data);
             }
 
             this.killMe();

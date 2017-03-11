@@ -46,9 +46,9 @@ var Globals = {
 				kind:"weapon",
 				data:"bounce"
 			},
-			"powerupShieid":{
+			"powerupShield":{
 				kind:"shield",
-				data:3
+				data:6
 			},
 			"powerupPower":{
 				kind:"power",

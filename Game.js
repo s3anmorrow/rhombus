@@ -268,9 +268,8 @@
 			}
 			// required routine updates
 			waveFactory.updateMe();
-			player.updateMe();
 		}
-		// screenManager needs updating for all gameGameStates except initalization
+		// screenManager needs updating for all gameGameStates except initalization (background shapes)
 		if (Globals.gameState !== GameStates.INITIALIZE) screenManager.updateMe();		
 
 		// STEP III : RENDERING

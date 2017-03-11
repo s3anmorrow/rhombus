@@ -41,6 +41,11 @@ var Player = function(){
     var fireCounter = 0;
     var weaponType = "";
     var weaponData = null;
+    // shield behaviour
+    var shieldEnabled = false;
+    var shieldCounter = 0;
+    var shieldFadeTime = 0
+    var shieldKillTime = 0;
 
     // get sprite for Player
     var sprite = assetManager.getSprite("assets","playerEntrance");
@@ -104,6 +109,10 @@ var Player = function(){
         // initialization
         state = PlayerState.ENTERING;
         fireCounter = 0;
+        shieldCounter = 0;
+        shieldFadeTime = 0;
+        shieldKillTime = 0;
+        shieldEnabled = false;
         this.setPower(Globals.gameConstants.PLAYER_START_POWER);
         sprite.gotoAndStop("playerEntrance");
 
@@ -146,107 +155,40 @@ var Player = function(){
     };
 
     this.goLeft = function() {
-        // exit if in entering or killed state
+        // do nothing if in ENTERING or KILLED state
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        if (state != PlayerState.MOVING_LEFT) {
-            if (state != PlayerState.HIT) sprite.gotoAndStop("playerLeft");
-            state = PlayerState.MOVING_LEFT;
-        }
-        // no vertical movement now
-        speedY = 0;
-        // acceleration to targetSpeed
-        if (speedX < targetSpeedX) speedX++;
-        // move sprite to the left
-        sprite.x-=speedX;
-        // have I hit the movement boundary?
-        if (sprite.x < minX) {
-            sprite.x = minX;
-            speedX = 0;
-        }
+        // don't change animation sequence if currently being hit
+        if (state != PlayerState.HIT) sprite.gotoAndStop("playerLeft");
+        if (shieldEnabled) shieldSprite.gotoAndStop("playerShieldLeft");
+        state = PlayerState.MOVING_LEFT;
     };
 
     this.goRight = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        if (state != PlayerState.MOVING_RIGHT) {
-            if (state != PlayerState.HIT) sprite.gotoAndStop("playerRight");
-            state = PlayerState.MOVING_RIGHT;
-        }
-        speedY = 0;
-        if (speedX < targetSpeedX) speedX++;
-        sprite.x+=speedX;
-        if (sprite.x > maxX) {
-            sprite.x = maxX;
-            speedX = 0;
-        }
+        if (state != PlayerState.HIT) sprite.gotoAndStop("playerRight");
+        if (shieldEnabled) shieldSprite.gotoAndStop("playerShieldRight");
+        state = PlayerState.MOVING_RIGHT;
     };     
 
     this.goUp = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        if (state != PlayerState.MOVING_UP) {
-            if ((sprite.currentAnimation != "playerIdle") && (state != PlayerState.HIT)) sprite.gotoAndPlay("playerIdle");
-            state = PlayerState.MOVING_UP;
-        }
-        speedX = 0;
-        if (speedY < targetSpeedY) speedY++;
-        sprite.y-=speedY;
-        if (sprite.y < minY) {
-            sprite.y = minY;
-            speedY = 0;
-        }
+        if ((sprite.currentAnimation != "playerIdle") && (state != PlayerState.HIT)) sprite.gotoAndPlay("playerIdle");
+        if (shieldEnabled) shieldSprite.gotoAndStop("playerShield");
+        state = PlayerState.MOVING_UP;
     };
 
     this.goDown = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        if (state != PlayerState.MOVING_DOWN) {
-            if ((sprite.currentAnimation != "playerIdle") && (state != PlayerState.HIT)) sprite.gotoAndPlay("playerIdle");
-            state = PlayerState.MOVING_DOWN;
-        }
-        speedX = 0;
-        if (speedY < targetSpeedY) speedY++;
-        sprite.y+=speedY;
-        if (sprite.y > maxY) {
-            sprite.y = maxY;
-            speedY = 0;
-        }
+        if ((sprite.currentAnimation != "playerIdle") && (state != PlayerState.HIT)) sprite.gotoAndPlay("playerIdle");
+        if (shieldEnabled) shieldSprite.gotoAndStop("playerShield");
+        state = PlayerState.MOVING_DOWN;
     };
 
     this.goIdle = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED) || (state == PlayerState.IDLE)) return;
-
-        if (state == PlayerState.MOVING_LEFT) {
-            if (speedX > 0) speedX--;
-            sprite.x-=speedX;
-        } else if (state == PlayerState.MOVING_RIGHT) {
-            if (speedX > 0) speedX--;
-            sprite.x+=speedX;
-        } else if (state == PlayerState.MOVING_UP) {
-            if (speedY > 0) speedY--;
-            sprite.y-=speedY;
-        } else if (state == PlayerState.MOVING_DOWN) {
-            if (speedY > 0) speedY--;
-            sprite.y+=speedY;
-        }    
-
-        // if player is decelerrating into a stage boundary, stop player dead
-        if (sprite.y < minY) {
-            sprite.y = minY;
-            speedY = 0;
-        } else if (sprite.y > maxY) {
-            sprite.y = maxY;
-            speedY = 0;
-        } else if (sprite.x < minX) {
-            sprite.x = minX;
-            speedX = 0;
-        } else if (sprite.x > maxX) {
-            sprite.x = maxX;
-            speedX = 0;
-        }
-
-        // has the player finished decelerration?
-        if ((speedX === 0) && (speedY === 0) && (state != PlayerState.HIT)) {
-            state = PlayerState.IDLE;
-            sprite.gotoAndPlay("playerIdle");
-        }
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
+        if ((sprite.currentAnimation != "playerIdle") && (state != PlayerState.HIT)) sprite.gotoAndPlay("playerIdle");
+        if (shieldEnabled) shieldSprite.gotoAndStop("playerShield");
+        state = PlayerState.IDLE;
     };
 
     this.fire = function() {
@@ -299,6 +241,12 @@ var Player = function(){
     };
 
     this.hitMe = function(powerLoss) {
+        // if shield enabled no damage taken
+        if (shieldEnabled) {
+            // TODO: play cool sound effect for shield deflection
+            return;
+        }
+
         state = PlayerState.HIT;
         if (powerLoss === undefined) powerLoss = 1;
         this.setPower(power - powerLoss);
@@ -313,6 +261,19 @@ var Player = function(){
                 sprite.gotoAndPlay("playerIdle");
             });
         }
+    };
+
+    this.shieldMe = function(duration) {
+        shieldEnabled = true;
+        shieldCounter = 0;
+
+        // determine fadeout and kill times
+        shieldFadeTime = (duration - 2) * gameConstants.FRAME_RATE;
+        shieldKillTime = duration * gameConstants.FRAME_RATE;
+
+        shieldSprite.x = sprite.x;
+        shieldSprite.y = sprite.y;
+        stage.addChild(shieldSprite);
     };
 
     this.killMe = function() {
@@ -336,70 +297,82 @@ var Player = function(){
 
     this.updateMe = function() {
         // which direction is player moving?
-        if (state == PlayerState.IDLE) {
+        if (state == PlayerState.MOVING_LEFT) {
+            speedY = 0;
+            if (speedX > -targetSpeedX) speedX--;
+        } else if (state == PlayerState.MOVING_RIGHT) {
+            speedY = 0;
+            if (speedX < targetSpeedX) speedX++;
+        } else if (state == PlayerState.MOVING_UP) {
+            speedX = 0;
+            if (speedY > -targetSpeedY) speedY--;
+        } else if (state == PlayerState.MOVING_DOWN) {
+            speedX = 0;
+            if (speedY < targetSpeedY) speedY++;
+        } else if (state == PlayerState.IDLE) {
+            // do I need to decelerate the player anymore?
+            if ((speedX !== 0) || (speedY !== 0)) {
 
+                // decelerate player
+                if (speedX < 0) {
+                    speedX+=1;
+                    if (speedX > 0) speedX = 0;
+                } else if (speedX > 0) {
+                    speedX-=1;
+                    if (speedX < 0) speedX = 0;
+                } else if (speedY < 0) {
+                    speedY+=1;
+                    if (speedY > 0) speedY = 0;
+                } else if (speedY > 0) {
+                    speedY-=1;
+                    if (speedY < 0) speedY = 0;
+                }
 
-
-
-        } else {
-            // currently decelerating
-            if (state == PlayerState.MOVING_LEFT) {
-                if (speedX > 0) speedX--;
-                sprite.x-=speedX;
-            } else if (state == PlayerState.MOVING_RIGHT) {
-                if (speedX > 0) speedX--;
-                sprite.x+=speedX;
-            } else if (state == PlayerState.MOVING_UP) {
-                if (speedY > 0) speedY--;
-                sprite.y-=speedY;
-            } else if (state == PlayerState.MOVING_DOWN) {
-                if (speedY > 0) speedY--;
-                sprite.y+=speedY;
-            }    
-
-            // if player is decelerrating into a stage boundary, stop player dead
-            if (sprite.y < minY) {
-                sprite.y = minY;
-                speedY = 0;
-            } else if (sprite.y > maxY) {
-                sprite.y = maxY;
-                speedY = 0;
-            } else if (sprite.x < minX) {
-                sprite.x = minX;
-                speedX = 0;
-            } else if (sprite.x > maxX) {
-                sprite.x = maxX;
-                speedX = 0;
+                // has the player finished decelerration?
+                if ((speedX === 0) && (speedY === 0) && (state != PlayerState.HIT)) sprite.gotoAndPlay("playerIdle");
             }
-
-            // has the player finished decelerration?
-            if ((speedX === 0) && (speedY === 0) && (state != PlayerState.HIT)) {
-                state = PlayerState.IDLE;
-                sprite.gotoAndPlay("playerIdle");
-            }
-
         }
 
+        // move the player!
+        sprite.x+=speedX;
+        sprite.y+=speedY;
 
+        // regardless of state - player never allowed to move out of bounds on stage
+        if (sprite.y < minY) {
+            sprite.y = minY;
+            speedY = 0;
+        } else if (sprite.y > maxY) {
+            sprite.y = maxY;
+            speedY = 0;
+        } else if (sprite.x < minX) {
+            sprite.x = minX;
+            speedX = 0;
+        } else if (sprite.x > maxX) {
+            sprite.x = maxX;
+            speedX = 0;
+        }
 
-
-
-
-
-
-
-
-
-
-        /*
-        stage.addChild(shieldSprite);
-        shieldSprite.x = sprite.x;
-        shieldSprite.y = sprite.y;
-        */
-
+        // are shields active on player?
+        if (shieldEnabled) {
+            if (shieldCounter < shieldKillTime) {
+                // move shields with player
+                shieldSprite.x = sprite.x;
+                shieldSprite.y = sprite.y;
+                shieldCounter++;
+                if (shieldCounter == shieldFadeTime) {
+                    // start flash effect to warn player
+                    createjs.Tween.get(shieldSprite, {useTicks:true, loop:true})
+                        .to({alpha:0}, 8)
+                        .to({alpha:1}, 8);
+                }
+            } else {
+                // times up - remove shields
+                shieldEnabled = false;
+                stage.removeChild(shieldSprite);        
+            }
+        }
 
     };
-
 };
 
 var PlayerState = {
