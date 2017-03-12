@@ -68,17 +68,17 @@ var Powerup = function(){
             sprite.alpha = 1;
 
             var powerupData = gameConstants.POWERUPS[type];
-            if (powerupData.kind == "weapon") {
+            if (powerupData.category == "weapon") {
                 // change weapontype of player
                 var weaponType = powerupData.data;
                 player.setWeapon(weaponType);
-            } else if (powerupData.kind == "power") {
+            } else if (powerupData.category == "power") {
                 // player power boost granted
                 player.setPower(player.getPower() + powerupData.data);
-            } else if (powerupData.kind == "shield") {
+            } else if (powerupData.category == "shield") {
                 // player shields granted - eanble for certain amount of time
                 player.shieldMe(powerupData.data);
-            } else if (powerupData.kind == "life") {
+            } else if (powerupData.category == "life") {
                 // player gets extra life
                 player.setLives(player.getLives() + powerupData.data);
             }

@@ -41,7 +41,7 @@ var Player = function(){
     // shield behaviour
     var shieldEnabled = false;
     var shieldCounter = 0;
-    var shieldFadeTime = 0
+    var shieldFadeTime = 0;
     var shieldKillTime = 0;
 
     // get sprite for Player

@@ -21,54 +21,30 @@ var Globals = {
 		PLAYER_MAX_POWER:6,
 		PLAYER_START_LIVES:3,
 		POWERUP_DURATION:45,
+		SHAPES:{
+			"circle": {hp:1,points:50},
+			"square": {hp:1,points:50},
+			"triangle": {hp:2,points:100},
+			"elllipse": {hp:2,points:100},
+			"pentagon": {hp:3,points:200},
+			"star": {hp:3,points:200},
+			"nonagon": {hp:4,points:400},
+			"rectangle": {hp:4,points:400},
+			"rhombus": {hp:5,points:500},
+			"hexagon": {hp:4,points:400}
+		},
 		POWERUPS:{
-			"powerupDouble":{
-				kind:"weapon",
-				data:"double"
-			},
-			"powerupSpread":{
-				kind:"weapon",
-				data:"spread"
-			},
-			"powerupHeavy":{
-				kind:"weapon",
-				data:"heavy"
-			},
-			"powerupRapid":{
-				kind:"weapon",
-				data:"rapid"
-			},
-			"powerupLaser":{
-				kind:"weapon",
-				data:"laser"
-			},
-			"powerupBounce":{
-				kind:"weapon",
-				data:"bounce"
-			},
-			"powerupShield":{
-				kind:"shield",
-				// duration of shield in seconds
-				data:10
-			},
-			"powerupPower":{
-				kind:"power",
-				// number of power cubes
-				data:1
-			},
-			"powerupHalfPower":{
-				kind:"power",
-				data:3
-			},
-			"powerupFullPower":{
-				kind:"power",
-				data:6
-			},
-			"powerupLife":{
-				kind:"life",
-				// the number of lives
-				data:1
-			}
+			"powerupDouble": {category:"weapon",data:"double"},
+			"powerupSpread": {category:"weapon",data:"spread"},
+			"powerupHeavy": {category:"weapon",data:"heavy"},
+			"powerupRapid": {category:"weapon",data:"rapid"},
+			"powerupLaser": {category:"weapon",data:"laser"},
+			"powerupBounce": {category:"weapon",data:"bounce"},
+			"powerupShield": {category:"shield",data:10}, // duration of shield in seconds
+			"powerupPower": {category:"power",data:1}, // number of power cubes
+			"powerupHalfPower": {category:"power",data:3},
+			"powerupFullPower": {category:"power",data:6},
+			"powerupLife": {category:"life",data:1} // the number of lives
 		},
 		PLAYER_WEAPONS:{
 			"single":{

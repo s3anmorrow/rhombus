@@ -23,7 +23,7 @@ var Shape = function(){
     // control frequency of firing if shape is a shooter
     var shooter = false;
     var shootFrequency = -1;
-    var bulletType = 1;
+    var bulletType = "";
     var frameCounter = 0;
     // reference to Player object (the target!)
     var player = objectPool.playerPool[0];
@@ -40,13 +40,14 @@ var Shape = function(){
     };
 
     // ----------------------------------------------- public methods
-    this.startMe = function(myType, startX, startY, myPoints, myHitPoints, myPowerupType, myShootData, myMovement) {
+    this.startMe = function(myType, startX, startY, myPowerupType, myShootData, myMovement) {
         // shape initialization
         frameCounter = 0;
-        points = myPoints;
+        type = myType;
+        points = gameConstants.SHAPES[type].points;
         killedEvent.points = points;
         state = ShapeState.ATTACKING;
-        hitPoints = myHitPoints;
+        hitPoints = gameConstants.SHAPES[type].hp;
         halfHitPoints = hitPoints/2;
         powerupType = myPowerupType;
 
@@ -55,12 +56,11 @@ var Shape = function(){
         if (myShootData !== null) {
             shooter = true;
             shootFrequency = myShootData.freq;
-            if (myShootData.bulletType != undefined) bulletType = myShootData.bulletType;
-            else bulletType = 1;
+            if (myShootData.bulletType !== undefined) bulletType = myShootData.bulletType;
+            else bulletType = "bullet1";
         }
 
-        // store type of Shape and jump to frame
-        type = myType;
+        // jump to frame
         sprite.gotoAndStop(type);
 
         // position sprite
@@ -118,7 +118,7 @@ var Shape = function(){
             }
             sprite.addEventListener("animationend",function(e){
                 e.remove();
-                if (powerupType != "") {
+                if (powerupType !== "") {
                     // release the powerup
                     var powerup = objectPool.getPowerup();
                     powerup.startMe(powerupType, sprite.x, sprite.y);
@@ -149,7 +149,7 @@ var Shape = function(){
         var targetAngle = Math.floor(180 + (Math.atan2(sprite.y - player.sprite.y, sprite.x - player.sprite.x) * 57.2957795));
         // release the bullet!
         var bullet = objectPool.getBullet();
-        bullet.startMe("bullet" + bulletType, this, "bullet" + bulletType, 6, 2, false, sprite.x, sprite.y, targetAngle);
+        bullet.startMe(bulletType, this, bulletType, 6, 2, false, sprite.x, sprite.y, targetAngle);
     };
 
     this.updateMe = function() {

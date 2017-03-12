@@ -112,8 +112,6 @@ var WaveFactory = function(){
                         shape.startMe(activeWave.type, 
                                       activeWave.settings.x, 
                                       activeWave.settings.y, 
-                                      activeWave.settings.points,
-                                      activeWave.settings.hp,
                                       powerupType, 
                                       shootData, 
                                       movementData);

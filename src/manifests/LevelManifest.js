@@ -3,9 +3,10 @@ var levelManifest = [
 
         
         // LEVEL 1
-        {type:"circle", 
-            wave:{count:3, spaced:20},
-            settings:{x:400, y:800, hp:3, points:100, shooters:[{index:0, freq:100, bulletType:1}]}, 
+        /*
+        {type:"triangle", 
+            wave:{count:3, spaced:30},
+            settings:{x:400, y:800, shooters:[{index:0, freq:100, bulletType:"bullet1""}]}, 
             movement:{type:"up",speed:2},
             powerup:{type:"powerupLife",index:2},
             time:5
@@ -24,9 +25,9 @@ var levelManifest = [
             settings:{x:-200, y:250, points:1000,
                 turrets:[   
                     {type:"circle",x:0,y:0,hp:4,freq:100},
-                    {type:"square",x:100,y:100,hp:4,freq:150,bulletType:2},
-                    {type:"square",x:-100,y:100,hp:4,freq:50,bulletType:2},
-                    {type:"square",x:100,y:-100,hp:4,freq:200,bulletType:2},
+                    {type:"square",x:100,y:100,hp:4,freq:150,bulletType:"bullet2},
+                    {type:"square",x:-100,y:100,hp:4,freq:50,bulletType:"bullet2},
+                    {type:"square",x:100,y:-100,hp:4,freq:200,bulletType:"bullet2"},
                     {type:"circle",x:-100,y:-100,hp:4,freq:125}
                 ]
             },
@@ -48,6 +49,21 @@ var levelManifest = [
             time:1
         }
         */
+
+        {type:"bossHexagon", 
+            wave:{count:1, spaced:4},
+            settings:{x:-200, y:250, points:1000,
+                turrets:[   
+                    {type:"hexagon",x:0,y:0,freq:100,bulletType:"triangle"},
+                    {type:"square",x:100,y:100,freq:150,bulletType:"bullet1"},
+                    {type:"square",x:-100,y:100,freq:50,bulletType:"bullet2"},
+                    {type:"square",x:100,y:-100,freq:200,bulletType:"bullet3"},
+                    {type:"circle",x:-100,y:-100,freq:125}
+                ]
+            },
+            movement:{type:"rightAndStop", speed:2, stopAt:400, rotate:true},
+            time:1
+        }
 
 
 

@@ -3,14 +3,12 @@
 // Jan 2017
 (function() {
 	"use strict";
-
-	// TODO: add invicibility to player
 	
-	// TODO: add aircraft carrier release boss (Turret that releases shapes instead of bullets!)
 	// TODO: implement lookup tables for Trig
 	// TODO: check all getBounds() references - processor heavy (MoveFunctions)
 	// TODO: add loading screen while all the JS loads before preload kicks in
 	// TODO: bug - why first bullet causes pause
+	// TODO: add ability to set hp of shapes released from turret
 
 	// game variables
 	var stage = null;
