@@ -86,6 +86,11 @@ var Bigboss = function(){
             sprite.moveData.player = player;
             sprite.moveData.ready = false;
         }
+
+        // getBounds() is expensive - setBounds so it is cached all subsequent getBounds() calls
+        var bounds = sprite.getBounds();
+        sprite.setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
+
         stage.addChild(sprite);
     };
 
@@ -151,8 +156,6 @@ var Bigboss = function(){
 
     this.updateMe = function() {
         if (state == ShapeState.KILLED) return;
-
-        // TODO: add bounce back when player collides with shape
 
         // Step I : collision detection
         // has the bigboss collided with the player?

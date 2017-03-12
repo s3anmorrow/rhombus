@@ -126,28 +126,19 @@ var Globals = {
 			}
 		}
 	},
-
+	
+	// frequent access methods
+	// adds commas to any number (for scores)
 	commaUpScore:function(score) {
 		// take score and add commas
 		var scoreString = String(score);
 		return scoreString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	},
-
-	// ??????????????????/ possibly not used
-	/*
-	centerMe:function(displayObj) {
-		// centers a display object on stage horizontally
-        displayObj.x = 400 - (displayObj.getBounds().width/2);
-    },
-	*/
-
-	// frequent access methods
-	// ??????????????????/ possibly not need this below with lookup tables
+	
 	// converts degrees to radians for Trig calc
     radianMe:function(degrees) {
         return (degrees * (Math.PI / 180));
     },
-	// ????????????????????????????????????????????????
 
 	// generates random number within range
 	randomMe:function(lower,upper) {

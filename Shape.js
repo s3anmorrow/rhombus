@@ -62,6 +62,9 @@ var Shape = function(){
 
         // jump to frame
         sprite.gotoAndStop(type);
+        // getBounds() is expensive - setBounds so it is cached all subsequent getBounds() calls
+        var bounds = sprite.getBounds();
+        sprite.setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
 
         // position sprite
         sprite.x = startX;

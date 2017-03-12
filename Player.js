@@ -295,6 +295,8 @@ var Player = function(){
     };
 
     this.updateMe = function() {
+        if (state == PlayerState.KILLED) return;
+        
         // which direction is player moving?
         if (state == PlayerState.MOVING_LEFT) {
             speedY = 0;

@@ -32,6 +32,10 @@ var ScreenManager = function() {
     this.gameOver = gameOverScreen;
     var gameOverScreenSprite = assetManager.getSprite("ui","gameOverScreen");
     gameOverScreen.addChild(gameOverScreenSprite);
+    var prompt = assetManager.getSprite("ui","spacebarContinue");
+    prompt.x = 240;
+    prompt.y = 420;
+    gameOverScreen.addChild(prompt);
     
     // --------------------------------------------------------- private methods
     function dropShape(dropY) {
@@ -86,7 +90,11 @@ var ScreenManager = function() {
         if (which == "introScreen") introScreen.showMe();
         else if (which == "gameScreen") gameScreen.showMe();
         else if (which == "highScoreScreen") highScoreScreen.showMe(gameScreen.getScore());
-        else if (which == "gameOverScreen") stage.addChild(gameOverScreen);
+        else if (which == "gameOverScreen") {
+            prompt.gotoAndStop("spacebar");
+            if (Globals.gamepadManager.connected) prompt.gotoAndStop("startButtonContinue");
+            stage.addChild(gameOverScreen);
+        }
     };
 
     this.stopBackground = function() {

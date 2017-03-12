@@ -2,10 +2,10 @@ body {
 	margin: 0px;
 	padding: 0px;
 	overflow: hidden;
-	background: #FFFFFF;
+	background: #000000;
 	font-family: verdana,arial,helvetica,sans-serif;
 	font-size: 11px;
-	color: #000000;
+	color: #FFFFFF;
 }
 
 .outer {
@@ -30,7 +30,8 @@ body {
     width:800px;
     height:800px;
     border-width:1px;
-    border-style:dotted;
+    border-style:solid;
     margin-left:0px;
-    margin-top:0px"    
+    margin-top:0px;  
+    background:#000022;
 }

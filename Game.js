@@ -5,10 +5,7 @@
 	"use strict";
 	
 	// TODO: implement lookup tables for Trig
-	// TODO: check all getBounds() references - processor heavy (MoveFunctions)
-	// TODO: add loading screen while all the JS loads before preload kicks in
 	// TODO: bug - why first bullet causes pause
-	// TODO: add ability to set hp of shapes released from turret
 
 	// game variables
 	var stage = null;
@@ -159,7 +156,7 @@
 		console.log(">> intro gameScreen ready");
 
 		// ???????????????? temporary start
-		startGame();
+		//startGame();
 
 	}
 
@@ -190,7 +187,7 @@
 			else if (e.keyCode == 39) screenManager.highScore.moveSelector("right");
 			else if (e.keyCode == 32) screenManager.highScore.selectInitial();
 		} else if (Globals.gameState == GameStates.GAMEOVER) {
-			// !!!!!!!!!!!!!!! check if highscore
+			// TODO: !!!!!!!!!!!!!!! check if highscore
 			resetGame();
 			if (e.keyCode == 32) screenManager.setScreen("introScreen");
 		}

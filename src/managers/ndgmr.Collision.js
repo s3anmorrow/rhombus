@@ -178,7 +178,6 @@ this.ndgmr = this.ndgmr || {};
         pixelRect = {x:Infinity,y:Infinity,x2:-Infinity,y2:-Infinity};
 
     // parsing through the pixels checking for an alpha match
-    // TODO: intelligent parsing, not just from 0 to end!
     for ( y = 0; y < height; ++y) {
         for ( x = 0; x < width; ++x) {
             alpha1 = imageData1.length > offset+1 ? imageData1[offset] / 255 : 0;
