@@ -115,7 +115,7 @@ var Shape = function(){
             if ((pointsAwarded === undefined) || (pointsAwarded === true)) {
                 sprite.gotoAndPlay("explosion" + points);
                 killedEvent.target = null;
-                sprite.dispatchEvent(killedEvent);
+                stage.dispatchEvent(killedEvent);
             } else {
                 sprite.gotoAndPlay("explosionNoPoints");
             }
@@ -128,6 +128,8 @@ var Shape = function(){
                 }
                 _this.stopMe();
             });
+            // shape was destroyed
+            return true;
         } else {
             // play damage explosion
             if (sprite.currentAnimation != (type + "Hit")) sprite.gotoAndPlay(type + "Hit");
@@ -135,6 +137,8 @@ var Shape = function(){
                 e.remove();
                 sprite.gotoAndStop(type);
             });
+            // shape was not destroyed
+            return false;
         }
     };
 

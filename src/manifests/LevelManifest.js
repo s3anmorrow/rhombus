@@ -3,10 +3,9 @@ var levelManifest = [
 
         
         // LEVEL 1
-        /*
         {type:"triangle", 
             wave:{count:3, spaced:30},
-            settings:{x:400, y:800, shooters:[{index:0, freq:100, bulletType:"bullet1""}]}, 
+            settings:{x:400, y:800, shooters:[{index:0, freq:100, bulletType:"bullet1"}]}, 
             movement:{type:"up",speed:2},
             powerup:{type:"powerupLife",index:2},
             time:5
@@ -50,6 +49,7 @@ var levelManifest = [
         }
         */
 
+        /*
         {type:"bossHexagon", 
             wave:{count:1, spaced:4},
             settings:{x:-200, y:250, points:1000,
@@ -64,7 +64,7 @@ var levelManifest = [
             movement:{type:"rightAndStop", speed:2, stopAt:400, rotate:true},
             time:1
         }
-
+        */
 
 
     ]

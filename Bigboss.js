@@ -148,7 +148,7 @@ var Bigboss = function(){
             // dispatch custom event that big boss is killed
             killedEvent.target = null;
             killedEvent.points = points;
-            sprite.dispatchEvent(killedEvent);
+            stage.dispatchEvent(killedEvent);
             // shut down this game object
             _this.stopMe();
         });

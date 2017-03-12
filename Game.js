@@ -32,19 +32,15 @@
 	// ------------------------------------------------------------ private methods
 	function startGame() {
 		// game event listener for all events that control gameplay
-		stage.addEventListener("gameEvent", onGameEvent, true);
+		stage.addEventListener("gameEvent", onGameEvent);
 		// initialization
 		screenManager.setScreen("gameScreen");
-
-
-
 		// start the waves
 		waveFactory.startMe();
 
-		if (player == null) player = objectPool.getPlayer();
-		player.resetMe();
+		// get player and start
+		player = objectPool.getPlayer();
 		player.startMe();
-
 		
 		// change stage of game
 		Globals.gameState = GameStates.PLAYING;
@@ -60,12 +56,11 @@
 	}
 
 	function resetGame() {
-		// scroll through all used elements and return them to the objectPool (with exceptions)
+		// scroll through all used elements and stop (return to objectPool)
 		var length = updateList.length;
 		var object = null;
 		for (var n=0; n<length; n++) {
 			object = updateList[n];
-			// remove everything except the clouds
 			if (object !== null) object.stopMe();
 		}
 

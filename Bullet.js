@@ -154,12 +154,14 @@ var Bullet = function() {
 			// Player's bullet
 			if (owner.constructor.name == "Player") {
 				// has the bullet collided with a shape?
+				var destroyed = false;
 				var length = shapePool.length;
 				for (var n=0; n<length; n++) {	
 					var shape = shapePool[n];
 					if ((shape.used) && (shape.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, shape.sprite, 0, true))) {
-						shape.killMe(damage,true);
-						if (!invincible) this.killMe(true);
+						destroyed = shape.killMe(damage,true);
+						// only play bullet explosion if target NOT destroyed
+						if (!invincible) this.killMe(!destroyed);
 					}
 				}
 
@@ -168,8 +170,8 @@ var Bullet = function() {
 				for (n=0; n<length; n++) {	
 					var turret = turretPool[n];
 					if ((turret.used) && (turret.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, turret.sprite, 0, true))) {
-						turret.killMe(damage);
-						if (!invincible) this.killMe(true);
+						destroyed = turret.killMe(damage);
+						if (!invincible) this.killMe(!destroyed);
 					}
 				}
 

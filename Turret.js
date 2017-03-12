@@ -93,6 +93,8 @@ var Turret = function(){
                 // a turret has been destroyed - notify its owner
                 owner.turretKilled();
             });
+            // was destroyed
+            return true;
         } else {
             // play damage explosion
             if (sprite.currentAnimation != (type + "Hit")) sprite.gotoAndPlay(type + "Hit");
@@ -100,6 +102,8 @@ var Turret = function(){
                 e.remove();
                 sprite.gotoAndStop(type);
             });
+            // was not destroyed
+            return false;
         }
     }
 

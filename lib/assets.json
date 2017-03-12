@@ -1057,29 +1057,6 @@
         ]
     },
     "playerEntrance": {"speed": 1, "frames": [375, 376, 377, 378, 379, 380, 381]},
-    "playerHit": {
-        "speed": 1,
-        "frames": [391, 391, 391, 392, 392, 392, 391, 391, 391, 392, 392, 392]
-    },
-    "hexagonDamageFire": {
-        "speed": 1,
-        "frames": [
-            181,
-            191,
-            192,
-            177,
-            193,
-            194,
-            195,
-            194,
-            193,
-            177,
-            192,
-            191,
-            181
-        ]
-    },
-    "triangle": {"speed": 1, "frames": [59]},
     "bossExplosion1000": {
         "speed": 1,
         "frames": [
@@ -1102,6 +1079,50 @@
             633,
             634,
             635,
+            209
+        ]
+    },
+    "hexagonDamageFire": {
+        "speed": 1,
+        "frames": [
+            181,
+            191,
+            192,
+            177,
+            193,
+            194,
+            195,
+            194,
+            193,
+            177,
+            192,
+            191,
+            181
+        ]
+    },
+    "triangle": {"speed": 1, "frames": [59]},
+    "bossExplosion2000": {
+        "speed": 1,
+        "frames": [
+            617,
+            618,
+            619,
+            620,
+            621,
+            636,
+            637,
+            638,
+            639,
+            640,
+            641,
+            642,
+            643,
+            644,
+            645,
+            646,
+            647,
+            648,
+            649,
             209
         ]
     },
@@ -1153,31 +1174,7 @@
         ]
     },
     "rectangleDamage": {"speed": 1, "frames": [349]},
-    "bossExplosion2000": {
-        "speed": 1,
-        "frames": [
-            617,
-            618,
-            619,
-            620,
-            621,
-            636,
-            637,
-            638,
-            639,
-            640,
-            641,
-            642,
-            643,
-            644,
-            645,
-            646,
-            647,
-            648,
-            649,
-            209
-        ]
-    },
+    "powerupHeavy": {"speed": 1, "frames": [705]},
     "playerShield": {"speed": 1, "frames": [388]},
     "explosionNoPoints": {
         "speed": 1,
@@ -1353,7 +1350,6 @@
             209
         ]
     },
-    "powerupHeavy": {"speed": 1, "frames": [705]},
     "pentagonDamage": {"speed": 1, "frames": [218]},
     "squareDamage": {"speed": 1, "frames": [43]},
     "bossMiniTriangle": {"speed": 1, "frames": [595]},

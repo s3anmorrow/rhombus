@@ -70,7 +70,7 @@ var Player = function(){
         ammoChangeEvent.target = null;
         ammoChangeEvent.ammo = ammo;
         ammoChangeEvent.weaponType = weaponType;
-        sprite.dispatchEvent(ammoChangeEvent);
+        stage.dispatchEvent(ammoChangeEvent);
     };
 
     this.getState = function() {
@@ -87,7 +87,7 @@ var Player = function(){
         // dispatch event so game screen can display updated power bars
         powerChangeEvent.target = null;
         powerChangeEvent.power = power;
-        sprite.dispatchEvent(powerChangeEvent);
+        stage.dispatchEvent(powerChangeEvent);
     };
 
     this.getLives = function() {
@@ -98,19 +98,41 @@ var Player = function(){
         lives = myLives;
         livesChangeEvent.target = null;
         livesChangeEvent.lives = lives;
-        sprite.dispatchEvent(livesChangeEvent);
+        stage.dispatchEvent(livesChangeEvent);
     };
 
     // --------------------------------------------------------- public methods
-    this.startMe = function() {
+    this.startMe = function(){
+        // new game for player initialization
+        lives =  Globals.gameConstants.PLAYER_START_LIVES;        
+        this.spawnMe();
+    };
+
+    this.stopMe = function() {
+        createjs.Tween.removeTweens(shieldSprite);
+        createjs.Tween.removeTweens(sprite);
+        stage.removeChild(shieldSprite);        
+        stage.removeChild(sprite);
+        sprite.stop();
+        // return this object to the object pool
+		objectPool.dispose(this);
+    };
+
+    this.spawnMe = function() {
         // initialization
         state = PlayerState.ENTERING;
+        speedX = 0;
+        speedY = 0;
         fireCounter = 0;
         shieldCounter = 0;
         shieldFadeTime = 0;
         shieldKillTime = 0;
         shieldEnabled = false;
         this.setPower(Globals.gameConstants.PLAYER_START_POWER);
+        this.setWeapon("single"); 
+        createjs.Tween.removeTweens(shieldSprite);
+        createjs.Tween.removeTweens(sprite);
+        stage.removeChild(shieldSprite);                
         sprite.gotoAndStop("playerEntrance");
 
         // center the player sprite
@@ -132,59 +154,41 @@ var Player = function(){
             });
 
         stage.addChild(sprite);
-        // have to do this here since it dispatched event from sprite and needs to be on stage
-        this.setWeapon("single");
-    };
-
-    this.stopMe = function() {
-        stage.removeChild(sprite);
-        sprite.stop();
-        // return this object to the object pool
-		objectPool.dispose(this);
-    };
-
-    this.resetMe = function() {
-        sprite.gotoAndStop("playerEntrance");
-        fireCounter = 0;
-        state = PlayerState.ENTERING;
-        lives =  Globals.gameConstants.PLAYER_START_LIVES;
-        sprite.x = startX;
-        sprite.y = startY;
     };
 
     this.goLeft = function() {
         // do nothing if in ENTERING or KILLED state
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         // don't change animation sequence if currently being hit
-        if (state != PlayerState.HIT) sprite.gotoAndStop("playerLeft");
+        sprite.gotoAndStop("playerLeft");
         if (shieldEnabled) shieldSprite.gotoAndStop("playerShieldLeft");
         state = PlayerState.MOVING_LEFT;
     };
 
     this.goRight = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        if (state != PlayerState.HIT) sprite.gotoAndStop("playerRight");
+        sprite.gotoAndStop("playerRight");
         if (shieldEnabled) shieldSprite.gotoAndStop("playerShieldRight");
         state = PlayerState.MOVING_RIGHT;
     };     
 
     this.goUp = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        if ((sprite.currentAnimation != "playerIdle") && (state != PlayerState.HIT)) sprite.gotoAndPlay("playerIdle");
+        if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
         if (shieldEnabled) shieldSprite.gotoAndStop("playerShield");
         state = PlayerState.MOVING_UP;
     };
 
     this.goDown = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        if ((sprite.currentAnimation != "playerIdle") && (state != PlayerState.HIT)) sprite.gotoAndPlay("playerIdle");
+        if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
         if (shieldEnabled) shieldSprite.gotoAndStop("playerShield");
         state = PlayerState.MOVING_DOWN;
     };
 
     this.goIdle = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        if ((sprite.currentAnimation != "playerIdle") && (state != PlayerState.HIT)) sprite.gotoAndPlay("playerIdle");
+        if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
         if (shieldEnabled) shieldSprite.gotoAndStop("playerShield");
         state = PlayerState.IDLE;
     };
@@ -215,7 +219,7 @@ var Player = function(){
                         ammoChangeEvent.target = null;
                         ammoChangeEvent.ammo = ammo;
                         ammoChangeEvent.weaponType = weaponType;
-                        sprite.dispatchEvent(ammoChangeEvent);
+                        stage.dispatchEvent(ammoChangeEvent);
                         // out of ammo?
                         if (ammo <= 0) this.setWeapon("single");
                     }
@@ -245,26 +249,23 @@ var Player = function(){
             return;
         }
 
-        state = PlayerState.HIT;
         if (powerLoss === undefined) powerLoss = 1;
         this.setPower(power - powerLoss);
         if (power <= 0) {
             this.killMe();
         } else {
-            sprite.gotoAndPlay("playerHit");
-            // update event object
-            sprite.addEventListener("animationend",function(e){
-                e.remove();
-                state = PlayerState.IDLE;
-                sprite.gotoAndPlay("playerIdle");
-            });
+            // tween rocking of sprite when hit by bullet
+            createjs.Tween.get(sprite, {useTicks:true})
+                .to({rotation:sprite.rotation+10}, 3)
+                .to({rotation:sprite.rotation-10}, 3)
+                .to({rotation:sprite.rotation}, 3);
         }
     };
 
     this.shieldMe = function(duration,fadeout) {
         shieldEnabled = true;
         shieldCounter = 0;
-        if (fadeout == undefined) fadeout = 2;
+        if (fadeout === undefined) fadeout = 2;
 
         // determine fadeout and kill times
         shieldFadeTime = (duration - fadeout) * gameConstants.FRAME_RATE;
@@ -277,6 +278,11 @@ var Player = function(){
 
     this.killMe = function() {
         state = PlayerState.KILLED;
+        // kill shield tween/sprite if on
+        if (shieldEnabled) {
+            createjs.Tween.removeTweens(shieldSprite);
+            stage.removeChild(shieldSprite); 
+        }
         sprite.gotoAndPlay("playerKilled");
         sprite.addEventListener("animationend",function(e){
             e.remove();
@@ -287,16 +293,17 @@ var Player = function(){
                 sprite.stop();
                 sprite.y = -2000;
                 gameOverEvent.target = null;
-                sprite.dispatchEvent(gameOverEvent);
+                stage.dispatchEvent(gameOverEvent);
+                 _this.stopMe();
             } else {
-                _this.startMe();
+                _this.spawnMe();
             }
         });
     };
 
     this.updateMe = function() {
         if (state == PlayerState.KILLED) return;
-        
+
         // which direction is player moving?
         if (state == PlayerState.MOVING_LEFT) {
             speedY = 0;
@@ -330,7 +337,7 @@ var Player = function(){
                 }
 
                 // has the player finished decelerration?
-                if ((speedX === 0) && (speedY === 0) && (state != PlayerState.HIT)) sprite.gotoAndPlay("playerIdle");
+                if ((speedX === 0) && (speedY === 0)) sprite.gotoAndPlay("playerIdle");
             }
         }
 
@@ -384,6 +391,5 @@ var PlayerState = {
     "MOVING_RIGHT":3,
     "MOVING_UP":4,
     "MOVING_DOWN":5,
-    "KILLED":6,
-    "HIT":7
+    "KILLED":6
 };
