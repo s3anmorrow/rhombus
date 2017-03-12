@@ -36,6 +36,7 @@ var Globals = {
 		POWERUPS:{
 			"powerupDouble": {category:"weapon",data:"double"},
 			"powerupSpread": {category:"weapon",data:"spread"},
+			"powerupSuperSpread": {category:"weapon",data:"superSpread"},
 			"powerupHeavy": {category:"weapon",data:"heavy"},
 			"powerupRapid": {category:"weapon",data:"rapid"},
 			"powerupLaser": {category:"weapon",data:"laser"},
@@ -77,6 +78,17 @@ var Globals = {
 				speed:20,
 				damage:0.5,
 				ammo:100,
+				invincible:false,
+				frame:"spreadBullet"				
+			},
+			"superSpread":{
+				freq:8,
+				gunPoints:[{x:0,y:-20,r:270},{x:-20,y:-5,r:225},{x:20,y:-5,r:315},{x:24,y:5,r:0},{x:-24,y:5,r:180},{x:24,y:15,r:45},{x:-24,y:15,r:135}],
+				alternateFire:false,
+				auto:true,
+				speed:20,
+				damage:1,
+				ammo:400,
 				invincible:false,
 				frame:"spreadBullet"				
 			},

@@ -130,6 +130,8 @@ var Player = function(){
         shieldEnabled = false;
         this.setPower(Globals.gameConstants.PLAYER_START_POWER);
         this.setWeapon("single"); 
+        // TESTING WEAPONS
+        //this.setWeapon("superspread"); 
         createjs.Tween.removeTweens(shieldSprite);
         createjs.Tween.removeTweens(sprite);
         stage.removeChild(shieldSprite);                
