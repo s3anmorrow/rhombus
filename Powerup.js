@@ -60,6 +60,9 @@ var Powerup = function(){
     this.updateMe = function() {
         // make powerup fade away
         sprite.alpha -= 0.005;
+        // make powerup slowly drop
+        //sprite.y+=2;
+
         if (sprite.alpha <= 0) this.stopMe();
 
         // has the player collided with the powerup?

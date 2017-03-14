@@ -140,6 +140,7 @@ var Player = function(){
         // center the player sprite
         sprite.x = startX;
         sprite.y = startY;
+        sprite.rotation = 0;
 
         // animate player sprite coming onto stage
         createjs.Tween.get(sprite, {useTicks:true})
@@ -162,14 +163,14 @@ var Player = function(){
         // do nothing if in ENTERING or KILLED state
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         // don't change animation sequence if currently being hit
-        sprite.gotoAndStop("playerLeft");
+        if (sprite.currentAnimation != "playerLeft") sprite.gotoAndPlay("playerLeft");
         if (shieldEnabled) shieldSprite.gotoAndStop("playerShieldLeft");
         state = PlayerState.MOVING_LEFT;
     };
 
     this.goRight = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        sprite.gotoAndStop("playerRight");
+        if (sprite.currentAnimation != "playerRight") sprite.gotoAndPlay("playerRight");
         if (shieldEnabled) shieldSprite.gotoAndStop("playerShieldRight");
         state = PlayerState.MOVING_RIGHT;
     };     
@@ -256,6 +257,7 @@ var Player = function(){
         if (power <= 0) {
             this.killMe();
         } else {
+            sprite.rotation = 0;
             // tween rocking of sprite when hit by bullet
             createjs.Tween.get(sprite, {useTicks:true})
                 .to({rotation:sprite.rotation+10}, 3)

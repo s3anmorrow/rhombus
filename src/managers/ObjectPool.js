@@ -6,6 +6,7 @@ var ObjectPool = function() {
 	// private property variables
 	// list of all game objects to be rendered onto the canvas
 	var updateList = [];
+	var usedCount = 0;
 
 	// starting constant maximums of the game elements (virusMax can be extended by Object pool if needed)
 	var SHAPE_MAX = 100;
@@ -43,6 +44,8 @@ var ObjectPool = function() {
 				var object = pool[i];
 				object.used = true;
 				updateList[object.usedIndex] = object;
+				// keeping track of used objects except bullets
+				if (pool != bulletPool) usedCount++;
 				return object;
 			}
 		}
@@ -61,7 +64,13 @@ var ObjectPool = function() {
 	}
 
 	// ------------------------------------------------------ public methods
-	this.getUpdateList = function() {return updateList;};
+	this.getUpdateList = function() {
+		return updateList;
+	};
+
+	this.getUsedCount = function() {
+		return usedCount;
+	};
 
 	this.init = function() {
 		// pool object construction
@@ -115,6 +124,7 @@ var ObjectPool = function() {
 		} else if (o.constructor.name == "Powerup") {
 			powerupPool[o.poolIndex].used = false;	
 		}
+		if (o.constructor.name != "Bullet") usedCount--;
 		updateList[o.usedIndex] = null;
 
 		//console.log("dispose " + o.constructor.name + " @ pool index " + o.poolIndex);

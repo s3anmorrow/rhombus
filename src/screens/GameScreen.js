@@ -32,7 +32,7 @@ var GameScreen = function() {
 
     var txtLives = new createjs.BitmapText("0",assetManager.getSpriteSheet("charset30"));
     txtLives.x = 70;
-    txtLives.y = 129;
+    txtLives.y = 131;
     screen.addChild(txtLives);
 
     var powerBlocks = [];

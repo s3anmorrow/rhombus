@@ -151,16 +151,16 @@
 		console.log(">> intro gameScreen ready");
 
 		// ???????????????? temporary start
-		//startGame();
+		startGame();
 
 	}
 
 	function onKeyDown(e) {
 		if (Globals.gameState == GameStates.PLAYING) {
-			if (e.keyCode == 40) downKey = true;
-			else if (e.keyCode == 38) upKey = true;
-			else if (e.keyCode == 37) leftKey = true;
-			else if (e.keyCode == 39) rightKey = true;
+			if ((e.keyCode == 40) || (e.keyCode == 83)) downKey = true;
+			else if ((e.keyCode == 38) || (e.keyCode == 87)) upKey = true;
+			else if ((e.keyCode == 37) || (e.keyCode == 65)) leftKey = true;
+			else if ((e.keyCode == 39) || (e.keyCode == 68)) rightKey = true;
 			else if (e.keyCode == 32) fireKey = true;
 		}
 		e.preventDefault();
@@ -170,10 +170,10 @@
 		if (Globals.gameState == GameStates.INTRO) {
 			if (e.keyCode == 32) startGame();
 		} else if (Globals.gameState == GameStates.PLAYING) {
-			if (e.keyCode == 40) downKey = false;
-			else if (e.keyCode == 38) upKey = false;
-			else if (e.keyCode == 37) leftKey = false;
-			else if (e.keyCode == 39) rightKey = false;
+			if ((e.keyCode == 40) || (e.keyCode == 83)) downKey = false;
+			else if ((e.keyCode == 38) || (e.keyCode == 87)) upKey = false;
+			else if ((e.keyCode == 37) || (e.keyCode == 65)) leftKey = false;
+			else if ((e.keyCode == 39) || (e.keyCode == 68)) rightKey = false;
 			else if (e.keyCode == 32) fireKey = false;
 		} else if (Globals.gameState == GameStates.HIGHSCORE) {			
 			if (e.keyCode == 40) screenManager.highScore.moveSelector("down");
@@ -190,7 +190,7 @@
 	}
 
 	function onGameEvent(e) {
-		console.log("gameEvent: " + e.id);
+		//console.log("gameEvent: " + e.id);
 
 		// what type of event has occurred?
 		switch (e.id){
@@ -252,8 +252,13 @@
 			var target = null;
 			for (var n=0; n<length; n++) {
 				target = updateList[n];
-				if (target !== null) target.updateMe();
+				if (target !== null) {
+					target.updateMe();
+				}
 			}
+
+			console.log("used: " + objectPool.getUsedCount());
+
 			// required routine updates
 			waveFactory.updateMe();
 		}

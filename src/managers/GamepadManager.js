@@ -53,7 +53,7 @@ var GamepadManager = function(){
  
             //setup an interval for Chrome
             var checkGP = window.setInterval(function() {
-                console.log(">> looking for gamepad");
+                //console.log(">> looking for gamepad");
                 if(navigator.getGamepads()[0]) {
                     if(!this.active) onGBConnected();
                     window.clearInterval(checkGP);

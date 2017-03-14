@@ -38,7 +38,7 @@ var WaveFactory = function(){
         // go through all pending waves of current level to see if time to release
         for (var n=0; n<activeLevel.length; n++) {
             if (activeLevel[n].time == seconds) {
-                console.log("release wave!");
+                //console.log("release wave!");
                 // release new wave
 
                 // initializing next wave object before starting wave
@@ -49,8 +49,12 @@ var WaveFactory = function(){
                 waveIndex++;
                 if (waveIndex > (activeLevel.length - 1)) {
                     // wave is complete
-                    //window.clearInterval(waveTimer);
                     console.log("wave all released!");
+
+                    // TODO: add code to move to next level (add to heads up?)
+                    
+
+
                 }
 
                 //console.log(activeWaves);
@@ -73,6 +77,9 @@ var WaveFactory = function(){
         waveIndex = 0;
         activeLevel = levelManifest[level - 1];
         activeWaves = [];
+
+        // LEVEL TESTING
+        //waveIndex = 11;
     };
 
     this.resetMe = function() {
@@ -106,8 +113,10 @@ var WaveFactory = function(){
                         if (activeWave.settings.shooters !== undefined) shootData = search(activeWave.settings.shooters, "index", activeWave.wave.dropped);
                         // does this shape drop a powerup?
                         var powerupType = "";
-                        var powerupIndex = activeWave.powerup.index;
-                        if (activeWave.wave.dropped == powerupIndex) powerupType = activeWave.powerup.type;
+                        if (activeWave.powerup !== null) {
+                            var powerupIndex = activeWave.powerup.index;
+                            if (activeWave.wave.dropped == powerupIndex) powerupType = activeWave.powerup.type;
+                        }
                         // start the shape and pass along required data
                         shape.startMe(activeWave.type, 
                                       activeWave.settings.x, 

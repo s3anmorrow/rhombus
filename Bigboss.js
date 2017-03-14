@@ -96,7 +96,6 @@ var Bigboss = function(){
 
     this.stopMe = function() {
         // clear out all turrets
-        for (var n=0; n<turrets.length; n++) turrets[n].stopMe();
         turrets = null;
 
         // remove Shape

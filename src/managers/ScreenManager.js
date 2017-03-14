@@ -91,7 +91,7 @@ var ScreenManager = function() {
         else if (which == "gameScreen") gameScreen.showMe();
         else if (which == "highScoreScreen") highScoreScreen.showMe(gameScreen.getScore());
         else if (which == "gameOverScreen") {
-            prompt.gotoAndStop("spacebar");
+            prompt.gotoAndStop("spacebarContinue");
             if (Globals.gamepadManager.connected) prompt.gotoAndStop("startButtonContinue");
             stage.addChild(gameOverScreen);
         }
