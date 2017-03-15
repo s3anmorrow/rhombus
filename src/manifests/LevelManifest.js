@@ -24,7 +24,7 @@ var levelManifest = [
         },
         {type:"ellipse", 
             wave:{count:5, spaced:30},
-            settings:{x:700, y:-30, shooters:[{index:0, freq:100, bulletType:"bullet1"}]}, 
+            settings:{x:700, y:-20, shooters:[{index:0, freq:100, bulletType:"bullet1"}]}, 
             movement:{type:"diagonal",speed:4,angle:135},
             powerup:null,
             time:15

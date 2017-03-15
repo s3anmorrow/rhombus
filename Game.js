@@ -6,6 +6,9 @@
 	
 	// TODO: implement lookup tables for Trig
 	// TODO: bug - why first bullet causes pause
+	// TODO: remove points when shape escapes
+	// TODO: adjust so single bullet can't be fired as fast
+	// TODO: points removed when shape escapes
 
 	// game variables
 	var stage = null;
@@ -194,7 +197,7 @@
 
 		// what type of event has occurred?
 		switch (e.id){
-			case "shapeKilled":
+			case "pointsChange":
 				screenManager.game.adjustPoints(e.points);
 				break;
 			case "playerPowerChange":
@@ -256,9 +259,6 @@
 					target.updateMe();
 				}
 			}
-
-			console.log("used: " + objectPool.getUsedCount());
-
 			// required routine updates
 			waveFactory.updateMe();
 		}

@@ -11,7 +11,7 @@ var MoveFunctions = {
         }
         if (sprite.moveData.rotate) sprite.rotation++;
         sprite.y+=sprite.moveData.speed;
-        if (sprite.y > Globals.stage.canvas.height + sprite.getBounds().height) return false;
+        if (sprite.y > Globals.stage.canvas.height + sprite.moveData.height) return false;
         return true;
     },
 
@@ -66,7 +66,7 @@ var MoveFunctions = {
         }
         if (sprite.moveData.rotate) sprite.rotation++;
         sprite.y-=sprite.moveData.speed;
-        if (sprite.y <= -sprite.getBounds().height) return false;
+        if (sprite.y <= -sprite.moveData.height) return false;
         return true;
     },
 
@@ -77,7 +77,7 @@ var MoveFunctions = {
         }
         if (sprite.moveData.rotate) sprite.rotation++;
         sprite.x-=sprite.moveData.speed;
-        if (sprite.x <= -sprite.getBounds().width) return false;
+        if (sprite.x <= -sprite.moveData.width) return false;
         return true;
     },
 
@@ -88,7 +88,7 @@ var MoveFunctions = {
         }
         if (sprite.moveData.rotate) sprite.rotation++;
         sprite.x+=sprite.moveData.speed;
-        if (sprite.x >= Globals.stage.canvas.width + sprite.getBounds().width) return false;
+        if (sprite.x >= Globals.stage.canvas.width + sprite.moveData.width) return false;
         return true;
     },    
 
@@ -130,7 +130,7 @@ var MoveFunctions = {
         sprite.y = sprite.y + sprite.moveData.yDisplace;
 
         // check if object is off the stage
-        if ((sprite.x < -sprite.getBounds().width) || (sprite.x > (Globals.stage.canvas.width + sprite.getBounds().width)) || (sprite.y < -sprite.getBounds().height) || (sprite.y > (Globals.stage.canvas.height + sprite.getBounds().height))) return false;
+        if ((sprite.x < -sprite.moveData.width) || (sprite.x > (Globals.stage.canvas.width + sprite.moveData.width)) || (sprite.y < -sprite.moveData.height) || (sprite.y > (Globals.stage.canvas.height + sprite.moveData.height))) return false;
         return true;
     },    
 
@@ -147,7 +147,7 @@ var MoveFunctions = {
                 if (sprite.y >= sprite.moveData.y) sprite.moveData.stage = 1;
             } else {
                 sprite.y-=sprite.moveData.speed;
-                if (sprite.y <= -sprite.getBounds().height) return false;
+                if (sprite.y <= -sprite.moveData.height) return false;
             }
             return true;
         } else {
@@ -157,7 +157,7 @@ var MoveFunctions = {
                 if (sprite.y <= sprite.moveData.y) sprite.moveData.stage = 1;
             } else {
                 sprite.y+=sprite.moveData.speed;
-                if (sprite.y <= -sprite.getBounds().height) return false;
+                if (sprite.y <= -sprite.moveData.height) return false;
             }
             return true;
         }
@@ -194,7 +194,7 @@ var MoveFunctions = {
                 // EXIT STAGE
                 sprite.x-=sprite.moveData.speed;
                 // off the left of the stage?
-                if (sprite.x < -sprite.getBounds().width) return false;
+                if (sprite.x < -sprite.moveData.width) return false;
             }
             return true;
         } else if (sprite.moveData.dir == "right") {
@@ -219,7 +219,7 @@ var MoveFunctions = {
                 // EXIT STAGE
                 sprite.x+=sprite.moveData.speed;
                 // off the left of the stage?
-                if (sprite.x > Globals.stage.canvas.width + sprite.getBounds().width) return false;
+                if (sprite.x > Globals.stage.canvas.width + sprite.moveData.width) return false;
             }
             return true;
         } else if (sprite.moveData.dir === "down") {
@@ -244,7 +244,7 @@ var MoveFunctions = {
                 // EXIT STAGE
                 sprite.y+=sprite.moveData.speed;
                 // off the left of the stage?
-                if (sprite.y > Globals.stage.canvas.height + sprite.getBounds().height) return false;
+                if (sprite.y > Globals.stage.canvas.height + sprite.moveData.height) return false;
             }
             return true;
         }

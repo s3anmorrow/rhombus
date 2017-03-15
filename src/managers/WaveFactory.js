@@ -10,6 +10,8 @@ var WaveFactory = function(){
     var level = 0;
     var wave = 0;
     var waveIndex = 0;
+    var enemyReleased = 0;
+    var enemyTotal = 0;
     // current level metadata
     var activeLevel = null;
     // the current active waves on the stage
@@ -38,26 +40,12 @@ var WaveFactory = function(){
         // go through all pending waves of current level to see if time to release
         for (var n=0; n<activeLevel.length; n++) {
             if (activeLevel[n].time == seconds) {
-                //console.log("release wave!");
                 // release new wave
-
                 // initializing next wave object before starting wave
                 activeLevel[waveIndex].wave.frameCount = activeLevel[waveIndex].wave.spaced;
                 activeLevel[waveIndex].wave.dropped = 0;
                 activeWaves.push(activeLevel[waveIndex]);
-
                 waveIndex++;
-                if (waveIndex > (activeLevel.length - 1)) {
-                    // wave is complete
-                    console.log("wave all released!");
-
-                    // TODO: add code to move to next level (add to heads up?)
-                    
-
-
-                }
-
-                //console.log(activeWaves);
             }
         }
     }    
@@ -76,6 +64,11 @@ var WaveFactory = function(){
         wave = 0;
         waveIndex = 0;
         activeLevel = levelManifest[level - 1];
+        enemyReleased = 0;
+        enemyTotal = 0;
+        for (var n=0; n<activeLevel.length; n++) {
+            enemyTotal += activeLevel[n].wave.count;
+        }
         activeWaves = [];
 
         // LEVEL TESTING
@@ -105,6 +98,7 @@ var WaveFactory = function(){
                         var turretData = activeWave.settings.turrets;
                         // start the boss shape and pass along required data
                         boss.startMe(activeWave.type, activeWave.settings.x, activeWave.settings.y, activeWave.settings.points, turretData, movementData);
+                        enemyReleased++;
                     } else {
                         var shootData = null;
                         // drop shape into the game
@@ -124,6 +118,7 @@ var WaveFactory = function(){
                                       powerupType, 
                                       shootData, 
                                       movementData);
+                        enemyReleased++;
                     }
                     
                     activeWave.wave.dropped++;
@@ -143,6 +138,9 @@ var WaveFactory = function(){
             // check if time to add a new wave to game
             addWave();
         }
+        
+        // wave is complete only if all enemies released and there is only player left (enemies all killed)
+        if ((enemyReleased == enemyTotal) && (objectPool.getUsedCount() == 1)) this.levelMe();
 
     };
 

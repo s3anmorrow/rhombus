@@ -100,6 +100,7 @@ var GameScreen = function() {
 
     this.adjustPoints = function(amount) {
         score+=amount;
+        if (score < 0) score = 0;
         refreshScoreBoard();
     };
 

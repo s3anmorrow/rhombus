@@ -1,8 +1,8 @@
 var Shape = function(){
     // custom events
-    var killedEvent = new createjs.Event("gameEvent", true);
-    killedEvent.id = "shapeKilled";
-    killedEvent.points = 0;
+    var pointsEvent = new createjs.Event("gameEvent", true);
+    pointsEvent.id = "pointsChange";
+    pointsEvent.points = 0;
 
     // set references to globals
     var stage = Globals.stage;
@@ -45,11 +45,12 @@ var Shape = function(){
         frameCounter = 0;
         type = myType;
         points = gameConstants.SHAPES[type].points;
-        killedEvent.points = points;
+        pointsEvent.points = points;
         state = ShapeState.ATTACKING;
         hitPoints = gameConstants.SHAPES[type].hp;
         halfHitPoints = hitPoints/2;
         powerupType = myPowerupType;
+        createjs.Tween.removeTweens(sprite);
 
         // setup shape to be a shooter or not
         shooter = false;
@@ -62,14 +63,12 @@ var Shape = function(){
 
         // jump to frame
         sprite.gotoAndStop(type);
-        // getBounds() is expensive - setBounds so it is cached all subsequent getBounds() calls
-        var bounds = sprite.getBounds();
-        sprite.setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
 
         // position sprite
         sprite.x = startX;
         sprite.y = startY;
         sprite.rotation = 0;
+        sprite.alpha = 1;
         // get reference to this shape's moveFunction
         moveFunction = MoveFunctions[myMovement.type];
         // add movement options object to sprite for setting up movement function
@@ -78,6 +77,10 @@ var Shape = function(){
             // attach reference to player object - for kamikaze move function
             sprite.moveData.player = player;
             sprite.moveData.ready = false;
+            // getBounds() is expensive - setBounds so it is cached all subsequent getBounds() calls
+            var bounds = sprite.getBounds();
+            sprite.moveData.width = bounds.width;
+            sprite.moveData.height = bounds.height;
         }
         stage.addChild(sprite);
     };
@@ -85,6 +88,7 @@ var Shape = function(){
     this.stopMe = function() {
         // remove Shape
 		sprite.stop();
+        createjs.Tween.removeTweens(sprite);
 		stage.removeChild(sprite);    
 		// return this object to the object pool
 		objectPool.dispose(this);
@@ -114,8 +118,8 @@ var Shape = function(){
             // position explosion sprite
             if ((pointsAwarded === undefined) || (pointsAwarded === true)) {
                 sprite.gotoAndPlay("explosion" + points);
-                killedEvent.target = null;
-                stage.dispatchEvent(killedEvent);
+                pointsEvent.target = null;
+                stage.dispatchEvent(pointsEvent);
             } else {
                 sprite.gotoAndPlay("explosionNoPoints");
             }
@@ -186,7 +190,34 @@ var Shape = function(){
         // run move movement function (result is whether movement should still be active)
         var result = moveFunction(sprite);
         // is shape off the stage?
-        if (!result) this.stopMe();
+        if (!result) {
+            // set to killed so user can't shoot points lost
+            state = ShapeState.KILLED;
+            // adjust sprite to display lost points
+            sprite.alpha = 1;
+            sprite.rotation = 0;
+            sprite.gotoAndStop("lose" + points);
+            // move sprite back on stage depending on where it currently is
+            if (sprite.y > Globals.stage.canvas.height) {
+                sprite.y = Globals.stage.canvas.width - (sprite.getBounds().height/2) - 5;
+            } else if (sprite.y < 0) {
+                sprite.y = (sprite.getBounds().height/2) + 5;
+            } else if (sprite.x < 0) {
+                sprite.x = (sprite.getBounds().width/2) + 5;
+            } else if (sprite.x > Globals.stage.canvas.width) {
+                sprite.x = Globals.stage.canvas.width - (sprite.getBounds().width/2) - 5;
+            }
+            // lose points for escaped shape
+            pointsEvent.target = null;
+            pointsEvent.points = -points;
+            stage.dispatchEvent(pointsEvent);
+            // tween out alpha of points            
+            createjs.Tween.get(sprite,{useTicks:true})
+            .to({alpha:0}, 15)
+            .call(function(){
+                _this.stopMe();
+            });
+        }
 
         frameCounter++;
     };
