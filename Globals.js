@@ -26,12 +26,12 @@ var Globals = {
 			"square": {hp:1,points:50},
 			"triangle": {hp:2,points:100},
 			"ellipse": {hp:2,points:100},
-			"pentagon": {hp:3,points:200},
 			"star": {hp:3,points:200},
-			"nonagon": {hp:4,points:400},
+			"nonagon": {hp:3,points:300},
 			"rectangle": {hp:4,points:400},
+			"hexagon": {hp:4,points:400},
 			"rhombus": {hp:5,points:500},
-			"hexagon": {hp:4,points:400}
+			"pentagon": {hp:5,points:500}
 		},
 		POWERUPS:{
 			"powerupDouble": {category:"weapon",data:"double"},
@@ -66,7 +66,7 @@ var Globals = {
 				auto:true,
 				speed:20,
 				damage:1,
-				ammo:250,
+				ammo:200,
 				invincible:false,
 				frame:"bullet"				
 			},
@@ -77,7 +77,7 @@ var Globals = {
 				auto:false,
 				speed:20,
 				damage:0.5,
-				ammo:250,
+				ammo:300,
 				invincible:false,
 				frame:"spreadBullet"				
 			},
@@ -109,7 +109,7 @@ var Globals = {
 				alternateFire:false,
 				auto:true,
 				speed:10,
-				damage:0.3,
+				damage:0.4,
 				ammo:100,
 				invincible:false,
 				frame:"rapidBullet"				

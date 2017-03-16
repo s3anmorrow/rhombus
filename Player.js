@@ -124,6 +124,7 @@ var Player = function(){
         speedX = 0;
         speedY = 0;
         fireCounter = 0;
+        firingGunIndex = 0;
         shieldCounter = 0;
         shieldFadeTime = 0;
         shieldKillTime = 0;

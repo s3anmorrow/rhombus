@@ -40,6 +40,9 @@ var WaveFactory = function(){
         // go through all pending waves of current level to see if time to release
         for (var n=0; n<activeLevel.length; n++) {
             if (activeLevel[n].time == seconds) {
+
+                console.log("Adding wave");
+
                 // release new wave
                 // initializing next wave object before starting wave
                 activeLevel[waveIndex].wave.frameCount = activeLevel[waveIndex].wave.spaced;
@@ -63,6 +66,13 @@ var WaveFactory = function(){
         seconds = 0;
         wave = 0;
         waveIndex = 0;
+
+
+        // LEVEL TESTING
+        level = 2;
+        waveIndex = 12;
+
+
         activeLevel = levelManifest[level - 1];
         enemyReleased = 0;
         enemyTotal = 0;
@@ -71,8 +81,7 @@ var WaveFactory = function(){
         }
         activeWaves = [];
 
-        // LEVEL TESTING
-        //waveIndex = 11;
+        console.log("level up: " + level);
     };
 
     this.resetMe = function() {

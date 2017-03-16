@@ -4,11 +4,10 @@
 (function() {
 	"use strict";
 	
-	// TODO: implement lookup tables for Trig
 	// TODO: bug - why first bullet causes pause
-	// TODO: remove points when shape escapes
 	// TODO: adjust so single bullet can't be fired as fast
-	// TODO: points removed when shape escapes
+	// TODO: way for game to finish with rhombus big boss
+	// TODO: add sound effects
 
 	// game variables
 	var stage = null;
