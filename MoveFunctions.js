@@ -192,6 +192,7 @@ var MoveFunctions = {
                 if (sprite.rotation >= (360 * sprite.moveData.loops)) sprite.moveData.stage = 2;
             } else if (sprite.moveData.stage == 2) {
                 // EXIT STAGE
+                if ((sprite.moveData.stop !== undefined) && (sprite.moveData.stop)) return true;
                 sprite.x-=sprite.moveData.speed;
                 // off the left of the stage?
                 if (sprite.x < -sprite.moveData.width) return false;
@@ -217,6 +218,7 @@ var MoveFunctions = {
                 if (sprite.rotation >= (360 * sprite.moveData.loops)) sprite.moveData.stage = 2;
             } else if (sprite.moveData.stage == 2) {
                 // EXIT STAGE
+                if ((sprite.moveData.stop !== undefined) && (sprite.moveData.stop)) return true;
                 sprite.x+=sprite.moveData.speed;
                 // off the left of the stage?
                 if (sprite.x > Globals.stage.canvas.width + sprite.moveData.width) return false;
@@ -242,6 +244,7 @@ var MoveFunctions = {
                 if (sprite.rotation >= (360 * sprite.moveData.loops)) sprite.moveData.stage = 2;
             } else if (sprite.moveData.stage == 2) {
                 // EXIT STAGE
+                if ((sprite.moveData.stop !== undefined) && (sprite.moveData.stop)) return true;
                 sprite.y+=sprite.moveData.speed;
                 // off the left of the stage?
                 if (sprite.y > Globals.stage.canvas.height + sprite.moveData.height) return false;

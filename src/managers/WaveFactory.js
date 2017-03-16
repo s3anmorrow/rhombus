@@ -70,7 +70,7 @@ var WaveFactory = function(){
 
         // LEVEL TESTING
         level = 2;
-        waveIndex = 12;
+        waveIndex = 13;
 
 
         activeLevel = levelManifest[level - 1];

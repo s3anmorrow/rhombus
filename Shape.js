@@ -114,9 +114,9 @@ var Shape = function(){
 
         if (hitPoints <= 0) {
             state = ShapeState.KILLED;
-            sprite.rotation = 0;
             // position explosion sprite
             if ((pointsAwarded === undefined) || (pointsAwarded === true)) {
+                sprite.rotation = 0;
                 sprite.gotoAndPlay("explosion" + points);
                 pointsEvent.target = null;
                 stage.dispatchEvent(pointsEvent);

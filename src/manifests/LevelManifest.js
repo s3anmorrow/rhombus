@@ -15,6 +15,11 @@
 // level 2 - looping diagonal downAndStop (with overlap) / circle square ellipse star / bullet1
 
 
+// to add:
+// pentagon cloaking
+// looping and stopping
+// powerup powerupShield
+
 
 
 var levelManifest = [
@@ -291,6 +296,13 @@ var levelManifest = [
             },
             movement:{type:"leftAndStop", speed:2, stopAt:400, rotate:true},
             time:62
+        },
+        {type:"square", 
+            wave:{count:12, spaced:20},
+            settings:{x:400, y:0}, 
+            movement:{type:"looping", r:200, cx:400, cy:400, dir:"down", loops:3, speed:4},
+            powerup:null,
+            time:32
         }
     ]
     
