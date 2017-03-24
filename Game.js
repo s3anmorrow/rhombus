@@ -8,6 +8,7 @@
 	// TODO: adjust so single bullet can't be fired as fast
 	// TODO: way for game to finish with rhombus big boss
 	// TODO: add sound effects
+	// TODO: have powerup appear in nicer way
 
 	// game variables
 	var stage = null;

@@ -104,7 +104,8 @@ var Player = function(){
     // --------------------------------------------------------- public methods
     this.startMe = function(){
         // new game for player initialization
-        lives =  Globals.gameConstants.PLAYER_START_LIVES;        
+        lives =  Globals.gameConstants.PLAYER_START_LIVES;
+        this.setWeapon("single");         
         this.spawnMe();
     };
 
@@ -130,7 +131,10 @@ var Player = function(){
         shieldKillTime = 0;
         shieldEnabled = false;
         this.setPower(Globals.gameConstants.PLAYER_START_POWER);
-        this.setWeapon("single"); 
+
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //this.setWeapon("single"); 
+
         // TESTING WEAPONS
         //this.setWeapon("superspread"); 
         createjs.Tween.removeTweens(shieldSprite);

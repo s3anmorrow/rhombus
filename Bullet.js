@@ -1,7 +1,6 @@
 var Bullet = function() {
 	// custom events
 
-
 	// bullet state constants
 	var KILLED = BulletState.KILLED;
 	var MOVING = BulletState.MOVING;

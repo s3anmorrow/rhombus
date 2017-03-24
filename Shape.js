@@ -160,7 +160,10 @@ var Shape = function(){
         var targetAngle = Math.floor(180 + (Math.atan2(sprite.y - player.sprite.y, sprite.x - player.sprite.x) * 57.2957795));
         // release the bullet!
         var bullet = objectPool.getBullet();
-        bullet.startMe(bulletType, this, bulletType, 6, 2, false, sprite.x, sprite.y, targetAngle);
+        var bulletSpeed = 2;
+        if (bulletType == "bullet2") bulletSpeed = 3;
+        if (bulletType == "bullet3") bulletSpeed = 4;
+        bullet.startMe(bulletType, this, bulletType, 6, bulletSpeed, false, sprite.x, sprite.y, targetAngle);
     };
 
     this.updateMe = function() {

@@ -13,12 +13,16 @@
 
 // level 1 - up down left right rightAndStop leftAndStop downAndStop / circle square ellipse triangle / bullet1
 // level 2 - looping diagonal downAndStop (with overlap) / circle square ellipse star / bullet1
+// level 3 - wall of circles with four mini bosses coming down / massive looping number with higher hp
+// level 4 - 
 
 
 // to add:
 // pentagon cloaking
 // looping and stopping
 // powerup powerupShield
+// large loop radius of 400 (suicidal shapes)
+// shape spawn turret
 
 
 
@@ -304,6 +308,145 @@ var levelManifest = [
             powerup:null,
             time:32
         }
+    ],
+    [
+        // LEVEL 3
+        {type:"circle", 
+            wave:{count:20, spaced:30},
+            settings:{x:-30, y:200, 
+                shooters:[{index:1, freq:75, bulletType:"bullet1"},
+                {index:3, freq:75, bulletType:"bullet1"},
+                {index:5, freq:75, bulletType:"bullet1"},
+                {index:7, freq:75, bulletType:"bullet1"},
+                {index:9, freq:75, bulletType:"bullet1"},
+                {index:11, freq:75, bulletType:"bullet1"},
+                {index:13, freq:75, bulletType:"bullet1"},
+                {index:15, freq:75, bulletType:"bullet1"},
+                {index:17, freq:75, bulletType:"bullet1"},
+                {index:19, freq:75, bulletType:"bullet1"}
+                ]}, 
+            movement:{type:"right",speed:2},
+            powerup:{type:"powerupSuperDouble",index:2},
+            time:1
+        },
+        {type:"bossMiniHexagon", 
+            wave:{count:1, spaced:1},
+            settings:{x:200, y:-30, points:200,
+                turrets:[   
+                    {type:"star",x:0,y:0,freq:35,bulletType:"bullet1"},
+                ]
+            },
+            movement:{type:"downAndStop", speed:2, stopAt:250, rotate:true},
+            time:7
+        },
+        {type:"bossMiniHexagon", 
+            wave:{count:1, spaced:1},
+            settings:{x:300, y:-30, points:200,
+                turrets:[   
+                    {type:"star",x:0,y:0,freq:35,bulletType:"bullet1"},
+                ]
+            },
+            movement:{type:"downAndStop", speed:2, stopAt:350, rotate:true},
+            time:9
+        },
+        {type:"bossMiniHexagon", 
+            wave:{count:1, spaced:1},
+            settings:{x:400, y:-30, points:200,
+                turrets:[   
+                    {type:"star",x:0,y:0,freq:35,bulletType:"bullet1"},
+                ]
+            },
+            movement:{type:"downAndStop", speed:2, stopAt:350, rotate:true},
+            time:11
+        },
+        {type:"bossMiniHexagon", 
+            wave:{count:1, spaced:1},
+            settings:{x:500, y:-30, points:200,
+                turrets:[   
+                    {type:"star",x:0,y:0,freq:35,bulletType:"bullet1"},
+                ]
+            },
+            movement:{type:"downAndStop", speed:2, stopAt:350, rotate:true},
+            time:13
+        },
+        {type:"bossMiniHexagon", 
+            wave:{count:1, spaced:1},
+            settings:{x:600, y:-30, points:200,
+                turrets:[   
+                    {type:"star",x:0,y:0,freq:35,bulletType:"bullet1"},
+                ]
+            },
+            movement:{type:"downAndStop", speed:2, stopAt:350, rotate:true},
+            time:15
+        },
+        {type:"ellipse", 
+            wave:{count:12, spaced:40},
+            settings:{x:400, y:0, shooters:[{index:0, freq:60},{index:1, freq:48},{index:2, freq:60},{index:9, freq:60},{index:10, freq:60},{index:11, freq:60}]}, 
+            movement:{type:"looping", r:250, cx:400, cy:300, dir:"down", loops:1, speed:1, stop:true},
+            powerup:{type:"powerupRapid",index:11},
+            time:22
+        },
+        {type:"square", 
+            wave:{count:8, spaced:20},
+            settings:{x:100, y:-30, shooters:[{index:0, freq:50},{index:1, freq:50},{index:2, freq:50}]}, 
+            movement:{type:"diagonal",speed:4,angle:45},
+            powerup:null,
+            time:32
+        },
+        {type:"circle", 
+            wave:{count:8, spaced:20},
+            settings:{x:150, y:-30, shooters:[{index:0, freq:50},{index:1, freq:50},{index:2, freq:50}]}, 
+            movement:{type:"diagonal",speed:4,angle:45},
+            powerup:null,
+            time:36
+        },
+        {type:"square", 
+            wave:{count:8, spaced:20},
+            settings:{x:200, y:-30, shooters:[{index:0, freq:50},{index:1, freq:50},{index:2, freq:50}]}, 
+            movement:{type:"diagonal",speed:4,angle:45},
+            powerup:null,
+            time:40
+        },
+        {type:"circle", 
+            wave:{count:8, spaced:20},
+            settings:{x:250, y:-30, shooters:[{index:0, freq:50},{index:1, freq:50},{index:2, freq:50}]}, 
+            movement:{type:"diagonal",speed:4,angle:45},
+            powerup:{type:"powerupHalfPower",index:6},
+            time:44
+        },
+        {type:"square", 
+            wave:{count:8, spaced:20},
+            settings:{x:300, y:-30, shooters:[{index:0, freq:50},{index:1, freq:50},{index:2, freq:50}]}, 
+            movement:{type:"diagonal",speed:4,angle:45},
+            powerup:null,
+            time:48
+        },
+        {type:"circle", 
+            wave:{count:8, spaced:20},
+            settings:{x:350, y:-30, shooters:[{index:0, freq:50},{index:1, freq:50},{index:2, freq:50}]}, 
+            movement:{type:"diagonal",speed:4,angle:45},
+            powerup:null,
+            time:52
+        },
+        {type:"bossDecagon", 
+            wave:{count:1, spaced:4},
+            settings:{x:-200, y:400, points:2000,
+                turrets:[   
+                    {type:"star",x:0,y:0,freq:30,bulletType:"bullet2"},
+                    {type:"triangle",x:80,y:80,freq:90,bulletType:"bullet1"},
+                    {type:"triangle",x:-80,y:80,freq:90,bulletType:"bullet1"},
+                    {type:"triangle",x:80,y:-80,freq:90,bulletType:"bullet1"},
+                    {type:"triangle",x:-80,y:-80,freq:90,bulletType:"bullet1"},
+                    {type:"triangle",x:0,y:-80,freq:90,bulletType:"bullet1"},
+                    {type:"triangle",x:0,y:80,freq:90,bulletType:"bullet1"},
+                    {type:"triangle",x:80,y:0,freq:90,bulletType:"bullet1"},
+                    {type:"triangle",x:-80,y:0,freq:90,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"rightAndStop", speed:2, stopAt:350, rotate:true},
+            time:60
+        },
+        
     ]
     
 ];
