@@ -9,6 +9,7 @@
 	// TODO: way for game to finish with rhombus big boss
 	// TODO: add sound effects
 	// TODO: have powerup appear in nicer way
+	// TODO: bug with invicible when spawning can still get hit
 
 	// game variables
 	var stage = null;

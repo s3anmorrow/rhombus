@@ -12,6 +12,7 @@ var WaveFactory = function(){
     var waveIndex = 0;
     var enemyReleased = 0;
     var enemyTotal = 0;
+    var levelTitle = "";
     // current level metadata
     var activeLevel = null;
     // the current active waves on the stage
@@ -41,8 +42,8 @@ var WaveFactory = function(){
         for (var n=0; n<activeLevel.length; n++) {
             if (activeLevel[n].time == seconds) {
 
-                console.log("Adding wave");
-
+                console.log("Adding wave " + waveIndex + " out of 20 : seconds: " + seconds);
+                
                 // release new wave
                 // initializing next wave object before starting wave
                 activeLevel[waveIndex].wave.frameCount = activeLevel[waveIndex].wave.spaced;
@@ -69,11 +70,12 @@ var WaveFactory = function(){
 
 
         // LEVEL TESTING
-        level = 3;
-        //waveIndex = 7;
+        level = 4;
+        //waveIndex = 20;
 
-
-        activeLevel = levelManifest[level - 1];
+        activeLevel = levelManifest[level - 1];        
+        if (activeLevel[0].levelTitle == "undefined") levelTitle = "Untitled";
+        else levelTitle = activeLevel[0].levelTitle;
         enemyReleased = 0;
         enemyTotal = 0;
         for (var n=0; n<activeLevel.length; n++) {
@@ -81,6 +83,7 @@ var WaveFactory = function(){
         }
         activeWaves = [];
 
+        console.log("level title: " + levelTitle);
         console.log("level up: " + level);
     };
 
@@ -147,9 +150,10 @@ var WaveFactory = function(){
             // check if time to add a new wave to game
             addWave();
         }
-        
+
+        //console.log("r: " + enemyReleased +  " : t" + enemyTotal + " : u: " + objectPool.usageTest());
         // wave is complete only if all enemies released and there is only player left (enemies all killed)
-        if ((enemyReleased == enemyTotal) && (objectPool.getUsedCount() == 1)) this.levelMe();
+        if ((enemyReleased == enemyTotal) && (!objectPool.usageTest())) this.levelMe();
 
     };
 

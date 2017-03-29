@@ -19,7 +19,7 @@ var Globals = {
 		PLAYER_MAX_Y:750,
 		PLAYER_START_POWER:4,
 		PLAYER_MAX_POWER:4,
-		PLAYER_START_LIVES:3,
+		PLAYER_START_LIVES:20,
 		POWERUP_DURATION:45,
 		SHAPES:{
 			"circle": {hp:1,points:50},
@@ -53,7 +53,7 @@ var Globals = {
 				freq:8,
 				gunPoints:[{x:0,y:-20,r:270}],
 				alternateFire:false,
-				auto:true,
+				auto:false,
 				speed:14,
 				damage:1,
 				invincible:false,
@@ -111,7 +111,7 @@ var Globals = {
 				auto:false,
 				speed:10,
 				damage:5,
-				ammo:10,
+				ammo:50,
 				invincible:false,
 				frame:"bullet2"
 			},

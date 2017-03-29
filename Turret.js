@@ -136,7 +136,17 @@ var Turret = function(){
 
             // release the bullet!
             var bullet = objectPool.getBullet();
-            bullet.startMe(bulletType, owner, bulletType, 6, 2, false, turretPoint.x, turretPoint.y, targetAngle);
+            var bulletSpeed = 6;
+            var bulletDamage = 1;
+            if (bulletType == "bullet2") {
+                bulletSpeed = 8;
+                bulletDamage = 2;
+            } else if (bulletType == "bullet3") {
+                bulletSpeed = 10;
+                bulletDamage = 3;
+            }
+            // myType, myOwner, spriteFrame, mySpeed, myDamage, myInvincible, x, y, r
+            bullet.startMe(bulletType, owner, bulletType, bulletSpeed, bulletDamage, false, turretPoint.x, turretPoint.y, targetAngle);
         }
     };
 

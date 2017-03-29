@@ -160,10 +160,17 @@ var Shape = function(){
         var targetAngle = Math.floor(180 + (Math.atan2(sprite.y - player.sprite.y, sprite.x - player.sprite.x) * 57.2957795));
         // release the bullet!
         var bullet = objectPool.getBullet();
-        var bulletSpeed = 2;
-        if (bulletType == "bullet2") bulletSpeed = 3;
-        if (bulletType == "bullet3") bulletSpeed = 4;
-        bullet.startMe(bulletType, this, bulletType, 6, bulletSpeed, false, sprite.x, sprite.y, targetAngle);
+        var bulletSpeed = 6;
+        var bulletDamage = 1;
+        if (bulletType == "bullet2") {
+            bulletSpeed = 8;
+            bulletDamage = 2;
+        } else if (bulletType == "bullet3") {
+            bulletSpeed = 10;
+            bulletDamage = 3;
+        }
+        // myType, myOwner, spriteFrame, mySpeed, myDamage, myInvincible, x, y, r
+        bullet.startMe(bulletType, this, bulletType, bulletSpeed, bulletDamage, false, sprite.x, sprite.y, targetAngle);
     };
 
     this.updateMe = function() {
@@ -172,7 +179,7 @@ var Shape = function(){
         // Step I : collision detection
         // has the shape collided with the player?
         if ((state != ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
-            player.hitMe(hitPoints * 2);
+            player.hitMe(hitPoints);
             // kill shape with no points and no powerups
             powerupType = "";
             this.killMe(hitPoints, false);
