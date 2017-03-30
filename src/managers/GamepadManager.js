@@ -2,7 +2,6 @@ var GamepadManager = function(){
     
     // public properties
     this.connected = false;
-    
     // manifest for file for all gamepad buttons / joytsick
     var manifest = null;
     // self referencing pointer
@@ -13,6 +12,7 @@ var GamepadManager = function(){
     var gamepad = null;
     // array to keep track of buttons that have their button down - to prohibit clipping
     var buttonLock = [];
+    var joyLock = [];
     // event objects for dispatching
     var keydownEvent = null;
     var keyupEvent = null;
@@ -30,7 +30,8 @@ var GamepadManager = function(){
         gamepad = navigator.getGamepads()[0];
         
         // initialization
-        for(var i=0; i<gamepad.buttons.length; i++) buttonLock[i] = false;    
+        for(var i=0; i<gamepad.buttons.length; i++) buttonLock[i] = false;   
+        for(i=0; i<manifest.joystick.length; i++) joyLock[i] = false;   
         keydownEvent = new Event("keydown");
         keyupEvent = new Event("keyup");
         
@@ -81,7 +82,7 @@ var GamepadManager = function(){
             // check if game is in correct state for button to be active
             if (btnData.gameState == state) {
                 // check if button is allowed to clip or not
-                if (!btnData.clipping) {
+                if ((!btnData.clipping) || (btnData.clipping === undefined)) {
                     // CLIPPING PROHIBITED ON BUTTON
                     if ((gamepad.buttons[btnData.id].pressed) && (!buttonLock[btnData.id])) {
                         if (btnData.keydown) {
@@ -112,14 +113,27 @@ var GamepadManager = function(){
         for (n=0; n<manifest.joystick.length; n++) {
             var axisData = manifest.joystick[n];
             // check if game is in correct state for button to be active
-            if (axisData.gameState == state) {                
-                if ((gamepad.axes[axisData.axis] >= axisData.range[0]) && 
-                    (gamepad.axes[axisData.axis] <= axisData.range[1])) {
-                    keydownEvent.keyCode = axisData.keyCode;
-                    document.dispatchEvent(keydownEvent);
+            if (axisData.gameState === state) {  
+                if (!axisData.clipping) {
+                    if (((gamepad.axes[axisData.axis] >= axisData.range[0]) && 
+                        (gamepad.axes[axisData.axis] <= axisData.range[1])) && (!joyLock[n])) {
+                        keydownEvent.keyCode = axisData.keyCode;
+                        document.dispatchEvent(keydownEvent);
+                        joyLock[n] = true;
+                    } else if ((gamepad.axes[axisData.axis] < 0.1) && (gamepad.axes[axisData.axis] > -0.1) && (joyLock[n])) {
+                        keyupEvent.keyCode = axisData.keyCode;
+                        document.dispatchEvent(keyupEvent);
+                        joyLock[n] = false;
+                    }
                 } else {
-                    keyupEvent.keyCode = axisData.keyCode;
-                    document.dispatchEvent(keyupEvent);
+                    if ((gamepad.axes[axisData.axis] >= axisData.range[0]) && 
+                        (gamepad.axes[axisData.axis] <= axisData.range[1])) {
+                        keydownEvent.keyCode = axisData.keyCode;
+                        document.dispatchEvent(keydownEvent);
+                    } else {
+                        keyupEvent.keyCode = axisData.keyCode;
+                        document.dispatchEvent(keyupEvent);
+                    }
                 }
             }
         }

@@ -1,121 +1,110 @@
 var gamepadManifest = {
     buttons:[
         {
-            // fire button / take off if landed
-            id:0,
+            // start button to start game
+            id:9,
             keyCode:32,
-            keyup:false,
-            keydown:true,
-            clipping:false,
-            gameState:3
-        },
-        {
-            // flip plane button / release jeep (if landed at base)
-            id:2,
-            keyCode:37,
+            keydown:false,
             keyup:true,
-            keydown:true,
-            clipping:false,
-            gameState:3
-        },
-        {
-            // bomb button / load bomb button (if landed)
-            id:2,
-            keyCode:66,
-            keyup:true,
-            keydown:true,
-            clipping:false,
-            gameState:3
-        },
-        {
-            // release tank
-            id:1,
-            keyCode:49,
-            keyup:true,
-            keydown:true,
-            clipping:false,
-            gameState:3
-        },
-        {
-            // view instructions
-            id:8,
-            keyCode:73,
-            keyup:true,
-            keydown:true,
-            clipping:false,
             gameState:0
         },
         {
-            // next page in instructions
-            id:8,
-            keyCode:73,
-            keyup:true,
+            // fire button to start game
+            id:1,
+            keyCode:32,
             keydown:false,
-            clipping:false,
+            keyup:true,
+            gameState:0
+        },
+        {
+            // fire button
+            id:1,
+            keyCode:32,
+            keydown:true,
+            keyup:true,
             gameState:1
         },
         {
-            // start game button to start game
-            id:9,
-            keyCode:83,
-            keyup:true,
-            keydown:true,
-            clipping:false,
-            gameState:0
-        },
-        {
-            // fire game button to start game
-            id:0,
-            keyCode:83,
-            keyup:true,
-            keydown:true,
-            clipping:false,
-            gameState:0
-        },
-        {
-            // view credits
+            // select initial in highscore board
             id:1,
-            keyCode:67,
-            keyup:true,
+            keyCode:32,
             keydown:true,
-            clipping:false,
-            gameState:0
-        },
-        {
-            // close credits
-            id:1,
-            keyCode:67,
-            keyup:true,
-            keydown:false,
-            clipping:false,
+            keyup:true,            
             gameState:2
         },
         {
-            // fire button to play again when game is over
-            id:0,
+            // fire button to go back to main on game over
+            id:1,
             keyCode:32,
+            keydown:true,            
             keyup:true,
-            keydown:true,
-            clipping:false,
-            gameState:4
+            gameState:3
+        },
+        {
+            // start button to go back to main on game over
+            id:9,
+            keyCode:32,
+            keydown:false,            
+            keyup:true,
+            gameState:3
         }
     ],
     joystick:[
         {
             keyCode:40,
-            enter:true,
-            exit:true,
+            clipping:true,
             axis:1,
             range:[0.7,1.0],
-            gameState:3
+            gameState:1
         },
         {
             keyCode:38,
-            enter:true,
-            exit:true,
+            clipping:true,
             axis:1,
             range:[-1.0,-0.7],
-            gameState:3
+            gameState:1
+        },
+        {
+            keyCode:37,
+            clipping:true,
+            axis:0,
+            range:[-1.0,-0.7],
+            gameState:1
+        },
+        {
+            keyCode:39,
+            clipping:true,
+            axis:0,
+            range:[0.7,1.0],
+            gameState:1
+        },
+        {
+            keyCode:40,
+            clipping:false,
+            axis:1,
+            range:[0.7,1.0],
+            gameState:2
+        },
+        {
+            keyCode:38,
+            clipping:false,
+            axis:1,
+            range:[-1.0,-0.7],
+            gameState:2
+        },
+        {
+            keyCode:37,
+            clipping:false,
+            axis:0,
+            range:[-1.0,-0.7],
+            gameState:2
+        },
+        {
+            keyCode:39,
+            clipping:false,
+            axis:0,
+            range:[0.7,1.0],
+            gameState:2
         }
     ]
 };

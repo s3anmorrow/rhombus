@@ -880,6 +880,18 @@ var levelManifest = [
     ],
     [
         // level 7
+        {levelTitle:"Dizzy",
+            type:"bossMiniTriangle", 
+            wave:{count:1, spaced:1},
+            settings:{x:400, y:-50, points:200,
+                turrets:[   
+                    {type:"triangle",x:-20,y:0,freq:25,bulletType:"bullet1"},
+                    {type:"triangle",x:20,y:0,freq:25,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"downAndStop", speed:3, stopAt:200, rotate:false},
+            time:20
+        },
 
 
 

@@ -147,16 +147,15 @@
 		// now that all assets are loaded - start screenManager
 		screenManager.startMe();
 
-		//Globals.gameState = GameStates.HIGHSCORE;
-		//screenManager.setScreen("highScoreScreen");
-
 		// set screen to introduction
 		screenManager.setScreen("introScreen");
 		Globals.gameState = GameStates.INTRO;
 		console.log(">> intro gameScreen ready");
 
 		// ???????????????? temporary start
-		startGame();
+		//startGame();
+		//Globals.gameState = GameStates.HIGHSCORE;
+		//screenManager.setScreen("highScoreScreen");
 
 	}
 
@@ -248,9 +247,6 @@
 			if (fireKey) player.fire();
 			else player.cease();
 
-			// monitor gamepadManager for any buttons / joystick changes
-			//gamepadManager.monitorMe(Globals.gameState);
-
 			// STEP II : UPDATING STEP
 			// scroll through all used objects in game and update them all
 			var length = updateList.length;
@@ -266,6 +262,9 @@
 		}
 		// screenManager needs updating for all gameGameStates except initalization (background shapes)
 		if (Globals.gameState !== GameStates.INITIALIZE) screenManager.updateMe();		
+
+		// monitor gamepadManager for any buttons / joystick changes
+		gamepadManager.monitorMe(Globals.gameState);
 
 		// STEP III : RENDERING
 		// update the stage!

@@ -105,7 +105,7 @@ var Player = function(){
     this.startMe = function(){
         // new game for player initialization
         lives =  Globals.gameConstants.PLAYER_START_LIVES;
-        this.setWeapon("single");         
+        this.setWeapon("double");         
         this.spawnMe();
     };
 
@@ -316,16 +316,16 @@ var Player = function(){
         // which direction is player moving?
         if (state == PlayerState.MOVING_LEFT) {
             speedY = 0;
-            if (speedX > -targetSpeedX) speedX--;
+            if (speedX > -targetSpeedX) speedX-=1;
         } else if (state == PlayerState.MOVING_RIGHT) {
             speedY = 0;
-            if (speedX < targetSpeedX) speedX++;
+            if (speedX < targetSpeedX) speedX+=1;
         } else if (state == PlayerState.MOVING_UP) {
             speedX = 0;
-            if (speedY > -targetSpeedY) speedY--;
+            if (speedY > -targetSpeedY) speedY-=1;
         } else if (state == PlayerState.MOVING_DOWN) {
             speedX = 0;
-            if (speedY < targetSpeedY) speedY++;
+            if (speedY < targetSpeedY) speedY+=1;
         } else if (state == PlayerState.IDLE) {
             // do I need to decelerate the player anymore?
             if ((speedX !== 0) || (speedY !== 0)) {
