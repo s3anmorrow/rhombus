@@ -43,7 +43,7 @@ var WaveFactory = function(){
             if (activeLevel[n].time == seconds) {
 
                 console.log("Adding wave " + waveIndex + " out of 20 : seconds: " + seconds);
-                
+
                 // release new wave
                 // initializing next wave object before starting wave
                 activeLevel[waveIndex].wave.frameCount = activeLevel[waveIndex].wave.spaced;
@@ -70,8 +70,9 @@ var WaveFactory = function(){
 
 
         // LEVEL TESTING
-        level = 4;
-        //waveIndex = 20;
+        level = 6;
+        seconds = 19;
+        waveIndex = 4;
 
         activeLevel = levelManifest[level - 1];        
         if (activeLevel[0].levelTitle == "undefined") levelTitle = "Untitled";

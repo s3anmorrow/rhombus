@@ -178,9 +178,6 @@ var Bullet = function() {
 			} else if ((owner.constructor.name == "Shape") || (owner.constructor.name == "Bigboss"))  {
 				
 				if ((player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
-
-					console.log("player hit: " + damage);
-
 					player.hitMe(damage);
 					this.killMe(true);
 				}

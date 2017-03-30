@@ -128,8 +128,8 @@ var Player = function(){
         firingGunIndex = 0;
         shieldCounter = 0;
         shieldFadeTime = 0;
-        shieldKillTime = 0;
-        shieldEnabled = false;
+        shieldKillTime = 100;
+        shieldEnabled = true;
         this.setPower(Globals.gameConstants.PLAYER_START_POWER);
 
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -271,10 +271,10 @@ var Player = function(){
         }
     };
 
-    this.shieldMe = function(duration,fadeout) {
+    this.shieldMe = function(duration, fadeout) {
         shieldEnabled = true;
         shieldCounter = 0;
-        if (fadeout === undefined) fadeout = 2;
+        if (fadeout === undefined) fadeout = 1;
 
         // determine fadeout and kill times
         shieldFadeTime = (duration - fadeout) * gameConstants.FRAME_RATE;
@@ -286,12 +286,12 @@ var Player = function(){
     };
 
     this.killMe = function() {
+        // can't be killed if shieldEnabled
+        if (shieldEnabled) return;
+
         state = PlayerState.KILLED;
-        // kill shield tween/sprite if on
-        if (shieldEnabled) {
-            createjs.Tween.removeTweens(shieldSprite);
-            stage.removeChild(shieldSprite); 
-        }
+        createjs.Tween.removeTweens(shieldSprite);
+        stage.removeChild(shieldSprite); 
         sprite.gotoAndPlay("playerKilled");
         sprite.addEventListener("animationend",function(e){
             e.remove();
@@ -376,7 +376,7 @@ var Player = function(){
                 shieldSprite.x = sprite.x;
                 shieldSprite.y = sprite.y;
                 shieldCounter++;
-                if (shieldCounter == shieldFadeTime) {
+                if (shieldCounter >= shieldFadeTime) {
                     // start flash effect to warn player
                     createjs.Tween.get(shieldSprite, {useTicks:true, loop:true})
                         .to({alpha:0}, 8)
@@ -385,8 +385,8 @@ var Player = function(){
             } else {
                 // times up - remove shields
                 createjs.Tween.removeTweens(shieldSprite);
-                shieldEnabled = false;
                 stage.removeChild(shieldSprite);        
+                shieldEnabled = false;
             }
         }
 

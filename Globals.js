@@ -96,11 +96,11 @@ var Globals = {
 			"superSpread":{
 				freq:8,
 				gunPoints:[{x:0,y:-20,r:270},{x:-20,y:-5,r:225},{x:20,y:-5,r:315},{x:24,y:5,r:0},{x:-24,y:5,r:180},{x:24,y:15,r:45},{x:-24,y:15,r:135}],
-				alternateFire:true,
+				alternateFire:false,
 				auto:true,
 				speed:20,
 				damage:1,
-				ammo:400,
+				ammo:500,
 				invincible:false,
 				frame:"spreadBullet"				
 			},
