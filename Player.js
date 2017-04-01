@@ -1,5 +1,8 @@
 var Player = function(){
     // custom events
+    var changeDirEvent = new createjs.Event("gameEvent", true);
+    changeDirEvent.id = "playerChangeDir";
+    changeDirEvent.dir = 1;
     var livesChangeEvent = new createjs.Event("gameEvent", true);
     livesChangeEvent.id = "playerLivesChange";
     livesChangeEvent.lives = 0;
@@ -26,6 +29,8 @@ var Player = function(){
     // other private game variables
     var firingGunIndex = 0;
     var ammo = 0;
+    // which direction player is direction (0 is up : 1 is down)
+    var direction = 0;
     // the current speeds of movement of player
     var speedX = 0;
     var targetSpeedX = gameConstants.PLAYER_SPEED;
@@ -105,7 +110,7 @@ var Player = function(){
     this.startMe = function(){
         // new game for player initialization
         lives =  Globals.gameConstants.PLAYER_START_LIVES;
-        this.setWeapon("double");         
+        this.setWeapon("single");         
         this.spawnMe();
     };
 
@@ -130,6 +135,8 @@ var Player = function(){
         shieldFadeTime = 0;
         shieldKillTime = 100;
         shieldEnabled = true;
+        // set direction to going up
+        this.flipMe(0);
         this.setPower(Globals.gameConstants.PLAYER_START_POWER);
 
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -146,6 +153,7 @@ var Player = function(){
         sprite.x = startX;
         sprite.y = startY;
         sprite.rotation = 0;
+        shieldSprite.rotation = 0;
 
         // animate player sprite coming onto stage
         createjs.Tween.get(sprite, {useTicks:true})
@@ -201,10 +209,42 @@ var Player = function(){
         state = PlayerState.IDLE;
     };
 
+    this.flipMe = function(dir) {
+        if (dir !== undefined) {
+            // set direction immediately to argument
+            direction = dir;
+            if (direction === 1) {
+                sprite.rotation = 180;
+                shieldSprite.rotation = 180;
+            } else {
+                sprite.rotation = 0;
+                shieldSprite.rotation = 0;
+            }
+        } else {
+            // animate player rotating to direction
+            if (direction === 0) {
+                createjs.Tween.get(sprite, {useTicks:true})
+                    .to({rotation:180}, 6);
+                createjs.Tween.get(shieldSprite, {useTicks:true})
+                    .to({rotation:180}, 6);
+                direction = 1;
+            } else {
+                createjs.Tween.get(sprite, {useTicks:true})
+                    .to({rotation:0}, 6);
+                createjs.Tween.get(shieldSprite, {useTicks:true})
+                    .to({rotation:0}, 6);
+                direction = 0;
+            }
+        }
+        changeDirEvent.target = null;
+        changeDirEvent.dir = direction;
+        stage.dispatchEvent(changeDirEvent);
+    };
+
     this.fire = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         if (fireCounter == weaponData.freq) {
-            var gunPoints = weaponData.gunPoints;
+            var gunPoints = weaponData.gunPoints[direction];
             // loop through all gunPoints and add bullet
             for (var n=0; n<gunPoints.length; n++) {
 
@@ -262,7 +302,6 @@ var Player = function(){
         if (power <= 0) {
             this.killMe();
         } else {
-            sprite.rotation = 0;
             // tween rocking of sprite when hit by bullet
             createjs.Tween.get(sprite, {useTicks:true})
                 .to({rotation:sprite.rotation+10}, 3)

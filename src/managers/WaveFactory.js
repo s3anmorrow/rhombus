@@ -70,9 +70,9 @@ var WaveFactory = function(){
 
 
         // LEVEL TESTING
-        level = 1;
-        //seconds = 19;
-        //waveIndex = 4;
+        //level = 7;
+        //seconds = 25;
+        //waveIndex = 16;
 
         activeLevel = levelManifest[level - 1];        
         if (activeLevel[0].levelTitle == "undefined") levelTitle = "Untitled";
@@ -120,7 +120,7 @@ var WaveFactory = function(){
                         if (activeWave.settings.shooters !== undefined) shootData = search(activeWave.settings.shooters, "index", activeWave.wave.dropped);
                         // does this shape drop a powerup?
                         var powerupType = "";
-                        if (activeWave.powerup !== null) {
+                        if ((activeWave.powerup !== undefined) && (activeWave.powerup !== null)) {
                             var powerupIndex = activeWave.powerup.index;
                             if (activeWave.wave.dropped == powerupIndex) powerupType = activeWave.powerup.type;
                         }

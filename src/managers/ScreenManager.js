@@ -9,6 +9,7 @@ var ScreenManager = function() {
     var frameCounter = 0;
     var shapes = [];
     var nextBackgroundShape = 1;
+    var direction = 0;
     // separate layer to drop background shapes on
     var backgroundLayer = new createjs.Container();
 
@@ -44,8 +45,12 @@ var ScreenManager = function() {
         shape.speed = Globals.randomMe(1,3);
         shape.rotation = Globals.randomMe(50,180);        
         shape.x = Globals.randomMe(200,600);
-        if (dropY === undefined) shape.y = -300;
-        else shape.y = dropY;
+        if (dropY === undefined) {
+            if (direction === 0) shape.y = -300;
+            else shape.y = 1100;
+        } else {
+            shape.y = dropY;
+        }
         backgroundLayer.addChild(shape);
 
         // add to array for reference in updateMe
@@ -72,12 +77,17 @@ var ScreenManager = function() {
         // initialization
         moving = true;
         frameCounter = 0;
+        direction = 0;
         shapes = [];
         // drop default startup shapes
         dropShape(-300);
         dropShape(0);
         dropShape(300);
         dropShape(600);
+    };
+
+    this.setDirection = function(which) {
+        direction = which;
     };
 
     this.setScreen = function(which) {
@@ -110,12 +120,22 @@ var ScreenManager = function() {
         // move all background shapes
         for (var n=0; n<shapes.length; n++){
             var shape = shapes[n];
-            shape.y = shape.y + shape.speed;
-            // is shape off the bottom of the stage?
-            if ((shape.y - 300) > stageHeight) {
-                backgroundLayer.removeChild(shape);
-                // remove shape sprite from array
-                shapes.splice(n, 1);
+            if (direction === 0) {
+                shape.y = shape.y + shape.speed;
+                // is shape off the bottom of the stage?
+                if ((shape.y - 300) > stageHeight) {
+                    backgroundLayer.removeChild(shape);
+                    // remove shape sprite from array
+                    shapes.splice(n, 1);
+                }
+            } else {
+                shape.y = shape.y - shape.speed;
+                // is shape off the bottom of the stage?
+                if ((shape.y + 300) < 0) {
+                    backgroundLayer.removeChild(shape);
+                    // remove shape sprite from array
+                    shapes.splice(n, 1);
+                }
             }
         }
 

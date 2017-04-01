@@ -9,14 +9,6 @@ var gamepadManifest = {
             gameState:0
         },
         {
-            // fire button to start game
-            id:1,
-            keyCode:32,
-            keydown:false,
-            keyup:true,
-            gameState:0
-        },
-        {
             // fire button
             id:1,
             keyCode:32,
@@ -31,14 +23,6 @@ var gamepadManifest = {
             keydown:true,
             keyup:true,            
             gameState:2
-        },
-        {
-            // fire button to go back to main on game over
-            id:1,
-            keyCode:32,
-            keydown:true,            
-            keyup:true,
-            gameState:3
         },
         {
             // start button to go back to main on game over

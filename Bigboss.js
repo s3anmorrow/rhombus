@@ -154,7 +154,7 @@ var Bigboss = function(){
     };
 
     this.updateMe = function() {
-        if (state == ShapeState.KILLED) return;
+        if (state === ShapeState.KILLED) return;
 
         // Step I : collision detection
         // has the bigboss collided with the player?

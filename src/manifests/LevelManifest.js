@@ -636,7 +636,7 @@ var levelManifest = [
             wave:{count:5, spaced:30},
             settings:{x:-30, y:300, shooters:[{index:0, freq:35, bulletType:"bullet1"}]}, 
             movement:{type:"right",speed:3},
-            powerup:null,
+            powerup:{type:"powerupRapid",index:3},
             time:1
         },
         {type:"square", 
@@ -765,7 +765,7 @@ var levelManifest = [
         }
     ],
     [
-        // level 6
+        // level 6 - rating 5
         {levelTitle:"Dizzy",
             type:"circle", 
             wave:{count:10, spaced:30},
@@ -879,22 +879,245 @@ var levelManifest = [
         }
     ],
     [
-        // level 7
-        {levelTitle:"Dizzy",
+        // level 7 - rating 4
+        {levelTitle:"Cluster",
             type:"bossMiniTriangle", 
+            wave:{count:1, spaced:1},
+            settings:{x:200, y:-50, points:200,
+                turrets:[   
+                    {type:"circle",x:-20,y:0,freq:20,bulletType:"bullet1"},
+                    {type:"circle",x:20,y:0,freq:20,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"downAndStop", speed:6, stopAt:200, rotate:false},
+            time:1
+        },
+        {type:"bossMiniTriangle", 
+            wave:{count:1, spaced:1},
+            settings:{x:500, y:-50, points:200,
+                turrets:[   
+                    {type:"circle",x:-20,y:0,freq:40,bulletType:"bullet1"},
+                    {type:"circle",x:20,y:0,freq:40,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"downAndStop", speed:6, stopAt:300, rotate:false},
+            time:2
+        },
+        {type:"circle", 
+            wave:{count:5, spaced:20},
+            settings:{x:830, y:600}, 
+            movement:{type:"left",speed:4},
+            powerup:{type:"powerupSuperDouble",index:0},
+            time:2
+        },
+        {type:"bossMiniTriangle", 
+            wave:{count:1, spaced:1},
+            settings:{x:300, y:850, points:200,
+                turrets:[   
+                    {type:"circle",x:-20,y:0,freq:40,bulletType:"bullet1"},
+                    {type:"circle",x:20,y:0,freq:40,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"upAndStop", speed:6, stopAt:400, rotate:false},
+            time:3
+        },
+        {type:"bossMiniTriangle", 
+            wave:{count:1, spaced:1},
+            settings:{x:850, y:300, points:200,
+                turrets:[   
+                    {type:"circle",x:-20,y:0,freq:40,bulletType:"bullet1"},
+                    {type:"circle",x:20,y:0,freq:40,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"leftAndStop", speed:6, stopAt:700, rotate:false},
+            time:4
+        },
+        {type:"bossMiniTriangle", 
+            wave:{count:1, spaced:1},
+            settings:{x:-50, y:500, points:200,
+                turrets:[   
+                    {type:"circle",x:-20,y:0,freq:40,bulletType:"bullet1"},
+                    {type:"circle",x:20,y:0,freq:40,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"rightAndStop", speed:6, stopAt:625, rotate:false},
+            time:5
+        },
+        {type:"bossMiniTriangle", 
+            wave:{count:1, spaced:1},
+            settings:{x:525, y:850, points:200,
+                turrets:[   
+                    {type:"circle",x:-20,y:0,freq:40,bulletType:"bullet1"},
+                    {type:"circle",x:20,y:0,freq:40,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"upAndStop", speed:6, stopAt:370, rotate:false},
+            time:6
+        },
+        {type:"bossMiniTriangle", 
+            wave:{count:1, spaced:1},
+            settings:{x:425, y:-50, points:200,
+                turrets:[   
+                    {type:"circle",x:-20,y:0,freq:40,bulletType:"bullet1"},
+                    {type:"circle",x:20,y:0,freq:40,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"downAndStop", speed:6, stopAt:500, rotate:false},
+            time:7
+        },
+        {type:"bossMiniTriangle", 
+            wave:{count:1, spaced:1},
+            settings:{x:575, y:850, points:200,
+                turrets:[   
+                    {type:"circle",x:-20,y:0,freq:40,bulletType:"bullet1"},
+                    {type:"circle",x:20,y:0,freq:40,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"upAndStop", speed:6, stopAt:350, rotate:false},
+            time:8
+        },
+        {type:"bossMiniTriangle", 
+            wave:{count:1, spaced:1},
+            settings:{x:-50, y:600, points:200,
+                turrets:[   
+                    {type:"circle",x:-20,y:0,freq:40,bulletType:"bullet1"},
+                    {type:"circle",x:20,y:0,freq:40,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"rightAndStop", speed:6, stopAt:400, rotate:false},
+            time:9
+        },
+        {type:"bossMiniHexagon", 
+            wave:{count:1, spaced:1},
+            settings:{x:100, y:-50, points:200,
+                turrets:[   
+                    {type:"triangle",x:-20,y:0,freq:40,bulletType:"bullet2"},
+                    {type:"triangle",x:20,y:0,freq:40,bulletType:"bullet2"}
+                ]
+            },
+            movement:{type:"downAndStop", speed:4, stopAt:500, rotate:true},
+            time:20
+        },
+        {type:"bossMiniHexagon", 
+            wave:{count:1, spaced:1},
+            settings:{x:200, y:-50, points:200,
+                turrets:[   
+                    {type:"triangle",x:-20,y:0,freq:40,bulletType:"bullet2"},
+                    {type:"triangle",x:20,y:0,freq:40,bulletType:"bullet2"}
+                ]
+            },
+            movement:{type:"downAndStop", speed:4, stopAt:400, rotate:true},
+            time:20
+        },
+        {type:"bossMiniHexagon", 
+            wave:{count:1, spaced:1},
+            settings:{x:300, y:-50, points:200,
+                turrets:[   
+                    {type:"triangle",x:-20,y:0,freq:40,bulletType:"bullet2"},
+                    {type:"triangle",x:20,y:0,freq:40,bulletType:"bullet2"}
+                ]
+            },
+            movement:{type:"downAndStop", speed:4, stopAt:300, rotate:true},
+            time:20
+        },
+        {type:"bossMiniHexagon", 
             wave:{count:1, spaced:1},
             settings:{x:400, y:-50, points:200,
                 turrets:[   
-                    {type:"triangle",x:-20,y:0,freq:25,bulletType:"bullet1"},
-                    {type:"triangle",x:20,y:0,freq:25,bulletType:"bullet1"}
+                    {type:"triangle",x:-20,y:0,freq:40,bulletType:"bullet2"},
+                    {type:"triangle",x:20,y:0,freq:40,bulletType:"bullet2"}
                 ]
             },
-            movement:{type:"downAndStop", speed:3, stopAt:200, rotate:false},
+            movement:{type:"downAndStop", speed:4, stopAt:200, rotate:true},
             time:20
         },
-
-
-
+        {type:"bossMiniHexagon", 
+            wave:{count:1, spaced:1},
+            settings:{x:500, y:-50, points:200,
+                turrets:[   
+                    {type:"triangle",x:-20,y:0,freq:40,bulletType:"bullet2"},
+                    {type:"triangle",x:20,y:0,freq:40,bulletType:"bullet2"}
+                ]
+            },
+            movement:{type:"downAndStop", speed:4, stopAt:300, rotate:true},
+            time:20
+        },
+        {type:"bossMiniHexagon", 
+            wave:{count:1, spaced:1},
+            settings:{x:600, y:-50, points:200,
+                turrets:[   
+                    {type:"triangle",x:-20,y:0,freq:40,bulletType:"bullet2"},
+                    {type:"triangle",x:20,y:0,freq:40,bulletType:"bullet2"}
+                ]
+            },
+            movement:{type:"downAndStop", speed:4, stopAt:400, rotate:true},
+            time:20
+        },
+        {type:"bossMiniHexagon", 
+            wave:{count:1, spaced:1},
+            settings:{x:700, y:-50, points:200,
+                turrets:[   
+                    {type:"triangle",x:-20,y:0,freq:40,bulletType:"bullet2"},
+                    {type:"triangle",x:20,y:0,freq:40,bulletType:"bullet2"}
+                ]
+            },
+            movement:{type:"downAndStop", speed:4, stopAt:500, rotate:true},
+            time:20
+        },
+        {type:"circle", 
+            wave:{count:5, spaced:20},
+            settings:{x:830, y:600}, 
+            movement:{type:"left",speed:4},
+            powerup:{type:"powerupSuperDouble",index:0},
+            time:30
+        },
+        {type:"ellipse", 
+            wave:{count:6, spaced:10},
+            settings:{x:600, y:-50, points:200, shooters:[{index:0, freq:35, bulletType:"bullet1"}]},
+            movement:{type:"switch", dir:"down", speed:6, switchAt:700, rotate:false},
+            time:30
+        },
+        {type:"ellipse", 
+            wave:{count:6, spaced:10},
+            settings:{x:200, y:-50, points:200, shooters:[{index:0, freq:35, bulletType:"bullet1"}]},
+            movement:{type:"switch", dir:"down", speed:6, switchAt:675, rotate:false},
+            time:36
+        },
+        {type:"ellipse", 
+            wave:{count:10, spaced:10},
+            settings:{x:300, y:-50, points:200, shooters:[{index:0, freq:35, bulletType:"bullet1"}]},
+            movement:{type:"switch", dir:"down", speed:6, switchAt:525, rotate:false},
+            powerup:{type:"powerupFullPower",index:0},
+            time:40
+        },
+        {type:"ellipse", 
+            wave:{count:6, spaced:10},
+            settings:{x:350, y:850, points:200, shooters:[{index:0, freq:35, bulletType:"bullet1"}]},
+            movement:{type:"switch", dir:"up", speed:6, switchAt:100, rotate:true},
+            time:45
+        },
+        {type:"ellipse", 
+            wave:{count:6, spaced:10},
+            settings:{x:450, y:850, points:200, shooters:[{index:0, freq:35, bulletType:"bullet1"}]},
+            movement:{type:"switch", dir:"up", speed:6, switchAt:100, rotate:true},
+            time:50
+        },
+        {type:"bossHexagon", 
+            wave:{count:1, spaced:4},
+            settings:{x:-200, y:300, points:2000,
+                turrets:[   
+                    {type:"ellipse",x:100,y:100,freq:5,bulletType:"bullet1"},
+                    {type:"ellipse",x:-100,y:100,freq:5,bulletType:"bullet1"},
+                    {type:"ellipse",x:100,y:-100,freq:5,bulletType:"bullet1"},
+                    {type:"ellipse",x:-100,y:-100,freq:5,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"rightAndStop", speed:2, stopAt:400, rotate:true},
+            time:55
+        }
+    ],
+    [
+        // level 8
     ]
     
 ];

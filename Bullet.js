@@ -61,13 +61,13 @@ var Bullet = function() {
 		xDisplace = Globals.cosTable[r] * speed;
 		yDisplace = Globals.sinTable[r] * speed;
 		sprite.gotoAndStop(spriteFrame);
-		if (type == "laser") {
+		if (type === "laser") {
 			sprite.play();
 			sprite.addEventListener("animationend",function(e){
 				e.remove();
 				_this.stopMe();
 			});
-		} else if (type == "bounce") {
+		} else if (type === "bounce") {
 			sprite.play();
 		}
 		sprite.x = x;
@@ -116,11 +116,11 @@ var Bullet = function() {
 	};
 
 	this.updateMe = function(){
-		if (state == BulletState.MOVING) {
+		if (state === BulletState.MOVING) {
 
 			// STEP I : Bullet Movement
 			// different bullet type behaviours
-			if (type == "laser") {
+			if (type === "laser") {
 				sprite.x = owner.sprite.x;
 			} else {
 				// move bullet x and y position
@@ -130,7 +130,7 @@ var Bullet = function() {
 
 			// STEP II : Bullet removal if off stage
 			// check if bullet off the screen
-			if (type == "bounce") {
+			if (type === "bounce") {
 				// make bullets bounce off edges of stage
 				if ((sprite.y > stageBottom) || (sprite.y < stageTop)) {
 					yDisplace = yDisplace * -1;
@@ -151,7 +151,7 @@ var Bullet = function() {
 
 			// STEP III : collision detection
 			// Player's bullet
-			if (owner.constructor.name == "Player") {
+			if (owner.constructor.name === "Player") {
 				// has the bullet collided with a shape?
 				var destroyed = false;
 				var length = shapePool.length;
@@ -175,7 +175,7 @@ var Bullet = function() {
 				}
 
 			// Shape or Turret's bullet
-			} else if ((owner.constructor.name == "Shape") || (owner.constructor.name == "Bigboss"))  {
+			} else if ((owner.constructor.name === "Shape") || (owner.constructor.name === "Bigboss"))  {
 				
 				if ((player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
 					player.hitMe(damage);

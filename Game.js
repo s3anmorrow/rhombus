@@ -179,6 +179,7 @@
 			else if ((e.keyCode == 37) || (e.keyCode == 65)) leftKey = false;
 			else if ((e.keyCode == 39) || (e.keyCode == 68)) rightKey = false;
 			else if (e.keyCode == 32) fireKey = false;
+			else if (e.keyCode == 13) player.flipMe();
 		} else if (Globals.gameState == GameStates.HIGHSCORE) {			
 			if (e.keyCode == 40) screenManager.highScore.moveSelector("down");
 			else if (e.keyCode == 38) screenManager.highScore.moveSelector("up");
@@ -200,6 +201,9 @@
 		switch (e.id){
 			case "pointsChange":
 				screenManager.game.adjustPoints(e.points);
+				break;
+			case "playerChangeDir":
+				screenManager.setDirection(e.dir);
 				break;
 			case "playerPowerChange":
 				screenManager.game.setPower(e.power);

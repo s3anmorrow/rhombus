@@ -144,7 +144,7 @@ var MoveFunctions = {
             if (sprite.moveData.rotate) sprite.rotation++;
             if (sprite.moveData.stage === 0) {
                 sprite.y+=sprite.moveData.speed;
-                if (sprite.y >= sprite.moveData.y) sprite.moveData.stage = 1;
+                if (sprite.y >= sprite.moveData.switchAt) sprite.moveData.stage = 1;
             } else {
                 sprite.y-=sprite.moveData.speed;
                 if (sprite.y <= -sprite.moveData.height) return false;
@@ -154,7 +154,7 @@ var MoveFunctions = {
             if (sprite.moveData.rotate) sprite.rotation++;
             if (sprite.moveData.stage === 0) {
                 sprite.y-=sprite.moveData.speed;
-                if (sprite.y <= sprite.moveData.y) sprite.moveData.stage = 1;
+                if (sprite.y <= sprite.moveData.switchAt) sprite.moveData.stage = 1;
             } else {
                 sprite.y+=sprite.moveData.speed;
                 if (sprite.y <= -sprite.moveData.height) return false;

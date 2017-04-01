@@ -51,7 +51,7 @@ var Globals = {
 		PLAYER_WEAPONS:{
 			"single":{
 				freq:8,
-				gunPoints:[{x:0,y:-20,r:270}],
+				gunPoints:[[{x:0,y:-20,r:270}],[{x:0,y:20,r:90}]],
 				alternateFire:false,
 				auto:false,
 				speed:14,
@@ -62,7 +62,7 @@ var Globals = {
 			},
 			"double":{
 				freq:6,
-				gunPoints:[{x:-20,y:-5,r:270},{x:20,y:-5,r:270}],
+				gunPoints:[[{x:-20,y:-5,r:270},{x:20,y:-5,r:270}],[{x:-20,y:5,r:90},{x:20,y:5,r:90}]],
 				alternateFire:true,
 				auto:true,
 				speed:20,
@@ -73,7 +73,7 @@ var Globals = {
 			},
 			"superDouble":{
 				freq:6,
-				gunPoints:[{x:-20,y:-5,r:270},{x:20,y:-5,r:270}],
+				gunPoints:[[{x:-20,y:-5,r:270},{x:20,y:-5,r:270}],[{x:-20,y:5,r:90},{x:20,y:5,r:90}]],
 				alternateFire:false,
 				auto:true,
 				speed:20,
@@ -84,7 +84,7 @@ var Globals = {
 			},
 			"spread":{
 				freq:4,
-				gunPoints:[{x:0,y:-20,r:270},{x:-20,y:-5,r:250},{x:20,y:-5,r:290}],
+				gunPoints:[[{x:0,y:-20,r:270},{x:-20,y:-5,r:250},{x:20,y:-5,r:290}],[{x:0,y:20,r:90},{x:-20,y:5,r:110},{x:20,y:5,r:70}]],
 				alternateFire:false,
 				auto:false,
 				speed:20,
@@ -95,7 +95,7 @@ var Globals = {
 			},
 			"superSpread":{
 				freq:8,
-				gunPoints:[{x:0,y:-20,r:270},{x:-20,y:-5,r:225},{x:20,y:-5,r:315},{x:24,y:5,r:0},{x:-24,y:5,r:180},{x:24,y:15,r:45},{x:-24,y:15,r:135}],
+				gunPoints:[[{x:0,y:-20,r:270},{x:-20,y:-5,r:225},{x:20,y:-5,r:315},{x:24,y:5,r:0},{x:-24,y:5,r:180},{x:24,y:15,r:45},{x:-24,y:15,r:135}],[{x:0,y:20,r:90},{x:-20,y:5,r:135},{x:20,y:5,r:45},{x:24,y:-5,r:0},{x:-24,y:-5,r:180},{x:24,y:-15,r:315},{x:-24,y:-15,r:225}]],
 				alternateFire:false,
 				auto:true,
 				speed:20,
@@ -106,7 +106,7 @@ var Globals = {
 			},
 			"heavy":{
 				freq:8,
-				gunPoints:[{x:0,y:-30,r:270}],
+				gunPoints:[[{x:0,y:-30,r:270}],[{x:0,y:30,r:90}]],
 				alternateFire:false,
 				auto:false,
 				speed:10,
@@ -117,7 +117,7 @@ var Globals = {
 			},
 			"rapid":{
 				freq:1,
-				gunPoints:[{x:0,y:-20,r:270}],
+				gunPoints:[[{x:0,y:-20,r:270}],[{x:0,y:20,r:90}]],
 				alternateFire:false,
 				auto:true,
 				speed:10,
@@ -128,7 +128,7 @@ var Globals = {
 			},
 			"laser":{
 				freq:0,
-				gunPoints:[{x:0,y:-28,r:270}],
+				gunPoints:[[{x:0,y:-28,r:270}],[{x:0,y:28,r:90}]],
 				alternateFire:false,
 				auto:false,
 				speed:0,
@@ -139,7 +139,7 @@ var Globals = {
 			},
 			"bounce":{
 				freq:0,
-				gunPoints:[{x:0,y:-20,r:270},{x:-20,y:-5,r:260},{x:20,y:-5,r:280}],
+				gunPoints:[[{x:0,y:-20,r:270},{x:-20,y:-5,r:260},{x:20,y:-5,r:280}],[{x:0,y:20,r:90},{x:-20,y:5,r:100},{x:20,y:5,r:80}]],
 				alternateFire:false,
 				auto:false,
 				speed:6,
