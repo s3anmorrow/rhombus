@@ -48,6 +48,8 @@ var Player = function(){
     var shieldCounter = 0;
     var shieldFadeTime = 0;
     var shieldKillTime = 0;
+    // flip behaviour
+    var baseRotation = 0;
 
     // get sprite for Player
     var sprite = assetManager.getSprite("assets","playerEntrance");
@@ -136,14 +138,11 @@ var Player = function(){
         shieldKillTime = 100;
         shieldEnabled = true;
         // set direction to going up
-        this.flipMe(0);
+        direction = 0;
+        baseRotation = 0;
+        sprite.rotation = baseRotation;
+        shieldSprite.rotation = baseRotation;
         this.setPower(Globals.gameConstants.PLAYER_START_POWER);
-
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //this.setWeapon("single"); 
-
-        // TESTING WEAPONS
-        //this.setWeapon("superspread"); 
         createjs.Tween.removeTweens(shieldSprite);
         createjs.Tween.removeTweens(sprite);
         stage.removeChild(shieldSprite);                
@@ -152,8 +151,8 @@ var Player = function(){
         // center the player sprite
         sprite.x = startX;
         sprite.y = startY;
-        sprite.rotation = 0;
-        shieldSprite.rotation = 0;
+        sprite.rotation = baseRotation;
+        shieldSprite.rotation = baseRotation;
 
         // animate player sprite coming onto stage
         createjs.Tween.get(sprite, {useTicks:true})
@@ -167,9 +166,11 @@ var Player = function(){
                     _this.shieldMe(1.5,1);
                 });
                 sprite.play();
+                createjs.Sound.play("flipIn");
             });
 
         stage.addChild(sprite);
+        createjs.Sound.play("playerEnter");
     };
 
     this.goLeft = function() {
@@ -209,33 +210,27 @@ var Player = function(){
         state = PlayerState.IDLE;
     };
 
-    this.flipMe = function(dir) {
-        if (dir !== undefined) {
-            // set direction immediately to argument
-            direction = dir;
-            if (direction === 1) {
-                sprite.rotation = 180;
-                shieldSprite.rotation = 180;
-            } else {
-                sprite.rotation = 0;
-                shieldSprite.rotation = 0;
-            }
+    this.flipMe = function() {
+        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
+        // animate player rotating to direction
+        if (direction === 0) {
+            createjs.Tween.get(sprite, {useTicks:true})
+                .to({rotation:180}, 6);
+            createjs.Tween.get(shieldSprite, {useTicks:true})
+                .to({rotation:180}, 6);
+            baseRotation = 180;
+            direction = 1;
+            createjs.Sound.play("flipIn");
         } else {
-            // animate player rotating to direction
-            if (direction === 0) {
-                createjs.Tween.get(sprite, {useTicks:true})
-                    .to({rotation:180}, 6);
-                createjs.Tween.get(shieldSprite, {useTicks:true})
-                    .to({rotation:180}, 6);
-                direction = 1;
-            } else {
-                createjs.Tween.get(sprite, {useTicks:true})
-                    .to({rotation:0}, 6);
-                createjs.Tween.get(shieldSprite, {useTicks:true})
-                    .to({rotation:0}, 6);
-                direction = 0;
-            }
+            createjs.Tween.get(sprite, {useTicks:true})
+                .to({rotation:0}, 6);
+            createjs.Tween.get(shieldSprite, {useTicks:true})
+                .to({rotation:0}, 6);
+            baseRotation = 0;
+            direction = 0;
+            createjs.Sound.play("flipOut");
         }
+        
         changeDirEvent.target = null;
         changeDirEvent.dir = direction;
         stage.dispatchEvent(changeDirEvent);
@@ -260,6 +255,9 @@ var Player = function(){
                                 sprite.y + gunPoints[n].y, 
                                 gunPoints[n].r);
                     
+                    // play sound effect
+                    createjs.Sound.play(weaponType);
+
                     // only track ammo used if not infinite ammo
                     if (ammo != -1) {
                         ammo--;
@@ -293,15 +291,17 @@ var Player = function(){
     this.hitMe = function(powerLoss) {
         // if shield enabled no damage taken
         if (shieldEnabled) {
-            // TODO: play cool sound effect for shield deflection
+            createjs.Sound.play("hitWithShield");
             return;
         }
 
         if (powerLoss === undefined) powerLoss = 1;
         this.setPower(power - powerLoss);
+        createjs.Sound.play("playerHit");
         if (power <= 0) {
             this.killMe();
         } else {
+            sprite.rotation = baseRotation;
             // tween rocking of sprite when hit by bullet
             createjs.Tween.get(sprite, {useTicks:true})
                 .to({rotation:sprite.rotation+10}, 3)
@@ -332,6 +332,7 @@ var Player = function(){
         createjs.Tween.removeTweens(shieldSprite);
         stage.removeChild(shieldSprite); 
         sprite.gotoAndPlay("playerKilled");
+        createjs.Sound.play("explosion4");
         sprite.addEventListener("animationend",function(e){
             e.remove();
             _this.setPower(0);
@@ -350,7 +351,7 @@ var Player = function(){
     };
 
     this.updateMe = function() {
-        if (state == PlayerState.KILLED) return;
+        if ((state == PlayerState.KILLED) || (state == PlayerState.ENTERING)) return;
 
         // which direction is player moving?
         if (state == PlayerState.MOVING_LEFT) {

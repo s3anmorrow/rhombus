@@ -87,6 +87,7 @@ var Turret = function(){
         if (hitPoints <= 0) {
             state = ShapeState.KILLED;
             sprite.gotoAndPlay("explosionNoPoints");
+            createjs.Sound.play("explosion3");
             sprite.addEventListener("animationend",function(e){
                 e.remove();
                 _this.stopMe();
@@ -102,6 +103,7 @@ var Turret = function(){
                 e.remove();
                 sprite.gotoAndStop(type);
             });
+            createjs.Sound.play("enemyHit");
             // was not destroyed
             return false;
         }

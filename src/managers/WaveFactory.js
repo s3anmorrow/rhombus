@@ -1,5 +1,10 @@
 var WaveFactory = function(){
 
+    // custom events
+    var levelEvent = new createjs.Event("gameEvent", true);
+    levelEvent.id = "levelChange";
+    levelEvent.levelTitle = 0;
+
     // set references to globals
     var stage = Globals.stage;
     var assetManager = Globals.assetManager;
@@ -68,9 +73,8 @@ var WaveFactory = function(){
         wave = 0;
         waveIndex = 0;
 
-
         // LEVEL TESTING
-        //level = 7;
+        level = 6;
         //seconds = 25;
         //waveIndex = 16;
 
@@ -83,6 +87,13 @@ var WaveFactory = function(){
             enemyTotal += activeLevel[n].wave.count;
         }
         activeWaves = [];
+
+        // announce level change
+        levelEvent.target = null;
+        levelEvent.levelTitle = "L" + level + " " + levelTitle;
+        stage.dispatchEvent(levelEvent);
+
+        createjs.Sound.play("level");
 
         console.log("level title: " + levelTitle);
         console.log("level up: " + level);

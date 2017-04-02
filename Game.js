@@ -4,13 +4,15 @@
 (function() {
 	"use strict";
 	
-	// TODO: bug - why first bullet causes pause
 	// TODO: adjust so single bullet can't be fired as fast
 	// TODO: way for game to finish with rhombus big boss
 	// TODO: add sound effects
-	// TODO: have powerup appear in nicer way
-	// TODO: level names appear at beginning of level
 	// TODO: high score board implemented
+	// TODO: superdouble missing icon on interface
+	// TODO: sound effect for playerhit with three levels (for three bullets)
+	// TODO: level design
+
+	// fix spread
 
 	// game variables
 	var stage = null;
@@ -216,6 +218,9 @@
 				break;				
 			case "bigbossKilled":
 				screenManager.game.adjustPoints(e.points);
+				break;
+			case "levelChange":
+				screenManager.game.setLevelName(e.levelTitle);
 				break;
 			case "gameOver":
 				Globals.gameState = GameStates.GAMEOVER;

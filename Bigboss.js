@@ -21,6 +21,7 @@ var Bigboss = function(){
     var turretsActive = 0;
     var turretsTotal = 0;
     var frameCounter = 0;
+    var explosionSound = "";
 
     // the moveFunction that will be called in updateMe()
     var moveFunction = null;
@@ -54,8 +55,13 @@ var Bigboss = function(){
         sprite.addChild(bodySprite);
 
         // get explosion sprite ready to play
-        if (type.indexOf("Mini") != -1) explosionSprite.gotoAndStop("bossMiniExplosion" + points);        
-        else explosionSprite.gotoAndStop("bossExplosion" + points);        
+        if (type.indexOf("Mini") != -1) {
+            explosionSprite.gotoAndStop("bossMiniExplosion" + points);
+            explosionSound = "miniBossExplosion";      
+        } else {
+            explosionSprite.gotoAndStop("bossExplosion" + points);
+            explosionSound = "bossExplosion";
+        }
 
         // position sprite
         sprite.x = startX;
@@ -138,6 +144,7 @@ var Bigboss = function(){
             e.remove();
             bodySprite.stop();
         });
+        createjs.Sound.play(explosionSound);
 
         // add explosion to sprite
         sprite.addChild(explosionSprite);

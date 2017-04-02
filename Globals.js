@@ -112,7 +112,7 @@ var Globals = {
 				speed:10,
 				damage:5,
 				ammo:50,
-				invincible:false,
+				invincible:true,
 				frame:"bullet2"
 			},
 			"rapid":{

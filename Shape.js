@@ -95,7 +95,7 @@ var Shape = function(){
     };
 
     this.resetMe = function() {
-        moveFunction = null;
+        //moveFunction = null;
 
         
 
@@ -118,10 +118,12 @@ var Shape = function(){
             if ((pointsAwarded === undefined) || (pointsAwarded === true)) {
                 sprite.rotation = 0;
                 sprite.gotoAndPlay("explosion" + points);
+                createjs.Sound.play("explosion1");
                 pointsEvent.target = null;
                 stage.dispatchEvent(pointsEvent);
             } else {
                 sprite.gotoAndPlay("explosionNoPoints");
+                createjs.Sound.play("explosion1");
             }
             sprite.addEventListener("animationend",function(e){
                 e.remove();
@@ -141,6 +143,7 @@ var Shape = function(){
                 e.remove();
                 sprite.gotoAndStop(type);
             });
+            createjs.Sound.play("enemyHit");
             // shape was not destroyed
             return false;
         }
@@ -171,6 +174,7 @@ var Shape = function(){
         }
         // myType, myOwner, spriteFrame, mySpeed, myDamage, myInvincible, x, y, r
         bullet.startMe(bulletType, this, bulletType, bulletSpeed, bulletDamage, false, sprite.x, sprite.y, targetAngle);
+        createjs.Sound.play("enemyShoot");
     };
 
     this.updateMe = function() {
@@ -227,6 +231,7 @@ var Shape = function(){
             .call(function(){
                 _this.stopMe();
             });
+            createjs.Sound.play("losePoints");
         }
 
         frameCounter++;

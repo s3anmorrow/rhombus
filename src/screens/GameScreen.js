@@ -35,6 +35,12 @@ var GameScreen = function() {
     txtLives.y = 131;
     screen.addChild(txtLives);
 
+    var txtLevel = new createjs.BitmapText("A",assetManager.getSpriteSheet("charset30"));
+    txtLevel.x = 15;
+    txtLevel.y = 385;
+    txtLevel.alpha = 0;
+    screen.addChild(txtLevel);    
+
     var powerBlocks = [];
     for (var n=0; n<Globals.gameConstants.PLAYER_MAX_POWER; n++) {
         var block = assetManager.getSprite("ui","iconPower");
@@ -76,6 +82,19 @@ var GameScreen = function() {
     // ------------------------------------------------- get/set methods
     this.getScore =  function() {
         return score;
+    };
+
+    this.setLevelName = function(levelName) {
+        // update bitmapttext
+        txtLevel.text = levelName;
+        // tween fading in
+        createjs.Tween.get(txtLevel, {useTicks:true}).to({alpha:1}, 20)
+            .call(function(){
+                createjs.Tween.get(txtLevel, {useTicks:true}).to({x:txtLevel.x}, 60)
+                    .call(function(){
+                        createjs.Tween.get(txtLevel, {useTicks:true}).to({alpha:0}, 20);
+                    });
+            });
     };
 
     // ------------------------------------------------- public methods

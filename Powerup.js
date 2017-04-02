@@ -29,15 +29,25 @@ var Powerup = function(){
         sprite.x = startX;
         sprite.y = startY;
         sprite.alpha = 1;
-        // tween powerup wiggling back and forth
-        createjs.Tween.get(sprite,{useTicks:true, loop:true})
-            .to({x:startX-5}, 8)
-            .to({x:startX}, 8);
+        sprite.scaleX = 0.1;
+        sprite.scaleY = 0.1;
 
+        // tween powerup appearing
+        createjs.Tween.get(sprite,{useTicks:true})
+            .to({scaleX:1,scaleY:1}, 10)
+            .call(function(){
+                createjs.Sound.play("powerupAppear");
+                // tween powerup wiggling back and forth
+                createjs.Tween.get(sprite,{useTicks:true, loop:true})
+                    .to({x:startX-5}, 8)
+                    .to({x:startX}, 8);
+            });
+            
         stage.addChild(sprite);
     };
 
     this.stopMe = function() {
+        createjs.Tween.removeTweens(sprite);
         // remove Shape
 		sprite.stop();
 		stage.removeChild(sprite);
@@ -63,7 +73,10 @@ var Powerup = function(){
         // make powerup slowly drop
         //sprite.y+=2;
 
-        if (sprite.alpha <= 0) this.stopMe();
+        if (sprite.alpha <= 0) {
+            this.stopMe();
+            return;
+        }
 
         // has the player collided with the powerup?
         if ((state != ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
@@ -86,6 +99,7 @@ var Powerup = function(){
                 player.setLives(player.getLives() + powerupData.data);
             }
 
+            createjs.Sound.play("powerupPickup");
             this.killMe();
         }
     };
