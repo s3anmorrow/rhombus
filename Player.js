@@ -175,7 +175,7 @@ var Player = function(){
 
     this.goLeft = function() {
         // do nothing if in ENTERING or KILLED state
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
+        if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
         // don't change animation sequence if currently being hit
         if (sprite.currentAnimation != "playerLeft") {
             sprite.gotoAndPlay("playerLeft");
@@ -186,7 +186,7 @@ var Player = function(){
     };
 
     this.goRight = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
+        if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
         if (sprite.currentAnimation != "playerRight") {
             sprite.gotoAndPlay("playerRight");
             createjs.Sound.play("playerMove");
@@ -196,28 +196,28 @@ var Player = function(){
     };     
 
     this.goUp = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
+        if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
         if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
         if (shieldEnabled) shieldSprite.gotoAndStop("playerShield");
         state = PlayerState.MOVING_UP;
     };
 
     this.goDown = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
+        if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
         if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
         if (shieldEnabled) shieldSprite.gotoAndStop("playerShield");
         state = PlayerState.MOVING_DOWN;
     };
 
     this.goIdle = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
+        if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
         if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
         if (shieldEnabled) shieldSprite.gotoAndStop("playerShield");
         state = PlayerState.IDLE;
     };
 
     this.flipMe = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
+        if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
         // animate player rotating to direction
         if (direction === 0) {
             createjs.Tween.get(sprite, {useTicks:true})
@@ -243,13 +243,13 @@ var Player = function(){
     };
 
     this.fire = function() {
-        if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        if (fireCounter == weaponData.freq) {
+        if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
+        if (fireCounter === weaponData.freq) {
             var gunPoints = weaponData.gunPoints[direction];
             // loop through all gunPoints and add bullet
             for (var n=0; n<gunPoints.length; n++) {
 
-                if (((weaponData.alternateFire) && (firingGunIndex == n)) || (!weaponData.alternateFire)) {
+                if (((weaponData.alternateFire) && (firingGunIndex === n)) || (!weaponData.alternateFire)) {
                     // pluck bullet out of object pool and release
                     var bullet = objectPool.getBullet();
                     bullet.startMe(weaponType, this, 
@@ -280,7 +280,7 @@ var Player = function(){
 
             // increment index of firing gun of next shot
             firingGunIndex++;
-            if (firingGunIndex == gunPoints.length) firingGunIndex = 0;
+            if (firingGunIndex === gunPoints.length) firingGunIndex = 0;
 
             // reset fire frame counter
             fireCounter = 0;
@@ -357,22 +357,22 @@ var Player = function(){
     };
 
     this.updateMe = function() {
-        if ((state == PlayerState.KILLED) || (state == PlayerState.ENTERING)) return;
+        if ((state === PlayerState.KILLED) || (state === PlayerState.ENTERING)) return;
 
         // which direction is player moving?
-        if (state == PlayerState.MOVING_LEFT) {
+        if (state === PlayerState.MOVING_LEFT) {
             speedY = 0;
             if (speedX > -targetSpeedX) speedX-=1;
-        } else if (state == PlayerState.MOVING_RIGHT) {
+        } else if (state === PlayerState.MOVING_RIGHT) {
             speedY = 0;
             if (speedX < targetSpeedX) speedX+=1;
-        } else if (state == PlayerState.MOVING_UP) {
+        } else if (state === PlayerState.MOVING_UP) {
             speedX = 0;
             if (speedY > -targetSpeedY) speedY-=1;
-        } else if (state == PlayerState.MOVING_DOWN) {
+        } else if (state === PlayerState.MOVING_DOWN) {
             speedX = 0;
             if (speedY < targetSpeedY) speedY+=1;
-        } else if (state == PlayerState.IDLE) {
+        } else if (state === PlayerState.IDLE) {
             // do I need to decelerate the player anymore?
             if ((speedX !== 0) || (speedY !== 0)) {
 

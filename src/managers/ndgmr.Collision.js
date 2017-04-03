@@ -214,7 +214,7 @@ this.ndgmr = this.ndgmr || {};
     if ( child.parent && child.parent[propName] ) {
       var cp = child[propName];
       var pp = _getParentalCumulatedProperty(child.parent,propName,operation);
-      if ( operation == '*' ) {
+      if ( operation === '*' ) {
         return cp * pp;
       } else {
         return cp + pp;
@@ -268,10 +268,10 @@ this.ndgmr = this.ndgmr || {};
         //if ( cbounds.x - bounds.x + cbounds.width  > bounds.width  ) bounds.width  = cbounds.x - bounds.x + cbounds.width;
         //if ( cbounds.y - bounds.y + cbounds.height > bounds.height ) bounds.height = cbounds.y - bounds.y + cbounds.height;
       }
-      if ( bounds.x == Infinity ) bounds.x = 0;
-      if ( bounds.y == Infinity ) bounds.y = 0;
-      if ( bounds.x2 == Infinity ) bounds.x2 = 0;
-      if ( bounds.y2 == Infinity ) bounds.y2 = 0;
+      if ( bounds.x === Infinity ) bounds.x = 0;
+      if ( bounds.y === Infinity ) bounds.y = 0;
+      if ( bounds.x2 === Infinity ) bounds.x2 = 0;
+      if ( bounds.y2 === Infinity ) bounds.y2 = 0;
       
       bounds.width = bounds.x2 - bounds.x;
       bounds.height = bounds.y2 - bounds.y;

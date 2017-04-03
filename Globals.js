@@ -42,6 +42,7 @@ var Globals = {
 			"powerupRapid": {category:"weapon",data:"rapid"},
 			"powerupLaser": {category:"weapon",data:"laser"},
 			"powerupBounce": {category:"weapon",data:"bounce"},
+			"powerupSuperBounce": {category:"weapon",data:"superBounce"},
 			"powerupShield": {category:"shield",data:10}, // duration of shield in seconds
 			"powerupPower": {category:"power",data:1}, // number of power cubes
 			"powerupHalfPower": {category:"power",data:3},
@@ -62,7 +63,7 @@ var Globals = {
 			},
 			"double":{
 				freq:6,
-				gunPoints:[[{x:-20,y:-5,r:270},{x:20,y:-5,r:270}],[{x:-20,y:5,r:90},{x:20,y:5,r:90}]],
+				gunPoints:[[{x:-10,y:-5,r:270},{x:10,y:-5,r:270}],[{x:-10,y:5,r:90},{x:10,y:5,r:90}]],
 				alternateFire:true,
 				auto:true,
 				speed:20,
@@ -73,7 +74,7 @@ var Globals = {
 			},
 			"superDouble":{
 				freq:6,
-				gunPoints:[[{x:-20,y:-5,r:270},{x:20,y:-5,r:270}],[{x:-20,y:5,r:90},{x:20,y:5,r:90}]],
+				gunPoints:[[{x:-10,y:-5,r:270},{x:10,y:-5,r:270}],[{x:-10,y:5,r:90},{x:10,y:5,r:90}]],
 				alternateFire:false,
 				auto:true,
 				speed:20,
@@ -111,7 +112,7 @@ var Globals = {
 				auto:false,
 				speed:10,
 				damage:5,
-				ammo:50,
+				ammo:25,
 				invincible:true,
 				frame:"bullet2"
 			},
@@ -145,6 +146,17 @@ var Globals = {
 				speed:6,
 				damage:0.5,
 				ammo:100,
+				invincible:true,
+				frame:"bounceBullet"				
+			},
+			"superBounce":{
+				freq:0,
+				gunPoints:[[{x:0,y:-20,r:270},{x:-20,y:-5,r:260},{x:20,y:-5,r:280}],[{x:0,y:20,r:90},{x:-20,y:5,r:100},{x:20,y:5,r:80}]],
+				alternateFire:false,
+				auto:false,
+				speed:6,
+				damage:0.75,
+				ammo:200,
 				invincible:true,
 				frame:"bounceBullet"				
 			}

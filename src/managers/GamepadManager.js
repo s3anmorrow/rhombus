@@ -80,7 +80,7 @@ var GamepadManager = function(){
         for (var n=0; n<manifest.buttons.length; n++) {
             var btnData = manifest.buttons[n];
             // check if game is in correct state for button to be active
-            if (btnData.gameState == state) {
+            if (btnData.gameState === state) {
                 // check if button is allowed to clip or not
                 if ((!btnData.clipping) || (btnData.clipping === undefined)) {
                     // CLIPPING PROHIBITED ON BUTTON

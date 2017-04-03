@@ -125,9 +125,35 @@ var MoveFunctions = {
             sprite.moveData.yDisplace = Math.sin(radians) * sprite.moveData.speed;
             sprite.moveData.ready = true;
         }
+        if (sprite.moveData.rotate) sprite.rotation++;
         // move sprite on diagonal
         sprite.x = sprite.x + sprite.moveData.xDisplace;
         sprite.y = sprite.y + sprite.moveData.yDisplace;
+
+        // check if object is off the stage
+        if ((sprite.x < -sprite.moveData.width) || (sprite.x > (Globals.stage.canvas.width + sprite.moveData.width)) || (sprite.y < -sprite.moveData.height) || (sprite.y > (Globals.stage.canvas.height + sprite.moveData.height))) return false;
+        return true;
+    },    
+
+    diagonalAndStop:function(sprite) {
+        if (!sprite.moveData.ready) {
+            if (sprite.moveData.speed === undefined) sprite.moveData.speed = 2;
+            // adjust rotation of sprite
+            sprite.rotation = sprite.moveData.angle;
+            // convert current rotation of object to radians
+            var radians = Globals.radianMe(sprite.moveData.angle);
+            // calculating X and Y displacement
+            sprite.moveData.xDisplace = Math.cos(radians) * sprite.moveData.speed;
+            sprite.moveData.yDisplace = Math.sin(radians) * sprite.moveData.speed;
+            sprite.moveData.ready = true;
+        }
+
+        if (sprite.moveData.rotate) sprite.rotation++;
+        if ((sprite.x > (sprite.moveData.stopAt + 10)) || (sprite.x < (sprite.moveData.stopAt - 10)))  {
+            // move sprite on diagonal
+            sprite.x = sprite.x + sprite.moveData.xDisplace;
+            sprite.y = sprite.y + sprite.moveData.yDisplace;
+        }
 
         // check if object is off the stage
         if ((sprite.x < -sprite.moveData.width) || (sprite.x > (Globals.stage.canvas.width + sprite.moveData.width)) || (sprite.y < -sprite.moveData.height) || (sprite.y > (Globals.stage.canvas.height + sprite.moveData.height))) return false;
@@ -140,7 +166,7 @@ var MoveFunctions = {
             sprite.moveData.stage = 0;
             sprite.moveData.ready = true;
         }
-        if (sprite.moveData.dir == "down") {
+        if (sprite.moveData.dir === "down") {
             if (sprite.moveData.rotate) sprite.rotation++;
             if (sprite.moveData.stage === 0) {
                 sprite.y+=sprite.moveData.speed;
@@ -179,7 +205,7 @@ var MoveFunctions = {
                 sprite.x-=sprite.moveData.speed;
                 // ready to move onto looping stage?
                 if (sprite.x <= (sprite.moveData.cx + sprite.moveData.r)) sprite.moveData.stage = 1;
-            } else if (sprite.moveData.stage == 1) {
+            } else if (sprite.moveData.stage === 1) {
                 // LOOPING STAGE
                 // looping in circle - increment rotation of shape
                 sprite.rotation+=sprite.moveData.speed;
@@ -190,7 +216,7 @@ var MoveFunctions = {
                 sprite.y = sprite.moveData.cy + sprite.moveData.r * Math.sin(radians);
                 // ready to move onto exit stage?
                 if (sprite.rotation >= (360 * sprite.moveData.loops)) sprite.moveData.stage = 2;
-            } else if (sprite.moveData.stage == 2) {
+            } else if (sprite.moveData.stage === 2) {
                 // EXIT STAGE
                 if ((sprite.moveData.stop !== undefined) && (sprite.moveData.stop)) return true;
                 sprite.x-=sprite.moveData.speed;
@@ -198,14 +224,14 @@ var MoveFunctions = {
                 if (sprite.x < -sprite.moveData.width) return false;
             }
             return true;
-        } else if (sprite.moveData.dir == "right") {
+        } else if (sprite.moveData.dir === "right") {
             if (sprite.moveData.stage === 0) {
                 // ENTERING STAGE
                 // move shape from left across stage
                 sprite.x+=sprite.moveData.speed;
                 // ready to move onto looping stage?
                 if (sprite.x >= (sprite.moveData.cx - sprite.moveData.r)) sprite.moveData.stage = 1;
-            } else if (sprite.moveData.stage == 1) {
+            } else if (sprite.moveData.stage === 1) {
                 // LOOPING STAGE
                 // looping in circle - increment rotation of shape
                 sprite.rotation+=sprite.moveData.speed;
@@ -216,7 +242,7 @@ var MoveFunctions = {
                 sprite.y = sprite.moveData.cy + sprite.moveData.r * Math.sin(radians);
                 // ready to move onto exit stage?
                 if (sprite.rotation >= (360 * sprite.moveData.loops)) sprite.moveData.stage = 2;
-            } else if (sprite.moveData.stage == 2) {
+            } else if (sprite.moveData.stage === 2) {
                 // EXIT STAGE
                 if ((sprite.moveData.stop !== undefined) && (sprite.moveData.stop)) return true;
                 sprite.x+=sprite.moveData.speed;
@@ -231,7 +257,7 @@ var MoveFunctions = {
                 sprite.y+=sprite.moveData.speed;
                 // ready to move onto looping stage?
                 if (sprite.y >= (sprite.moveData.cy - sprite.moveData.r)) sprite.moveData.stage = 1;
-            } else if (sprite.moveData.stage == 1) {
+            } else if (sprite.moveData.stage === 1) {
                 // LOOPING STAGE
                 // looping in circle - increment rotation of shape
                 sprite.rotation+=sprite.moveData.speed;
@@ -242,7 +268,7 @@ var MoveFunctions = {
                 sprite.y = sprite.moveData.cy + sprite.moveData.r * Math.sin(radians);
                 // ready to move onto exit stage?
                 if (sprite.rotation >= (360 * sprite.moveData.loops)) sprite.moveData.stage = 2;
-            } else if (sprite.moveData.stage == 2) {
+            } else if (sprite.moveData.stage === 2) {
                 // EXIT STAGE
                 if ((sprite.moveData.stop !== undefined) && (sprite.moveData.stop)) return true;
                 sprite.y+=sprite.moveData.speed;

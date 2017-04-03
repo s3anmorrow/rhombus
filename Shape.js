@@ -107,7 +107,7 @@ var Shape = function(){
         hitPoints-=damage;
 
         // show damage if not done already?
-        if ((hitPoints <= halfHitPoints) && (sprite.currentAnimation.indexOf("Damage") == -1)) {
+        if ((hitPoints <= halfHitPoints) && (sprite.currentAnimation.indexOf("Damage") === -1)) {
             type = type + "Damage";
             sprite.gotoAndStop(type);
         }
@@ -165,10 +165,10 @@ var Shape = function(){
         var bullet = objectPool.getBullet();
         var bulletSpeed = 6;
         var bulletDamage = 1;
-        if (bulletType == "bullet2") {
+        if (bulletType === "bullet2") {
             bulletSpeed = 8;
             bulletDamage = 2;
-        } else if (bulletType == "bullet3") {
+        } else if (bulletType === "bullet3") {
             bulletSpeed = 10;
             bulletDamage = 3;
         }
@@ -178,7 +178,7 @@ var Shape = function(){
     };
 
     this.updateMe = function() {
-        if (state == ShapeState.KILLED) return;
+        if (state === ShapeState.KILLED) return;
 
         // Step I : collision detection
         // has the shape collided with the player?

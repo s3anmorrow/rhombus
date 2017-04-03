@@ -79,7 +79,7 @@ var Turret = function(){
         hitPoints-=damage;
 
         // show damage if not done already?
-        if ((hitPoints <= halfHitPoints) && (sprite.currentAnimation.indexOf("Damage") == -1)) {
+        if ((hitPoints <= halfHitPoints) && (sprite.currentAnimation.indexOf("Damage") === -1)) {
             type = type + "Damage";
             sprite.gotoAndStop(type);
         }
@@ -119,7 +119,7 @@ var Turret = function(){
 
         // switch coords to stage from container of bigboss
         var turretPoint = owner.sprite.localToGlobal(sprite.x,sprite.y);
-        if (bulletType.indexOf("bullet") == -1) {
+        if (bulletType.indexOf("bullet") === -1) {
             // release a shape instead of a bullet
             var shootData = null;
             // drop shape into the game
@@ -140,10 +140,10 @@ var Turret = function(){
             var bullet = objectPool.getBullet();
             var bulletSpeed = 6;
             var bulletDamage = 1;
-            if (bulletType == "bullet2") {
+            if (bulletType === "bullet2") {
                 bulletSpeed = 8;
                 bulletDamage = 2;
-            } else if (bulletType == "bullet3") {
+            } else if (bulletType === "bullet3") {
                 bulletSpeed = 10;
                 bulletDamage = 3;
             }
@@ -153,7 +153,7 @@ var Turret = function(){
     };
 
     this.updateMe = function() {
-        if (state == ShapeState.KILLED) return;
+        if (state === ShapeState.KILLED) return;
 
         /*
         // Step I : collision detection

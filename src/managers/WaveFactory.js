@@ -46,7 +46,7 @@ var WaveFactory = function(){
     function addWave() {
         // go through all pending waves of current level to see if time to release
         for (var n=0; n<activeLevel.length; n++) {
-            if (activeLevel[n].time == seconds) {
+            if (activeLevel[n].time === seconds) {
 
                 console.log("Adding wave " + waveIndex + " out of 20 : seconds: " + seconds);
 
@@ -75,12 +75,12 @@ var WaveFactory = function(){
         waveIndex = 0;
 
         // LEVEL TESTING
-        //level = 6;
-        //seconds = 25;
-        //waveIndex = 16;
+        level = 8;
+        //seconds = 39;
+        //waveIndex = 4;
 
         activeLevel = levelManifest[level - 1];        
-        if (activeLevel[0].levelTitle == "undefined") levelTitle = "Untitled";
+        if (activeLevel[0].levelTitle === "undefined") levelTitle = "Untitled";
         else levelTitle = activeLevel[0].levelTitle;
         enemyReleased = 0;
         enemyTotal = 0;
@@ -134,7 +134,7 @@ var WaveFactory = function(){
                         var powerupType = "";
                         if ((activeWave.powerup !== undefined) && (activeWave.powerup !== null)) {
                             var powerupIndex = activeWave.powerup.index;
-                            if (activeWave.wave.dropped == powerupIndex) powerupType = activeWave.powerup.type;
+                            if (activeWave.wave.dropped === powerupIndex) powerupType = activeWave.powerup.type;
                         }
                         // start the shape and pass along required data
                         shape.startMe(activeWave.type, 
@@ -181,7 +181,7 @@ var WaveFactory = function(){
 
         //console.log("r: " + enemyReleased +  " : t" + enemyTotal + " : u: " + objectPool.usageTest());
         // wave is complete only if all enemies released and there is only player left (enemies all killed)
-        if ((enemyReleased == enemyTotal) && (!objectPool.usageTest())) this.levelMe();
+        if ((enemyReleased === enemyTotal) && (!objectPool.usageTest())) this.levelMe();
 
     };
 

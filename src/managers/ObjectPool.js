@@ -10,7 +10,7 @@ var ObjectPool = function() {
 	// starting constant maximums of the game elements (virusMax can be extended by Object pool if needed)
 	var SHAPE_MAX = 100;
 	var PLAYER_MAX = 1;
-	var BULLET_MAX = 200;
+	var BULLET_MAX = 400;
 	var BIGBOSS_MAX = 20;
 	var TURRET_MAX = 50;
 	var POWERUP_MAX = 5;
@@ -118,17 +118,17 @@ var ObjectPool = function() {
 
     this.dispose = function(o) {
 		// which type of game object are we disposing?
-		if (o.constructor.name == "Shape") {
+		if (o.constructor.name === "Shape") {
 			shapePool[o.poolIndex].used = false;			
-		} else if (o.constructor.name == "Player") {
+		} else if (o.constructor.name === "Player") {
 			playerPool[o.poolIndex].used = false;
-		} else if (o.constructor.name == "Bullet") {
+		} else if (o.constructor.name === "Bullet") {
 			bulletPool[o.poolIndex].used = false;	
-		} else if (o.constructor.name == "Bigboss") {
+		} else if (o.constructor.name === "Bigboss") {
 			bigbossPool[o.poolIndex].used = false;	
-		} else if (o.constructor.name == "Turret") {
+		} else if (o.constructor.name === "Turret") {
 			turretPool[o.poolIndex].used = false;	
-		} else if (o.constructor.name == "Powerup") {
+		} else if (o.constructor.name === "Powerup") {
 			powerupPool[o.poolIndex].used = false;	
 		}
 		updateList[o.usedIndex] = null;

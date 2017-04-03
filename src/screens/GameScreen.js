@@ -75,7 +75,7 @@ var GameScreen = function() {
         // update weapon icon
         weaponIcon.gotoAndStop("iconWeapon_" + weaponType);
         // is there infinite ammo?
-        if (ammo == -1) txtAmmo.text = "@";
+        if (ammo === -1) txtAmmo.text = "@";
         else txtAmmo.text = String(ammo);
     }
 

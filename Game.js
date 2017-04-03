@@ -6,11 +6,11 @@
 	
 	// TODO: adjust so single bullet can't be fired as fast
 	// TODO: way for game to finish with rhombus big boss
-	// TODO: add sound effects
 	// TODO: high score board implemented
-	// TODO: superdouble missing icon on interface
 	// TODO: sound effect for playerhit with three levels (for three bullets)
+	// TODO: game over sound effect
 	// TODO: level design
+	// TODO: bug when switching over weapontype (takes shot with wrong bullet)
 
 	// fix spread
 
@@ -157,43 +157,43 @@
 		//createjs.Sound.play("music","none",0,0,-1);
 
 		// ???????????????? temporary start
-		//startGame();
+		startGame();
 		//Globals.gameState = GameStates.HIGHSCORE;
 		//screenManager.setScreen("highScoreScreen");
 
 	}
 
 	function onKeyDown(e) {
-		if (Globals.gameState == GameStates.PLAYING) {
-			if ((e.keyCode == 40) || (e.keyCode == 83)) downKey = true;
-			else if ((e.keyCode == 38) || (e.keyCode == 87)) upKey = true;
-			else if ((e.keyCode == 37) || (e.keyCode == 65)) leftKey = true;
-			else if ((e.keyCode == 39) || (e.keyCode == 68)) rightKey = true;
-			else if (e.keyCode == 32) fireKey = true;
+		if (Globals.gameState === GameStates.PLAYING) {
+			if ((e.keyCode === 40) || (e.keyCode === 83)) downKey = true;
+			else if ((e.keyCode === 38) || (e.keyCode === 87)) upKey = true;
+			else if ((e.keyCode === 37) || (e.keyCode === 65)) leftKey = true;
+			else if ((e.keyCode === 39) || (e.keyCode === 68)) rightKey = true;
+			else if (e.keyCode === 32) fireKey = true;
 		}
 		e.preventDefault();
 	}
 
 	function onKeyUp(e) {
-		if (Globals.gameState == GameStates.INTRO) {
-			if (e.keyCode == 32) startGame();
-		} else if (Globals.gameState == GameStates.PLAYING) {
-			if ((e.keyCode == 40) || (e.keyCode == 83)) downKey = false;
-			else if ((e.keyCode == 38) || (e.keyCode == 87)) upKey = false;
-			else if ((e.keyCode == 37) || (e.keyCode == 65)) leftKey = false;
-			else if ((e.keyCode == 39) || (e.keyCode == 68)) rightKey = false;
-			else if (e.keyCode == 32) fireKey = false;
-			else if (e.keyCode == 13) player.flipMe();
-		} else if (Globals.gameState == GameStates.HIGHSCORE) {			
-			if (e.keyCode == 40) screenManager.highScore.moveSelector("down");
-			else if (e.keyCode == 38) screenManager.highScore.moveSelector("up");
-			else if (e.keyCode == 37) screenManager.highScore.moveSelector("left");
-			else if (e.keyCode == 39) screenManager.highScore.moveSelector("right");
-			else if (e.keyCode == 32) screenManager.highScore.selectInitial();
-		} else if (Globals.gameState == GameStates.GAMEOVER) {
+		if (Globals.gameState === GameStates.INTRO) {
+			if (e.keyCode === 32) startGame();
+		} else if (Globals.gameState === GameStates.PLAYING) {
+			if ((e.keyCode === 40) || (e.keyCode === 83)) downKey = false;
+			else if ((e.keyCode === 38) || (e.keyCode === 87)) upKey = false;
+			else if ((e.keyCode === 37) || (e.keyCode === 65)) leftKey = false;
+			else if ((e.keyCode === 39) || (e.keyCode === 68)) rightKey = false;
+			else if (e.keyCode === 32) fireKey = false;
+			else if (e.keyCode === 13) player.flipMe();
+		} else if (Globals.gameState === GameStates.HIGHSCORE) {			
+			if (e.keyCode === 40) screenManager.highScore.moveSelector("down");
+			else if (e.keyCode === 38) screenManager.highScore.moveSelector("up");
+			else if (e.keyCode === 37) screenManager.highScore.moveSelector("left");
+			else if (e.keyCode === 39) screenManager.highScore.moveSelector("right");
+			else if (e.keyCode === 32) screenManager.highScore.selectInitial();
+		} else if (Globals.gameState === GameStates.GAMEOVER) {
 			// TODO: !!!!!!!!!!!!!!! check if highscore
 			resetGame();
-			if (e.keyCode == 32) screenManager.setScreen("introScreen");
+			if (e.keyCode === 32) screenManager.setScreen("introScreen");
 		}
 		e.preventDefault();
 	}

@@ -100,10 +100,10 @@ var HighScoreScreen = function() {
         var char = charList[rowIndex][charIndex];
         var initials = txtInitials.text;
 
-        if (char == "1") {
+        if (char === "1") {
             console.log("!!! submit initials !!!");
 
-        } else if ((char == "-1") && (initials.length > 0)) {
+        } else if ((char === "-1") && (initials.length > 0)) {
             txtInitials.text = initials.substring(0, initials.length - 1);
             // center initials on stage
             if (txtInitials.text != "") centerMe(txtInitials);

@@ -67,7 +67,7 @@ var Bullet = function() {
 				e.remove();
 				_this.stopMe();
 			});
-		} else if (type === "bounce") {
+		} else if ((type === "bounce") || (type === "superBounce")) {
 			sprite.play();
 		}
 		sprite.x = x;
@@ -76,7 +76,7 @@ var Bullet = function() {
 
 		/*
 		// play bullet sound effect
-		if ((ownerType == "RedPlane") || (ownerType == "RedTank") || (ownerType == "RedJeep") || (ownerType == "RedBunker")) createjs.Sound.play("RedFire");
+		if ((ownerType === "RedPlane") || (ownerType === "RedTank") || (ownerType === "RedJeep") || (ownerType === "RedBunker")) createjs.Sound.play("RedFire");
 		else createjs.Sound.play("BlueFire");
 		*/
 
@@ -130,7 +130,7 @@ var Bullet = function() {
 
 			// STEP II : Bullet removal if off stage
 			// check if bullet off the screen
-			if (type === "bounce") {
+			if ((type === "bounce") || (type === "superBounce")) {
 				// make bullets bounce off edges of stage
 				if ((sprite.y > stageBottom) || (sprite.y < stageTop)) {
 					yDisplace = yDisplace * -1;

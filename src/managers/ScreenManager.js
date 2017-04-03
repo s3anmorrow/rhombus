@@ -97,10 +97,10 @@ var ScreenManager = function() {
         stage.removeChild(gameOverScreen);
 
         // add corresponding screen container and setup
-        if (which == "introScreen") introScreen.showMe();
-        else if (which == "gameScreen") gameScreen.showMe();
-        else if (which == "highScoreScreen") highScoreScreen.showMe(gameScreen.getScore());
-        else if (which == "gameOverScreen") {
+        if (which === "introScreen") introScreen.showMe();
+        else if (which === "gameScreen") gameScreen.showMe();
+        else if (which === "highScoreScreen") highScoreScreen.showMe(gameScreen.getScore());
+        else if (which === "gameOverScreen") {
             prompt.gotoAndStop("spacebarContinue");
             if (Globals.gamepadManager.connected) prompt.gotoAndStop("startButtonContinue");
             stage.addChild(gameOverScreen);
