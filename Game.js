@@ -154,6 +154,8 @@
 		Globals.gameState = GameStates.INTRO;
 		console.log(">> intro gameScreen ready");
 
+		//createjs.Sound.play("music","none",0,0,-1);
+
 		// ???????????????? temporary start
 		//startGame();
 		//Globals.gameState = GameStates.HIGHSCORE;

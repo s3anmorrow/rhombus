@@ -177,14 +177,20 @@ var Player = function(){
         // do nothing if in ENTERING or KILLED state
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
         // don't change animation sequence if currently being hit
-        if (sprite.currentAnimation != "playerLeft") sprite.gotoAndPlay("playerLeft");
+        if (sprite.currentAnimation != "playerLeft") {
+            sprite.gotoAndPlay("playerLeft");
+            createjs.Sound.play("playerMove");
+        }
         if (shieldEnabled) shieldSprite.gotoAndStop("playerShieldLeft");
         state = PlayerState.MOVING_LEFT;
     };
 
     this.goRight = function() {
         if ((state == PlayerState.ENTERING) || (state == PlayerState.KILLED)) return;
-        if (sprite.currentAnimation != "playerRight") sprite.gotoAndPlay("playerRight");
+        if (sprite.currentAnimation != "playerRight") {
+            sprite.gotoAndPlay("playerRight");
+            createjs.Sound.play("playerMove");
+        }
         if (shieldEnabled) shieldSprite.gotoAndStop("playerShieldRight");
         state = PlayerState.MOVING_RIGHT;
     };     

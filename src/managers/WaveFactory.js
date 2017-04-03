@@ -10,6 +10,7 @@ var WaveFactory = function(){
     var assetManager = Globals.assetManager;
     var objectPool = Globals.objectPool;
     var frameRate = Globals.gameConstants.FRAME_RATE;
+    var halfFrameRate = Globals.gameConstants.FRAME_RATE/2;
 
     // private property variables
     var level = 0;
@@ -74,7 +75,7 @@ var WaveFactory = function(){
         waveIndex = 0;
 
         // LEVEL TESTING
-        level = 6;
+        //level = 6;
         //seconds = 25;
         //waveIndex = 16;
 
@@ -162,6 +163,21 @@ var WaveFactory = function(){
             // check if time to add a new wave to game
             addWave();
         }
+
+        // play beat sound effect
+        if (seconds >= 50) {
+            if ((frameCounter % halfFrameRate) === 0) {
+                createjs.Sound.play("beat2");
+            }
+        } else if (seconds >= 30) {
+            if ((frameCounter % frameRate) === 0) {
+                createjs.Sound.play("beat2");
+            }
+        } else {
+            if ((frameCounter % frameRate) === 0) {
+                createjs.Sound.play("beat1");
+            }
+        } 
 
         //console.log("r: " + enemyReleased +  " : t" + enemyTotal + " : u: " + objectPool.usageTest());
         // wave is complete only if all enemies released and there is only player left (enemies all killed)

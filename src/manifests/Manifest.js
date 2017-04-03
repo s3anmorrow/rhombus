@@ -118,6 +118,11 @@ var gameManifest = [
         data:4
     },
     {
+        src:"lib/music.ogg",
+        id:"music",
+        data:1
+    },
+    {
         src:"lib/losePoints.ogg",
         id:"losePoints",
         data:4
@@ -130,6 +135,21 @@ var gameManifest = [
     {
         src:"lib/playerEnter.ogg",
         id:"playerEnter",
+        data:4
+    },
+    {
+        src:"lib/playerMove.ogg",
+        id:"playerMove",
+        data:4
+    },
+    {
+        src:"lib/beat1.ogg",
+        id:"beat1",
+        data:4
+    },
+    {
+        src:"lib/beat2.ogg",
+        id:"beat2",
         data:4
     },
     {
