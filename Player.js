@@ -362,32 +362,32 @@ var Player = function(){
         // which direction is player moving?
         if (state === PlayerState.MOVING_LEFT) {
             speedY = 0;
-            if (speedX > -targetSpeedX) speedX-=1;
+            if (speedX > -targetSpeedX) speedX-=2;
         } else if (state === PlayerState.MOVING_RIGHT) {
             speedY = 0;
-            if (speedX < targetSpeedX) speedX+=1;
+            if (speedX < targetSpeedX) speedX+=2;
         } else if (state === PlayerState.MOVING_UP) {
             speedX = 0;
-            if (speedY > -targetSpeedY) speedY-=1;
+            if (speedY > -targetSpeedY) speedY-=2;
         } else if (state === PlayerState.MOVING_DOWN) {
             speedX = 0;
-            if (speedY < targetSpeedY) speedY+=1;
+            if (speedY < targetSpeedY) speedY+=2;
         } else if (state === PlayerState.IDLE) {
             // do I need to decelerate the player anymore?
             if ((speedX !== 0) || (speedY !== 0)) {
 
                 // decelerate player
                 if (speedX < 0) {
-                    speedX+=1;
+                    speedX+=2;
                     if (speedX > 0) speedX = 0;
                 } else if (speedX > 0) {
-                    speedX-=1;
+                    speedX-=2;
                     if (speedX < 0) speedX = 0;
                 } else if (speedY < 0) {
-                    speedY+=1;
+                    speedY+=2;
                     if (speedY > 0) speedY = 0;
                 } else if (speedY > 0) {
-                    speedY-=1;
+                    speedY-=2;
                     if (speedY < 0) speedY = 0;
                 }
 

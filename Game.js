@@ -12,8 +12,6 @@
 	// TODO: level design
 	// TODO: bug when switching over weapontype (takes shot with wrong bullet)
 
-	// fix spread
-
 	// game variables
 	var stage = null;
 	var canvas = null;
@@ -157,7 +155,7 @@
 		//createjs.Sound.play("music","none",0,0,-1);
 
 		// ???????????????? temporary start
-		startGame();
+		//sstartGame();
 		//Globals.gameState = GameStates.HIGHSCORE;
 		//screenManager.setScreen("highScoreScreen");
 

@@ -276,6 +276,32 @@ var MoveFunctions = {
                 if (sprite.y > Globals.stage.canvas.height + sprite.moveData.height) return false;
             }
             return true;
+        } else if (sprite.moveData.dir === "up") {
+            if (sprite.moveData.stage === 0) {
+                // ENTERING STAGE
+                // move shape from left across stage
+                sprite.y-=sprite.moveData.speed;
+                // ready to move onto looping stage?
+                if (sprite.y <= (sprite.moveData.cy + sprite.moveData.r)) sprite.moveData.stage = 1;
+            } else if (sprite.moveData.stage === 1) {
+                // LOOPING STAGE
+                // looping in circle - increment rotation of shape
+                sprite.rotation+=sprite.moveData.speed;
+                // get current angle of rotation and convert to radians
+                radians = Globals.radianMe(sprite.rotation + 90);
+                // calculate X and Y location around circle
+                sprite.x = sprite.moveData.cx + sprite.moveData.r * Math.cos(radians);
+                sprite.y = sprite.moveData.cy + sprite.moveData.r * Math.sin(radians);
+                // ready to move onto exit stage?
+                if (sprite.rotation >= (360 * sprite.moveData.loops)) sprite.moveData.stage = 2;
+            } else if (sprite.moveData.stage === 2) {
+                // EXIT STAGE
+                if ((sprite.moveData.stop !== undefined) && (sprite.moveData.stop)) return true;
+                sprite.y-=sprite.moveData.speed;
+                // off the left of the stage?
+                if (sprite.y < -sprite.moveData.height) return false;
+            }
+            return true;
         }
     }
 

@@ -15,7 +15,6 @@ var WaveFactory = function(){
     // private property variables
     var level = 0;
     var wave = 0;
-    var waveIndex = 0;
     var enemyReleased = 0;
     var enemyTotal = 0;
     var levelTitle = "";
@@ -48,14 +47,13 @@ var WaveFactory = function(){
         for (var n=0; n<activeLevel.length; n++) {
             if (activeLevel[n].time === seconds) {
 
-                console.log("Adding wave " + waveIndex + " out of 20 : seconds: " + seconds);
+                console.log("Adding wave at seconds: " + seconds);
 
                 // release new wave
                 // initializing next wave object before starting wave
-                activeLevel[waveIndex].wave.frameCount = activeLevel[waveIndex].wave.spaced;
-                activeLevel[waveIndex].wave.dropped = 0;
-                activeWaves.push(activeLevel[waveIndex]);
-                waveIndex++;
+                activeLevel[n].wave.frameCount = activeLevel[n].wave.spaced;
+                activeLevel[n].wave.dropped = 0;
+                activeWaves.push(activeLevel[n]);
             }
         }
     }    
@@ -72,12 +70,10 @@ var WaveFactory = function(){
         frameCounter = 0;
         seconds = 0;
         wave = 0;
-        waveIndex = 0;
 
         // LEVEL TESTING
-        level = 8;
+        level = 11;
         //seconds = 39;
-        //waveIndex = 4;
 
         activeLevel = levelManifest[level - 1];        
         if (activeLevel[0].levelTitle === "undefined") levelTitle = "Untitled";
@@ -166,17 +162,11 @@ var WaveFactory = function(){
 
         // play beat sound effect
         if (seconds >= 50) {
-            if ((frameCounter % halfFrameRate) === 0) {
-                createjs.Sound.play("beat2");
-            }
+            if ((frameCounter % halfFrameRate) === 0) createjs.Sound.play("beat2");
         } else if (seconds >= 30) {
-            if ((frameCounter % frameRate) === 0) {
-                createjs.Sound.play("beat2");
-            }
+            if ((frameCounter % frameRate) === 0) createjs.Sound.play("beat2");
         } else {
-            if ((frameCounter % frameRate) === 0) {
-                createjs.Sound.play("beat1");
-            }
+            if ((frameCounter % frameRate) === 0) createjs.Sound.play("beat1");
         } 
 
         //console.log("r: " + enemyReleased +  " : t" + enemyTotal + " : u: " + objectPool.usageTest());

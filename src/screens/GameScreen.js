@@ -37,7 +37,7 @@ var GameScreen = function() {
 
     var txtLevel = new createjs.BitmapText("A",assetManager.getSpriteSheet("charset30"));
     txtLevel.x = 15;
-    txtLevel.y = 385;
+    txtLevel.y = 245;
     txtLevel.alpha = 0;
     screen.addChild(txtLevel);    
 
