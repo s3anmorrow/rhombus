@@ -8,7 +8,6 @@
 	// TODO: way for game to finish with rhombus big boss
 	// TODO: high score board implemented
 	// TODO: sound effect for playerhit with three levels (for three bullets)
-	// TODO: game over sound effect
 	// TODO: level design
 	// TODO: bug when switching over weapontype (takes shot with wrong bullet)
 
@@ -191,7 +190,7 @@
 		} else if (Globals.gameState === GameStates.GAMEOVER) {
 			// TODO: !!!!!!!!!!!!!!! check if highscore
 			resetGame();
-			if (e.keyCode === 32) screenManager.setScreen("introScreen");
+			if (e.keyCode === 13) screenManager.setScreen("introScreen");
 		}
 		e.preventDefault();
 	}

@@ -70,7 +70,7 @@ var gameManifest = [
     {
         src:"lib/enemyShoot.ogg",
         id:"enemyShoot",
-        data:4
+        data:6
     },
     {
         src:"lib/explosion1.ogg",
@@ -103,11 +103,6 @@ var gameManifest = [
         data:4
     },
     {
-        src:"lib/interface.ogg",
-        id:"interface",
-        data:4
-    },
-    {
         src:"lib/laser.ogg",
         id:"laser",
         data:4
@@ -116,11 +111,6 @@ var gameManifest = [
         src:"lib/level.ogg",
         id:"level",
         data:4
-    },
-    {
-        src:"lib/music.ogg",
-        id:"music",
-        data:1
     },
     {
         src:"lib/losePoints.ogg",
@@ -188,8 +178,13 @@ var gameManifest = [
         data:4
     },
     {
-        src:"lib/warning.ogg",
-        id:"warning",
+        src:"lib/enemyReleaseShape.ogg",
+        id:"enemyReleaseShape",
         data:4
+    },
+    {
+        src:"lib/gameOver.ogg",
+        id:"gameOver",
+        data:1
     },
 ];

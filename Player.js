@@ -139,6 +139,10 @@ var Player = function(){
         shieldEnabled = true;
         // set direction to going up
         direction = 0;
+        changeDirEvent.target = null;
+        changeDirEvent.dir = direction;
+        stage.dispatchEvent(changeDirEvent);
+        
         baseRotation = 0;
         sprite.rotation = baseRotation;
         shieldSprite.rotation = baseRotation;

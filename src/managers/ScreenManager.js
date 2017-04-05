@@ -104,6 +104,7 @@ var ScreenManager = function() {
             prompt.gotoAndStop("spacebarContinue");
             if (Globals.gamepadManager.connected) prompt.gotoAndStop("startButtonContinue");
             stage.addChild(gameOverScreen);
+            createjs.Sound.play("gameOver");
         }
     };
 

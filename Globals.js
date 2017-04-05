@@ -144,7 +144,7 @@ var Globals = {
 				alternateFire:false,
 				auto:false,
 				speed:6,
-				damage:0.5,
+				damage:0.3,
 				ammo:100,
 				invincible:true,
 				frame:"bounceBullet"				
@@ -155,7 +155,7 @@ var Globals = {
 				alternateFire:false,
 				auto:false,
 				speed:6,
-				damage:0.75,
+				damage:0.6,
 				ammo:200,
 				invincible:true,
 				frame:"bounceBullet"				

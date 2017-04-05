@@ -130,7 +130,7 @@ var Turret = function(){
                           {index:0, freq:100, bulletType:"bullet1"}, 
                           {type:"kamikaze", speed:2});
 
-
+            createjs.Sound.play("enemyReleaseShape");
         } else {
             // fire regular bullet!
             // get targetAngle of target relative to shape's sprite
@@ -149,6 +149,7 @@ var Turret = function(){
             }
             // myType, myOwner, spriteFrame, mySpeed, myDamage, myInvincible, x, y, r
             bullet.startMe(bulletType, owner, bulletType, bulletSpeed, bulletDamage, false, turretPoint.x, turretPoint.y, targetAngle);
+            createjs.Sound.play("enemyShoot");
         }
     };
 
