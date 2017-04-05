@@ -158,7 +158,49 @@ var MoveFunctions = {
         // check if object is off the stage
         if ((sprite.x < -sprite.moveData.width) || (sprite.x > (Globals.stage.canvas.width + sprite.moveData.width)) || (sprite.y < -sprite.moveData.height) || (sprite.y > (Globals.stage.canvas.height + sprite.moveData.height))) return false;
         return true;
-    },    
+    },   
+
+    zigzag:function(sprite){
+        if (!sprite.moveData.ready) {
+            if (sprite.moveData.speed === undefined) sprite.moveData.speed = 2;
+            // adjust rotation of sprite
+            sprite.rotation = sprite.moveData.angle;
+            // convert current rotation of object to radians
+            var radians = Globals.radianMe(sprite.moveData.angle);
+            // calculating X and Y displacement
+            sprite.moveData.xDisplace = Math.cos(radians) * sprite.moveData.speed;
+            sprite.moveData.yDisplace = Math.sin(radians) * sprite.moveData.speed;
+            if (sprite.moveData.bounces === undefined) sprite.moveData.bounces = 3;
+            sprite.moveData.bounceCount = 0;
+            sprite.moveData.onStage = false;
+            sprite.moveData.ready = true;
+        }
+        if (sprite.moveData.rotate) sprite.rotation++;
+        // move sprite on diagonal
+        sprite.x = sprite.x + sprite.moveData.xDisplace;
+        sprite.y = sprite.y + sprite.moveData.yDisplace;
+
+        // check when sprite is fully on stage
+        if (!sprite.moveData.onStage) {
+            if ((sprite.x > 0) && (sprite.y > 0) && (sprite.x < Globals.stage.canvas.width) && (sprite.y < Globals.stage.canvas.height)) {
+                sprite.moveData.onStage = true;
+            }
+        }
+
+        if ((sprite.moveData.onStage) && (sprite.moveData.bounceCount < sprite.moveData.bounces)) {
+            if ((sprite.y > Globals.stage.canvas.height) || (sprite.y < 0)) {
+                sprite.moveData.yDisplace = sprite.moveData.yDisplace * -1;
+                sprite.moveData.bounceCount++;
+            } else if ((sprite.x < 0) || (sprite.x > Globals.stage.canvas.width)) {
+                sprite.moveData.xDisplace = sprite.moveData.xDisplace * -1;
+                sprite.moveData.bounceCount++;
+            }
+        }
+
+        // check if object is off the stage
+        if ((sprite.x < -sprite.moveData.width) || (sprite.x > (Globals.stage.canvas.width + sprite.moveData.width)) || (sprite.y < -sprite.moveData.height) || (sprite.y > (Globals.stage.canvas.height + sprite.moveData.height))) return false;
+        return true;
+    },
 
     switch:function(sprite){
         if (!sprite.moveData.ready) {
