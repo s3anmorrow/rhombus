@@ -9,6 +9,7 @@ var Shape = function(){
     var assetManager = Globals.assetManager;
     var objectPool = Globals.objectPool;
     var gameConstants = Globals.gameConstants;
+    var randomMe = Globals.randomMe;
 
     // private property variables
     var type = "";
@@ -25,6 +26,7 @@ var Shape = function(){
     var shootFrequency = -1;
     var bulletType = "";
     var frameCounter = 0;
+    var accuracy = 0;
     // reference to Player object (the target!)
     var player = objectPool.playerPool[0];
     // get shape's sprite
@@ -45,6 +47,7 @@ var Shape = function(){
         frameCounter = 0;
         type = myType;
         points = gameConstants.SHAPES[type].points;
+        accuracy = gameConstants.SHAPES[type].accuracy;
         pointsEvent.points = points;
         state = ShapeState.ATTACKING;
         hitPoints = gameConstants.SHAPES[type].hp;
@@ -159,8 +162,16 @@ var Shape = function(){
         });
 
         // fire bullet!
+        var randomNum = randomMe(0,99);
+        var targetX = player.sprite.x;
+        var targetY = player.sprite.y;
+        if (randomNum >= accuracy) {
+            if (randomMe(1,2) == 1) targetX += randomMe(-60,-20);
+            else targetX += randomMe(20,60);
+        }
+
         // get targetAngle of target relative to shape's sprite
-        var targetAngle = Math.floor(180 + (Math.atan2(sprite.y - player.sprite.y, sprite.x - player.sprite.x) * 57.2957795));
+        var targetAngle = Math.floor(180 + (Math.atan2(sprite.y - targetY, sprite.x - targetX) * 57.2957795));
         // release the bullet!
         var bullet = objectPool.getBullet();
         var bulletSpeed = 6;
@@ -172,6 +183,7 @@ var Shape = function(){
             bulletSpeed = 10;
             bulletDamage = 3;
         }
+
         // myType, myOwner, spriteFrame, mySpeed, myDamage, myInvincible, x, y, r
         bullet.startMe(bulletType, this, bulletType, bulletSpeed, bulletDamage, false, sprite.x, sprite.y, targetAngle);
         createjs.Sound.play("enemyShoot");

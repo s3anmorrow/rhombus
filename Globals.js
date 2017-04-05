@@ -21,17 +21,18 @@ var Globals = {
 		PLAYER_MAX_POWER:4,
 		PLAYER_START_LIVES:20,
 		POWERUP_DURATION:8,
+		TURRET_BONUS_ACCURACY:30,
 		SHAPES:{
-			"circle": {hp:1,points:50},
-			"square": {hp:1,points:50},
-			"triangle": {hp:2,points:100},
-			"ellipse": {hp:2,points:100},
-			"star": {hp:3,points:200},
-			"nonagon": {hp:3,points:300},
-			"rectangle": {hp:4,points:400},
-			"hexagon": {hp:4,points:400},
-			"rhombus": {hp:5,points:500},
-			"pentagon": {hp:5,points:500}
+			"circle": {hp:1,points:50,accuracy:30},
+			"square": {hp:1,points:50,accuracy:80},
+			"triangle": {hp:2,points:100,accuracy:40},
+			"ellipse": {hp:2,points:100,accuracy:60},
+			"star": {hp:3,points:200,accuracy:50},
+			"nonagon": {hp:3,points:300,accuracy:70},
+			"rectangle": {hp:4,points:400,accuracy:80},
+			"hexagon": {hp:4,points:400,accuracy:70},
+			"rhombus": {hp:5,points:500,accuracy:100},
+			"pentagon": {hp:5,points:500,accuracy:100}
 		},
 		POWERUPS:{
 			"powerupDouble": {category:"weapon",data:"double"},

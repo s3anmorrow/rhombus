@@ -10,6 +10,9 @@
 	// TODO: level design
 	// TODO: bug when switching over weapontype (takes shot with wrong bullet)
 	// TODO: consider no power pickup when shield enabled
+	// TODO: zig zag movement
+	// TODO: test powerup appear when collision with enemy
+	// TODO: bug with stuck down key
 
 	// game variables
 	var stage = null;
@@ -180,7 +183,7 @@
 			else if ((e.keyCode === 37) || (e.keyCode === 65)) leftKey = false;
 			else if ((e.keyCode === 39) || (e.keyCode === 68)) rightKey = false;
 			else if (e.keyCode === 32) fireKey = false;
-			else if (e.keyCode === 13) player.flipMe();
+			else if (e.keyCode === 16) player.flipMe();
 		} else if (Globals.gameState === GameStates.HIGHSCORE) {			
 			if (e.keyCode === 40) screenManager.highScore.moveSelector("down");
 			else if (e.keyCode === 38) screenManager.highScore.moveSelector("up");
@@ -190,7 +193,7 @@
 		} else if (Globals.gameState === GameStates.GAMEOVER) {
 			// TODO: !!!!!!!!!!!!!!! check if highscore
 			resetGame();
-			if (e.keyCode === 13) screenManager.setScreen("introScreen");
+			if (e.keyCode === 16) screenManager.setScreen("introScreen");
 		}
 		e.preventDefault();
 	}

@@ -9,6 +9,7 @@ var Turret = function(){
     var assetManager = Globals.assetManager;
     var objectPool = Globals.objectPool;
     var gameConstants = Globals.gameConstants;
+    var randomMe = Globals.randomMe;
 
     // property variables
     var state = ShapeState.ATTACKING;
@@ -23,6 +24,7 @@ var Turret = function(){
     var shootFreq = 0;
     var bulletType = "";
     var frameCounter = 0;
+    var accuracy = 0;
     // reference to Player object (the target!)
     var player = objectPool.playerPool[0];    
     // get shape's sprite
@@ -47,6 +49,8 @@ var Turret = function(){
         owner = myOwner;
         shootFreq = freq;
         hitPoints = gameConstants.SHAPES[type].hp;
+        // turrets get a bonus accuracy
+        accuracy = gameConstants.SHAPES[type].accuracy + gameConstants.TURRET_BONUS_ACCURACY;
         halfHitPoints = hitPoints/2;
         bulletType = myBulletType;
 
@@ -133,8 +137,16 @@ var Turret = function(){
             createjs.Sound.play("enemyReleaseShape");
         } else {
             // fire regular bullet!
+            var randomNum = randomMe(0,99);
+            var targetX = player.sprite.x;
+            var targetY = player.sprite.y;
+            if (randomNum >= accuracy) {
+                if (randomMe(1,2) == 1) targetX += randomMe(-50,-20);
+                else targetX += randomMe(20,50);
+            }
+
             // get targetAngle of target relative to shape's sprite
-            var targetAngle = Math.floor(180 + (Math.atan2(turretPoint.y - player.sprite.y, turretPoint.x - player.sprite.x) * 57.2957795));
+            var targetAngle = Math.floor(180 + (Math.atan2(turretPoint.y - targetY, turretPoint.x - targetX) * 57.2957795));
 
             // release the bullet!
             var bullet = objectPool.getBullet();
@@ -147,6 +159,7 @@ var Turret = function(){
                 bulletSpeed = 10;
                 bulletDamage = 3;
             }
+
             // myType, myOwner, spriteFrame, mySpeed, myDamage, myInvincible, x, y, r
             bullet.startMe(bulletType, owner, bulletType, bulletSpeed, bulletDamage, false, turretPoint.x, turretPoint.y, targetAngle);
             createjs.Sound.play("enemyShoot");
@@ -155,16 +168,6 @@ var Turret = function(){
 
     this.updateMe = function() {
         if (state === ShapeState.KILLED) return;
-
-        /*
-        // Step I : collision detection
-        // has the shape collided with the player?
-        if ((state != ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
-            player.hitMe();
-            // kill shape with no points
-            //this.killMe(false);
-        }
-        */
 
         // Step II : Attacking
         if (frameCounter >= shootFreq) {

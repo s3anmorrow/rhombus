@@ -2,6 +2,7 @@ var ScreenManager = function() {
     // set references to globals
     var stage = Globals.stage;
     var assetManager = Globals.assetManager;
+    var randomMe = Globals.randomMe;
 
     // private variables
     var moving = false;
@@ -42,9 +43,9 @@ var ScreenManager = function() {
     function dropShape(dropY) {
         // randomly select properties
         var shape = assetManager.getSprite("ui","backgroundShape" + nextBackgroundShape);
-        shape.speed = Globals.randomMe(1,3);
-        shape.rotation = Globals.randomMe(50,180);        
-        shape.x = Globals.randomMe(200,600);
+        shape.speed = randomMe(1,3);
+        shape.rotation = randomMe(50,180);        
+        shape.x = randomMe(200,600);
         if (dropY === undefined) {
             if (direction === 0) shape.y = -300;
             else shape.y = 1100;
