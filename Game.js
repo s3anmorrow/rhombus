@@ -8,7 +8,7 @@
 	// TODO: high score board implemented
 	// TODO: level design
 	// TODO: consider no power pickup when shield enabled
-	// TODO: zig zag movement
+	// TODO: have powerups killed if player dies
 
 	// game variables
 	var stage = null;

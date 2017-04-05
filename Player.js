@@ -275,11 +275,14 @@ var Player = function(){
                         ammoChangeEvent.target = null;
                         ammoChangeEvent.ammo = ammo;
                         ammoChangeEvent.weaponType = weaponType;
-                        if (ammo >= 0) stage.dispatchEvent(ammoChangeEvent);
+                        stage.dispatchEvent(ammoChangeEvent);
+                        // out of ammo?
+                        if (ammo <= 0) {
+                            this.setWeapon("single");
+                            break;
+                        }
                     }
                 } 
-                // out of ammo?
-                if (ammo <= 0) this.setWeapon("single");
             }
 
             // increment index of firing gun of next shot

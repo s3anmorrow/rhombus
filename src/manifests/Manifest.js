@@ -58,6 +58,11 @@ var gameManifest = [
         data:4
     },
     {
+        src:"lib/superBounce.ogg",
+        id:"superBounce",
+        data:4
+    },
+    {
         src:"lib/double.ogg",
         id:"double",
         data:4

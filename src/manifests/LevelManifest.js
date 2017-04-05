@@ -2045,9 +2045,91 @@ var levelManifest = [
         }
     ],
     [
+        // level 15
+        {levelTitle:"Kong",
+            type:"square", 
+            wave:{count:15, spaced:25},
+            settings:{x:50, y:-30}, 
+            movement:{type:"zigzag", angle:10, speed:7, bounces:10, rotate:false},
+            powerup:null,
+            time:2
+        },
+        {type:"ellipse", 
+            wave:{count:15, spaced:25},
+            settings:{x:100, y:-20, shooters:[
+                {index:4, freq:10, bulletType:"bullet1"}
+            ]},  
+            movement:{type:"zigzag", angle:10, speed:7, bounces:10, rotate:false},
+            powerup:{type:"powerupRapid",index:8},
+            time:10
+        },
+        {type:"pentagon", 
+            wave:{count:15, spaced:30},
+            settings:{x:150, y:-30, shooters:[
+                {index:12, freq:10, bulletType:"bullet1"}
+            ]},  
+            movement:{type:"zigzag", angle:10, speed:8, bounces:10, rotate:false},
+            powerup:null,
+            time:20
+        },
+        {type:"nonagon", 
+            wave:{count:15, spaced:25},
+            settings:{x:200, y:-30, shooters:[
+                {index:7, freq:10, bulletType:"bullet1"},
+            ]},   
+            movement:{type:"zigzag", angle:10, speed:8, bounces:10, rotate:false},
+            powerup:{type:"powerupLife",index:4},
+            time:30
+        },
+        {type:"hexagon", 
+            wave:{count:12, spaced:35},
+            settings:{x:250, y:-30}, 
+            movement:{type:"zigzag", angle:10, speed:10, bounces:10, rotate:true},
+            powerup:{type:"powerupSuperBounce",index:2},
+            time:40
+        },
+        {type:"rhombus", 
+            wave:{count:12, spaced:35},
+            settings:{x:300, y:-30, shooters:[
+                {index:4, freq:40, bulletType:"bullet3"},
+                {index:10, freq:40, bulletType:"bullet3"}
+            ]},  
+            movement:{type:"zigzag", angle:10, speed:10, bounces:10, rotate:false},
+            powerup:{type:"powerupShield",index:0},
+            time:50
+        },
+        {type:"bossRhombus", 
+            wave:{count:1, spaced:4},
+            settings:{x:100, y:1000, points:5000,
+                turrets:[   
+                    {type:"nonagon",x:0,y:0,freq:20,bulletType:"bullet2"},
+                    {type:"nonagon",x:85,y:85,freq:22,bulletType:"bullet2"},
+                    {type:"nonagon",x:-85,y:85,freq:24,bulletType:"bullet2"},
+                    {type:"nonagon",x:85,y:-85,freq:26,bulletType:"bullet2"},
+                    {type:"nonagon",x:-85,y:-85,freq:28,bulletType:"bullet2"}
+                ]
+            },
+            movement:{type:"kamikaze", speed:2, rotate:true},
+            time:65
+        },
+        {type:"bossRhombus", 
+            wave:{count:1, spaced:4},
+            settings:{x:700, y:1000, points:5000,
+                turrets:[   
+                    {type:"nonagon",x:0,y:0,freq:30,bulletType:"bullet2"},
+                    {type:"nonagon",x:85,y:85,freq:32,bulletType:"bullet2"},
+                    {type:"nonagon",x:-85,y:85,freq:34,bulletType:"bullet2"},
+                    {type:"nonagon",x:85,y:-85,freq:36,bulletType:"bullet2"},
+                    {type:"nonagon",x:-85,y:-85,freq:38,bulletType:"bullet2"}
+                ]
+            },
+            movement:{type:"kamikaze", speed:2, rotate:true},
+            time:65
+        }
+    ],
+    [
         // the matrix
         // finale has loads of big bosses
-
     ]
     
 ];

@@ -85,6 +85,12 @@ var Powerup = function(){
             } 
         }
 
+        // kill powerup if player is killed
+        if (player.getState() === PlayerState.KILLED) {
+            this.killMe();
+            return;
+        }
+
         // has the player collided with the powerup?
         if (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true)) {
             var powerupData = gameConstants.POWERUPS[type];
