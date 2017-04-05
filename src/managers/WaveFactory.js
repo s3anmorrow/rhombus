@@ -72,7 +72,7 @@ var WaveFactory = function(){
         wave = 0;
 
         // LEVEL TESTING
-        level = 4;
+        level = 1;
         //seconds = 49;
 
         activeLevel = levelManifest[level - 1];        

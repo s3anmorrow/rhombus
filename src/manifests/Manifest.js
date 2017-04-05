@@ -78,8 +78,8 @@ var gameManifest = [
         data:4
     },
     {
-        src:"lib/explosion2.ogg",
-        id:"explosion2",
+        src:"lib/powerupRemove.ogg",
+        id:"powerupRemove",
         data:4
     },
     {

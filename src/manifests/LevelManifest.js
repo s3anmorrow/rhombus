@@ -11,20 +11,10 @@
 "hexagon": {hp:4,points:400}
 */
 
-// level 1 - up down left right rightAndStop leftAndStop downAndStop / circle square ellipse triangle / bullet1
-// level 2 - looping diagonal downAndStop (with overlap) / circle square ellipse star / bullet1
-// level 3 - wall of circles with four mini bosses coming down / massive looping number with higher hp
-// level 4 - 
-
-
 // to add:
-// pentagon cloaking
-// looping and stopping
 // powerup powerupShield
 // large loop radius of 400 (suicidal shapes)
 // shape spawn turret
-
-
 
 var levelManifest = [
     [

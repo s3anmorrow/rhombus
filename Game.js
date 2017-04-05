@@ -4,12 +4,12 @@
 (function() {
 	"use strict";
 	
-	// TODO: adjust so single bullet can't be fired as fast
 	// TODO: way for game to finish with rhombus big boss
 	// TODO: high score board implemented
 	// TODO: sound effect for playerhit with three levels (for three bullets)
 	// TODO: level design
 	// TODO: bug when switching over weapontype (takes shot with wrong bullet)
+	// TODO: consider no power pickup when shield enabled
 
 	// game variables
 	var stage = null;

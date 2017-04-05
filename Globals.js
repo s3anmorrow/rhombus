@@ -20,7 +20,7 @@ var Globals = {
 		PLAYER_START_POWER:4,
 		PLAYER_MAX_POWER:4,
 		PLAYER_START_LIVES:20,
-		POWERUP_DURATION:45,
+		POWERUP_DURATION:8,
 		SHAPES:{
 			"circle": {hp:1,points:50},
 			"square": {hp:1,points:50},

@@ -9,6 +9,9 @@ var Powerup = function(){
     var _this = this;
     var state = ShapeState.IDLE;
     var type = "";
+    var frameCounter = 0;
+    var frameRate = gameConstants.FRAME_RATE;
+    var seconds = 0;
     // reference to Player object (the target!)
     var player = objectPool.playerPool[0];
     // get pickup's sprite
@@ -25,10 +28,11 @@ var Powerup = function(){
         type = myType;
         state = ShapeState.IDLE;
         sprite.gotoAndStop(type);
+        frameCounter = 0;
+        seconds = 0;
         // position sprite
         sprite.x = startX;
         sprite.y = startY;
-        sprite.alpha = 1;
         sprite.scaleX = 0.1;
         sprite.scaleY = 0.1;
 
@@ -60,6 +64,7 @@ var Powerup = function(){
     };
 
     this.killMe = function() {
+        state = ShapeState.KILLED;
         createjs.Tween.removeTweens(sprite);
         sprite.gotoAndPlay("powerupKill");
         sprite.addEventListener("animationend", function(e){
@@ -68,21 +73,20 @@ var Powerup = function(){
     };
 
     this.updateMe = function() {
-        // make powerup fade away
-        sprite.alpha -= 0.005;
-        // make powerup slowly drop
-        //sprite.y+=2;
+        if (state === ShapeState.KILLED) return;
 
-        if (sprite.alpha <= 0) {
-            this.stopMe();
-            return;
+        if ((frameCounter % frameRate) === 0) {
+            seconds++;
+            // if time is up then kill powerup (no collection!)
+            if (seconds >= gameConstants.POWERUP_DURATION) {
+                createjs.Sound.play("powerupRemove");
+                this.killMe();
+                return;
+            } 
         }
 
         // has the player collided with the powerup?
-        if ((state != ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
-            state = ShapeState.KILLED;
-            sprite.alpha = 1;
-
+        if (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true)) {
             var powerupData = gameConstants.POWERUPS[type];
             if (powerupData.category === "weapon") {
                 // change weapontype of player
@@ -102,6 +106,8 @@ var Powerup = function(){
             createjs.Sound.play("powerupPickup");
             this.killMe();
         }
+
+        frameCounter++;
     };
 
 };
