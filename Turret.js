@@ -130,9 +130,9 @@ var Turret = function(){
             var shape = objectPool.getShape();
             // start the shape and pass along required data
             shape.startMe(bulletType, 
-                          turretPoint.x,turretPoint.y,"", 
-                          {index:0, freq:100, bulletType:"bullet1"}, 
-                          {type:"kamikaze", speed:2});
+                          turretPoint.x,turretPoint.y, "", 
+                          {index:0, freq:60, bulletType:"bullet1"}, 
+                          {type:"kamikaze", speed:3, rotate:true});
 
             createjs.Sound.play("enemyReleaseShape");
         } else {

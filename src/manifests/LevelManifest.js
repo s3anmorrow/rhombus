@@ -12,8 +12,6 @@
 */
 
 // to add:
-// powerup powerupShield
-// large loop radius of 400 (suicidal shapes)
 // shape spawn turret
 
 var levelManifest = [
@@ -2129,7 +2127,73 @@ var levelManifest = [
     ],
     [
         // level 16
-        
+        {levelTitle:"Multiplication!",
+            type:"triangle",
+            wave:{count:15, spaced:20},
+            settings:{x:830, y:400, shooters:[
+                {index:14, freq:20, bulletType:"bullet1"}
+            ]},   
+            movement:{type:"left", speed:4, rotate:true},
+            powerup:{type:"powerupLife",index:28},
+            time:2
+        },
+        {type:"circle",
+            wave:{count:20, spaced:20},
+            settings:{x:-30, y:150, shooters:[
+                {index:7, freq:20, bulletType:"bullet1"},
+                {index:14, freq:30, bulletType:"bullet1"},
+                {index:23, freq:20, bulletType:"bullet1"}
+            ]},   
+            movement:{type:"right", speed:6, rotate:true},
+            powerup:{type:"powerupSuperDouble",index:6},
+            time:2
+        },
+        {type:"ellipse",
+            wave:{count:15, spaced:20},
+            settings:{x:-30, y:650, shooters:[
+                {index:7, freq:20, bulletType:"bullet1"},
+                {index:14, freq:30, bulletType:"bullet1"},
+                {index:23, freq:20, bulletType:"bullet1"}
+            ]},   
+            movement:{type:"right", speed:4, rotate:true},
+            powerup:{type:"powerupShield",index:28},
+            time:16
+        },
+        {type:"square",
+            wave:{count:20, spaced:20},
+            settings:{x:830, y:500, shooters:[
+                {index:14, freq:20, bulletType:"bullet1"}
+            ]},   
+            movement:{type:"left", speed:4, rotate:true},
+            powerup:{type:"powerupHeavy",index:28},
+            time:19
+        },
+        {type:"bossSquare", 
+            wave:{count:1, spaced:4},
+            settings:{x:400, y:-200, points:5000,
+                turrets:[   
+                    {type:"hexagon",x:0,y:0,freq:120,bulletType:"square"},
+                    {type:"hexagon",x:45,y:45,freq:60,bulletType:"square"},
+                    {type:"nonagon",x:-65,y:60,freq:30,bulletType:"bullet2"},
+                    {type:"nonagon",x:60,y:-60,freq:30,bulletType:"bullet2"},
+                    {type:"hexagon",x:-45,y:-45,freq:120,bulletType:"square"}
+                ]
+            },
+            movement:{type:"downAndStop", speed:4, stopAt:500, rotate:true},
+            time:32
+        },
+        {type:"bossMiniTriangle", 
+            wave:{count:3, spaced:120},
+            settings:{x:200, y:850, points:200,
+                turrets:[   
+                    {type:"nonagon",x:25,y:-20,freq:120,bulletType:"triangle"},
+                    {type:"nonagon",x:-25,y:-20,freq:120,bulletType:"triangle"},
+                    {type:"nonagon",x:0,y:25,freq:60,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"zigzag", angle:280, speed:4, bounces:20, rotate:true},
+            time:50
+        }
     ],
     [
         // level 17

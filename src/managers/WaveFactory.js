@@ -73,7 +73,7 @@ var WaveFactory = function(){
 
         // LEVEL TESTING
         level = 16;
-        //seconds = 49;
+        //seconds = 19;
 
         activeLevel = levelManifest[level - 1];        
         if (activeLevel[0].levelTitle === "undefined") levelTitle = "Untitled";
