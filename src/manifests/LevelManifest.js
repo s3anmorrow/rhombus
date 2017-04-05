@@ -2128,8 +2128,76 @@ var levelManifest = [
         }
     ],
     [
+        // level 16
+        
+    ],
+    [
+        // level 17
+        {levelTitle:"Trapped!",
+            type:"triangle",
+            wave:{count:30, spaced:30},
+            settings:{x:400, y:-30, shooters:[
+                {index:0, freq:15, bulletType:"bullet1"}
+            ]},   
+            movement:{type:"zigzag", angle:45, speed:8, bounces:20, rotate:true},
+            powerup:{type:"powerupDouble",index:28},
+            time:2
+        },
+        {type:"ellipse",
+            wave:{count:30, spaced:30},
+            settings:{x:375, y:-20, shooters:[
+                {index:10, freq:15, bulletType:"bullet1"}
+            ]},   
+            movement:{type:"zigzag", angle:45, speed:6, bounces:20, rotate:true},
+            powerup:null,
+            time:14
+        },
+        {type:"square",
+            wave:{count:30, spaced:30},
+            settings:{x:400, y:-30, shooters:[
+                {index:10, freq:30, bulletType:"bullet2"}
+            ]},   
+            movement:{type:"zigzag", angle:135, speed:6, bounces:20, rotate:true},
+            powerup:{type:"powerupSuperDouble",index:10},
+            time:22
+        },
+        {type:"star",
+            wave:{count:30, spaced:30},
+            settings:{x:375, y:-30, shooters:[
+                {index:10, freq:40, bulletType:"bullet2"}
+            ]},   
+            movement:{type:"zigzag", angle:135, speed:8, bounces:20, rotate:true},
+            powerup:{type:"powerupHeavy",index:10},
+            time:30
+        },
+        {type:"nonagon",
+            wave:{count:30, spaced:30},
+            settings:{x:425, y:-30, shooters:[
+                {index:10, freq:50, bulletType:"bullet3"}
+            ]},   
+            movement:{type:"zigzag", angle:45, speed:6, bounces:20, rotate:true},
+            powerup:{type:"powerupLaser",index:28},
+            time:38
+        },
+        {type:"bossRhombus", 
+            wave:{count:1, spaced:4},
+            settings:{x:700, y:1000, points:5000,
+                turrets:[   
+                    {type:"nonagon",x:0,y:0,freq:20,bulletType:"bullet3"},
+                    {type:"nonagon",x:85,y:85,freq:22,bulletType:"bullet3"},
+                    {type:"nonagon",x:-85,y:85,freq:24,bulletType:"bullet3"},
+                    {type:"nonagon",x:85,y:-85,freq:26,bulletType:"bullet3"},
+                    {type:"nonagon",x:-85,y:-85,freq:28,bulletType:"bullet3"}
+                ]
+            },
+            movement:{type:"kamikaze", speed:2, rotate:true},
+            time:65
+        }
+    ],
+    [
         // the matrix
         // finale has loads of big bosses
+
     ]
     
 ];

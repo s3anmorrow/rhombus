@@ -7,8 +7,8 @@
 	// TODO: way for game to finish with rhombus big boss
 	// TODO: high score board implemented
 	// TODO: level design
-	// TODO: consider no power pickup when shield enabled
-	// TODO: have powerups killed if player dies
+	// TODO: consider no destroy when shield enabled
+	// TODO: collision detection not always working (solid shapes?)
 
 	// game variables
 	var stage = null;
