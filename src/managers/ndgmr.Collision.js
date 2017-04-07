@@ -142,9 +142,9 @@ this.ndgmr = this.ndgmr || {};
       }
     } else if ( bitmap instanceof createjs.MovieClip ) {
       var mBitmap;
-      if(bitmap.instance.instance != undefined) {
+      if(bitmap.instance.instance !== undefined) {
         mBitmap = bitmap.instance.instance; 
-      } else if (bitmap.instance != undefined) {		  
+      } else if (bitmap.instance !== undefined) {		  
         mBitmap = bitmap.instance; 
       }
       frame = mBitmap.spriteSheet.getFrame( mBitmap.currentFrame )
@@ -197,7 +197,7 @@ this.ndgmr = this.ndgmr || {};
         }
     }
 
-    if ( pixelRect.x != Infinity ) {
+    if ( pixelRect.x !== Infinity ) {
       pixelRect.width  = pixelRect.x2 - pixelRect.x + 1;
       pixelRect.height = pixelRect.y2 - pixelRect.y + 1;
       return pixelRect;

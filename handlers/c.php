@@ -7,9 +7,8 @@
     $password = "root";
     $database = "smorrow";
 
-    // Strings must be escaped to prevent SQL injection attack. 
-    $score = $_GET["score"];
-    //$score = 7;
+    $score = strrev(base64_decode($_GET["v"]));
+    //echo "test: " . $score;
 
     try {
         $dbh = new PDO("mysql:host=". $hostname .";dbname=". $database, $username, $password);
@@ -22,7 +21,6 @@
     $sth->setFetchMode(PDO::FETCH_ASSOC);
  
     $result = $sth->fetchAll();
-
 
     // by default score is not qualified
     $qualified = false;

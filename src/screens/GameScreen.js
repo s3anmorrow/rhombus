@@ -104,7 +104,6 @@ var GameScreen = function() {
         lives = Globals.gameConstants.PLAYER_START_LIVES;
         power = Globals.gameConstants.PLAYER_START_POWER;
         refreshScoreBoard();
-
         stage.addChild(screen);
     };
 

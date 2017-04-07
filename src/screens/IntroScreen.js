@@ -86,8 +86,7 @@ var IntroScreen = function() {
 
     // ------------------------------------------------ event handlers
     function onResponse(xhr) {
-        console.log("test: " + xhr.responseText);
-
+        //console.log("test: " + xhr.responseText);
         // update scoreboard
         var data = xhr.responseText.split(",");
         var i=0;

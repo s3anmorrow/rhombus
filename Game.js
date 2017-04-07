@@ -9,6 +9,9 @@
 	// TODO: level design
 	// TODO: consider no destroy when shield enabled
 	// TODO: collision detection not always working (solid shapes?)
+	// TODO: put cap on spawned shapes from turrets
+	// TODO: normalize sounds and output mp3
+	// TODO: bug with cloaking shape and collision
 
 	// game variables
 	var stage = null;
@@ -60,7 +63,6 @@
 	function stopGame(win) {
 		// kill game event listener
 		stage.removeEventListener("gameEvent", onGameEvent, true);
-
 		Globals.gameState = GameStates.GAMEOVER;
 	}
 
@@ -72,8 +74,6 @@
 			object = updateList[n];
 			if (object !== null) object.stopMe();
 		}
-
-		Globals.gameState = GameStates.INTRO;
 	}
 
 	// ------------------------------------------------------------ event handlers
@@ -160,6 +160,7 @@
 
 		// ???????????????? temporary start
 		//startGame();
+		stage.addEventListener("gameEvent", onGameEvent);
 		Globals.gameState = GameStates.HIGHSCORE;
 		screenManager.setScreen("highScoreScreen");
 
@@ -193,9 +194,12 @@
 			else if (e.keyCode === 39) screenManager.highScore.moveSelector("right");
 			else if (e.keyCode === 32) screenManager.highScore.selectInitial();
 		} else if (Globals.gameState === GameStates.GAMEOVER) {
-			// TODO: !!!!!!!!!!!!!!! check if highscore
-			resetGame();
-			if (e.keyCode === 16) screenManager.setScreen("introScreen");
+			if (e.keyCode === 16) {
+				// show highScoreScreen to check for high score
+				Globals.gameState = GameStates.HIGHSCORE;
+				screenManager.setScreen("highScoreScreen");
+				resetGame();
+			}
 		}
 		e.preventDefault();
 	}
@@ -230,6 +234,10 @@
 				Globals.gameState = GameStates.GAMEOVER;
 				screenManager.setScreen("gameOverScreen");
 				break;
+			case "highScoreComplete":
+				Globals.gameState = GameStates.INTRO;
+				screenManager.setScreen("introScreen");
+				break;			
 		}
 	}
 

@@ -1,4 +1,8 @@
 var HighScoreScreen = function() {
+    // custom events
+    var completeEvent = new createjs.Event("gameEvent", true);
+    completeEvent.id = "highScoreComplete";
+
     // set references to globals
     var stage = Globals.stage;
     var assetManager = Globals.assetManager;
@@ -19,6 +23,13 @@ var HighScoreScreen = function() {
     txtInitials.letterSpacing = 8;
     txtInitials.y = 585;
     screen.addChild(txtInitials);
+
+    // setup recording score screen
+    var recordingScreen = assetManager.getSprite("ui","recordingScore");
+
+    // setup checking score screen
+    var checkingScreen = assetManager.getSprite("ui","checkingScore");
+
     // 2D array of characters for entering initials for highscore
     var charList = [["A","B","C","D","E","F","G","H","I","J","K"],
                     ["L","M","N","O","P","Q","R","S","T","U","V"],
@@ -48,14 +59,22 @@ var HighScoreScreen = function() {
     // ------------------------------------------------- public methods
     this.showMe = function(myScore) {
         score = myScore;
+
         rowIndex = 0;
         charIndex = 0;
-        txtCurrentScore.text = String(score);
+        txtCurrentScore.text = Globals.commaUpScore(String(score));
         centerMe(txtCurrentScore);
-        stage.addChild(screen);
+
+        // check if score qualifies for high score
+        stage.addChild(checkingScreen);
+        // send score results to the server sided script
+        var source = Globals.gameConstants.HIGHSCORE_SCRIPT3 + "?v=" + btoa(reverse(String(score)));
+        Globals.sendMe(source, onCheckResponse);
     };
 
     this.hideMe = function() {
+        stage.removeChild(recordingScreen);
+        stage.removeChild(checkingScreen);
         stage.removeChild(screen);
     };
 
@@ -108,6 +127,7 @@ var HighScoreScreen = function() {
                 }
                 break;
         }
+        createjs.Sound.play("interface1");
     };
 
     this.selectInitial = function(){
@@ -116,10 +136,9 @@ var HighScoreScreen = function() {
         var initials = txtInitials.text;
 
         if (char === "1") {
-            
-            // !!!!!! TESTING
-            var score = 9876;
-            // !!!!!!!!!!!!!!
+            // display recording screen
+            stage.addChild(recordingScreen);
+            stage.removeChild(screen);
 
             var hash = CryptoJS.MD5(initials + score + "2f6d0f62dbedda976330f88add53a7e7").toString();
             // assemble the URL to send data
@@ -130,23 +149,40 @@ var HighScoreScreen = function() {
             console.log("HASH: " + hash);
 
             // send score results to the server sided script
-            Globals.sendMe(source, onResponse);
+            Globals.sendMe(source, onAddResponse);
 
+            createjs.Sound.play("powerupPickup");
         } else if ((char === "-1") && (initials.length > 0)) {
             txtInitials.text = initials.substring(0, initials.length - 1);
             // center initials on stage
             if (txtInitials.text !== "") centerMe(txtInitials);
-        } else if (initials.length < 3) {
+            createjs.Sound.play("interface2");
+        } else if ((char !== "-1") && (initials.length < 3)) {
             txtInitials.text += char;
             centerMe(txtInitials);
+            createjs.Sound.play("interface3");
         }
     };
 
     // ----------------------------------------------------------- event handlers
-    function onResponse(e) {            
-        console.log("got here");
+    function onAddResponse(xhr) {  
+        // score recorded
+        completeEvent.target = null;
+        stage.dispatchEvent(completeEvent);
+    }
 
-        
+    function onCheckResponse(xhr) {  
+
+        console.log(xhr.responseText);
+
+        if (xhr.responseText === "t") {
+            stage.removeChild(checkingScreen);
+            stage.addChild(screen);
+        } else {
+            // back to intro screen
+            completeEvent.target = null;
+            stage.dispatchEvent(completeEvent);
+        }
     }
 
 };

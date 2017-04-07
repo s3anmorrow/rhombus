@@ -754,25 +754,88 @@
     [2755, 3811, 36, 36, 0, 18, 18]
 ],
 "animations":{
-    "spreadBullet": {"frames": [409], "speed": 1},
     "powerupLife": {"frames": [739], "speed": 1},
-    "bullet": {"frames": [407], "speed": 1},
-    "powerupFullPower": {"frames": [738], "speed": 1},
-    "powerupHalfPower": {"frames": [737], "speed": 1},
-    "triangleDamageFire": {
-        "frames": [76, 84, 85, 86, 87, 88, 89, 90, 89, 88, 87, 86, 85, 84, 76],
+    "iconWeapon_superBounce": {"frames": [725], "speed": 1},
+    "nonagonDamageFire": {
+        "frames": [
+            299,
+            309,
+            310,
+            311,
+            312,
+            313,
+            314,
+            315,
+            316,
+            317,
+            318,
+            319,
+            320,
+            321,
+            322,
+            323,
+            324,
+            325,
+            326,
+            299
+        ],
         "speed": 1
     },
-    "powerupPower": {"frames": [736], "speed": 1},
-    "bossMiniRhombus": {"frames": [626], "speed": 1},
-    "powerupSuperBounce": {"frames": [735], "speed": 1},
-    "playerIdle": {
-        "frames": [386, 387, 388, 389, 390, 391, 387, 388, 389, 390, 391],
-        "speed": 1
-    },
+    "triangleDamage": {"frames": [76], "speed": 1},
     "lose300": {"frames": [506], "speed": 1},
-    "rhombusFire": {
-        "frames": [91, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 91],
+    "hexagonDamage": {"frames": [181], "speed": 1},
+    "bossRhombusKill": {
+        "frames": [
+            571,
+            571,
+            571,
+            572,
+            573,
+            574,
+            575,
+            576,
+            577,
+            578,
+            579,
+            580,
+            581,
+            210
+        ],
+        "speed": 1
+    },
+    "bossHexagonKill": {
+        "frames": [
+            593,
+            593,
+            593,
+            594,
+            595,
+            596,
+            597,
+            598,
+            599,
+            600,
+            601,
+            602,
+            603,
+            210
+        ],
+        "speed": 1
+    },
+    "iconWeapon_bounce": {"frames": [725], "speed": 1},
+    "ellipseHit": {
+        "frames": [131, 132, 133, 134, 135, 136, 137, 138, 139],
+        "speed": 1
+    },
+    "powerupKill": {
+        "frames": [741, 742, 743, 744, 745, 746, 747, 748, 749],
+        "speed": 1
+    },
+    "powerupRapid": {"frames": [732], "speed": 1},
+    "powerupShield": {"frames": [740], "speed": 1},
+    "pentagon": {"frames": [196], "speed": 1},
+    "rhombusHit": {
+        "frames": [92, 93, 94, 95, 96, 97, 98, 99, 100],
         "speed": 1
     },
     "bossExplosion2000": {
@@ -796,6 +859,487 @@
             667,
             668,
             669,
+            210
+        ],
+        "speed": 1
+    },
+    "pentagonDamage": {"frames": [220], "speed": 1},
+    "ellipseDamageHit": {
+        "frames": [150, 151, 133, 134, 135, 152, 153, 154, 155],
+        "speed": 1
+    },
+    "bossDecagonKill": {
+        "frames": [
+            556,
+            556,
+            556,
+            557,
+            558,
+            559,
+            560,
+            561,
+            562,
+            563,
+            564,
+            565,
+            566,
+            567,
+            568,
+            569,
+            570,
+            210
+        ],
+        "speed": 1
+    },
+    "starHit": {
+        "frames": [243, 244, 245, 246, 247, 248, 249, 250, 251],
+        "speed": 1
+    },
+    "triangleDamageFire": {
+        "frames": [76, 84, 85, 86, 87, 88, 89, 90, 89, 88, 87, 86, 85, 84, 76],
+        "speed": 1
+    },
+    "hexagon": {"frames": [165], "speed": 1},
+    "playerKilled": {
+        "frames": [
+            436,
+            437,
+            438,
+            439,
+            440,
+            441,
+            442,
+            443,
+            444,
+            445,
+            446,
+            447,
+            448,
+            449,
+            450
+        ],
+        "speed": 1
+    },
+    "explosion500": {
+        "frames": [
+            451,
+            452,
+            453,
+            454,
+            520,
+            521,
+            522,
+            523,
+            524,
+            525,
+            526,
+            527,
+            528,
+            529,
+            530,
+            531,
+            210
+        ],
+        "speed": 1
+    },
+    "bossMiniHexagonKill": {
+        "frames": [
+            604,
+            604,
+            604,
+            605,
+            606,
+            607,
+            608,
+            609,
+            610,
+            611,
+            612,
+            613,
+            614,
+            210
+        ],
+        "speed": 1
+    },
+    "hexagonHit": {
+        "frames": [166, 167, 168, 169, 170, 171, 172, 173, 174],
+        "speed": 1
+    },
+    "circleDamage": {"frames": [14], "speed": 1},
+    "lose50": {"frames": [467], "speed": 1},
+    "circleFire": {"frames": [0, 10, 11, 12, 13, 12, 11, 10, 0], "speed": 1},
+    "playerShieldRight": {"frames": [394], "speed": 1},
+    "squareDamageFire": {
+        "frames": [43, 43, 53, 53, 54, 54, 55, 55, 56, 56, 57, 57, 58, 58],
+        "speed": 1
+    },
+    "rhombusDamage": {"frames": [111], "speed": 1},
+    "triangle": {"frames": [59], "speed": 1},
+    "pentagonHit": {
+        "frames": [197, 198, 199, 200, 201, 202, 203, 204, 205],
+        "speed": 1
+    },
+    "iconWeapon_heavy": {"frames": [718], "speed": 1},
+    "hexagonFire": {
+        "frames": [
+            165,
+            175,
+            176,
+            177,
+            178,
+            179,
+            180,
+            179,
+            178,
+            177,
+            176,
+            175,
+            165
+        ],
+        "speed": 1
+    },
+    "nonagonFire": {
+        "frames": [
+            271,
+            281,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287,
+            288,
+            289,
+            290,
+            291,
+            292,
+            293,
+            294,
+            295,
+            296,
+            297,
+            298,
+            271
+        ],
+        "speed": 1
+    },
+    "powerupSingle": {"frames": [726], "speed": 1},
+    "ellipse": {"frames": [130], "speed": 1},
+    "bossRhombus": {"frames": [571], "speed": 1},
+    "bossMiniHexagon": {"frames": [604], "speed": 1},
+    "bulletExplosion": {
+        "frames": [428, 429, 430, 427, 431, 432, 433, 434, 435],
+        "speed": 1
+    },
+    "bullet1": {"frames": [425], "speed": 1},
+    "squareDamage": {"frames": [43], "speed": 1},
+    "playerEntrance": {"frames": [379, 380, 381, 382, 383, 384, 385], "speed": 1},
+    "playerIdle": {
+        "frames": [386, 387, 388, 389, 390, 391, 387, 388, 389, 390, 391],
+        "speed": 1
+    },
+    "starDamageHit": {
+        "frames": [260, 261, 245, 246, 247, 248, 249, 262, 263],
+        "speed": 1
+    },
+    "bossMiniExplosion400": {
+        "frames": [
+            684,
+            685,
+            686,
+            687,
+            688,
+            703,
+            704,
+            705,
+            706,
+            707,
+            708,
+            709,
+            710,
+            711,
+            712,
+            713,
+            714,
+            715,
+            716,
+            210
+        ],
+        "speed": 1
+    },
+    "lose100": {"frames": [480], "speed": 1},
+    "lose500": {"frames": [532], "speed": 1},
+    "lose200": {"frames": [493], "speed": 1},
+    "ellipseFire": {
+        "frames": [130, 140, 141, 142, 143, 144, 145, 146, 147, 148, 130],
+        "speed": 1
+    },
+    "iconWeapon_superDouble": {"frames": [720], "speed": 1},
+    "powerupLaser": {"frames": [733], "speed": 1},
+    "starDamageFire": {
+        "frames": [
+            259,
+            264,
+            265,
+            266,
+            267,
+            268,
+            269,
+            270,
+            269,
+            268,
+            267,
+            266,
+            265,
+            264,
+            259
+        ],
+        "speed": 1
+    },
+    "playerLeft": {
+        "frames": [395, 396, 397, 398, 399, 400, 396, 397, 398, 399, 400],
+        "speed": 1
+    },
+    "triangleFire": {
+        "frames": [59, 69, 70, 71, 72, 73, 74, 75, 74, 73, 72, 71, 70, 69, 59],
+        "speed": 1
+    },
+    "rectangle": {"frames": [327], "speed": 1},
+    "squareHit": {"frames": [30, 31, 32, 33, 34, 35, 36, 37, 38], "speed": 1},
+    "rectangleFire": {
+        "frames": [
+            327,
+            337,
+            338,
+            339,
+            340,
+            341,
+            342,
+            343,
+            344,
+            345,
+            346,
+            347,
+            348,
+            340,
+            349,
+            350,
+            351,
+            352,
+            327
+        ],
+        "speed": 1
+    },
+    "bossExplosion5000": {
+        "frames": [
+            637,
+            638,
+            639,
+            640,
+            641,
+            670,
+            671,
+            672,
+            673,
+            674,
+            675,
+            676,
+            677,
+            678,
+            679,
+            680,
+            681,
+            682,
+            683,
+            210
+        ],
+        "speed": 1
+    },
+    "ellipseDamageFire": {
+        "frames": [149, 156, 157, 158, 159, 160, 161, 162, 163, 164, 149],
+        "speed": 1
+    },
+    "bossMiniTriangle": {"frames": [615], "speed": 1},
+    "bounceBullet": {
+        "frames": [409, 410, 411, 412, 413, 414, 413, 412, 411, 410, 409],
+        "speed": 1
+    },
+    "playerShield": {"frames": [392], "speed": 1},
+    "iconWeapon_superSpread": {"frames": [722], "speed": 1},
+    "bossTriangle": {"frames": [582], "speed": 1},
+    "rhombusDamageHit": {
+        "frames": [112, 113, 114, 95, 115, 116, 117, 118, 119],
+        "speed": 1
+    },
+    "pentagonFire": {
+        "frames": [
+            196,
+            206,
+            207,
+            208,
+            209,
+            209,
+            209,
+            209,
+            209,
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            196
+        ],
+        "speed": 1
+    },
+    "rapidBullet": {"frames": [408], "speed": 1},
+    "powerupHeavy": {"frames": [727], "speed": 1},
+    "bossSquareKill": {
+        "frames": [
+            543,
+            543,
+            543,
+            544,
+            545,
+            546,
+            547,
+            548,
+            549,
+            550,
+            551,
+            552,
+            553,
+            554,
+            555,
+            210
+        ],
+        "speed": 1
+    },
+    "powerupSuperDouble": {"frames": [729], "speed": 1},
+    "explosion300": {
+        "frames": [
+            451,
+            452,
+            453,
+            454,
+            494,
+            495,
+            496,
+            497,
+            498,
+            499,
+            500,
+            501,
+            502,
+            503,
+            504,
+            505,
+            210
+        ],
+        "speed": 1
+    },
+    "triangleDamageHit": {"frames": [77, 78, 79, 63, 64, 80, 81, 82, 83], "speed": 1},
+    "circle": {"frames": [0], "speed": 1},
+    "powerupBounce": {"frames": [734], "speed": 1},
+    "rectangleDamageFire": {
+        "frames": [
+            353,
+            362,
+            363,
+            364,
+            365,
+            366,
+            367,
+            368,
+            369,
+            370,
+            371,
+            372,
+            373,
+            374,
+            375,
+            376,
+            377,
+            378,
+            353
+        ],
+        "speed": 1
+    },
+    "rectangleDamageHit": {
+        "frames": [354, 355, 356, 331, 357, 358, 359, 360, 361],
+        "speed": 1
+    },
+    "starFire": {
+        "frames": [
+            242,
+            252,
+            253,
+            254,
+            255,
+            256,
+            257,
+            258,
+            257,
+            256,
+            255,
+            254,
+            253,
+            252,
+            242
+        ],
+        "speed": 1
+    },
+    "iconWeapon_spread": {"frames": [721], "speed": 1},
+    "pentagonDamageHit": {
+        "frames": [221, 222, 223, 200, 224, 225, 226, 227, 228],
+        "speed": 1
+    },
+    "bossHexagon": {"frames": [593], "speed": 1},
+    "bossMiniTriangleKill": {
+        "frames": [
+            615,
+            615,
+            615,
+            616,
+            617,
+            618,
+            619,
+            620,
+            621,
+            622,
+            623,
+            624,
+            625,
+            210
+        ],
+        "speed": 1
+    },
+    "bossMiniExplosion200": {
+        "frames": [
+            684,
+            685,
+            686,
+            687,
+            688,
+            689,
+            690,
+            691,
+            692,
+            693,
+            694,
+            695,
+            696,
+            697,
+            698,
+            699,
+            700,
+            701,
+            702,
             210
         ],
         "speed": 1
@@ -826,137 +1370,114 @@
         ],
         "speed": 1
     },
-    "pentagonFire": {
+    "explosionNoPoints": {
         "frames": [
-            196,
-            206,
-            207,
-            208,
-            209,
-            209,
-            209,
-            209,
-            209,
-            209,
+            451,
+            452,
+            453,
+            454,
+            533,
+            534,
+            535,
+            536,
+            537,
+            538,
+            539,
+            540,
+            541,
+            542,
             210,
-            211,
-            212,
-            213,
-            214,
-            215,
-            216,
-            217,
-            218,
-            219,
-            196
-        ],
-        "speed": 1
-    },
-    "powerupBounce": {"frames": [734], "speed": 1},
-    "pentagonDamage": {"frames": [220], "speed": 1},
-    "circleDamageHit": {"frames": [15, 16, 17, 18, 19, 20, 21, 22, 23], "speed": 1},
-    "pentagonHit": {
-        "frames": [197, 198, 199, 200, 201, 202, 203, 204, 205],
-        "speed": 1
-    },
-    "rectangleDamageFire": {
-        "frames": [
-            353,
-            362,
-            363,
-            364,
-            365,
-            366,
-            367,
-            368,
-            369,
-            370,
-            371,
-            372,
-            373,
-            374,
-            375,
-            376,
-            377,
-            378,
-            353
-        ],
-        "speed": 1
-    },
-    "powerupRapid": {"frames": [732], "speed": 1},
-    "powerupLaser": {"frames": [733], "speed": 1},
-    "rectangleDamage": {"frames": [353], "speed": 1},
-    "pentagonDamageHit": {
-        "frames": [221, 222, 223, 200, 224, 225, 226, 227, 228],
-        "speed": 1
-    },
-    "triangleDamage": {"frames": [76], "speed": 1},
-    "starDamageHit": {
-        "frames": [260, 261, 245, 246, 247, 248, 249, 262, 263],
-        "speed": 1
-    },
-    "bossMiniTriangleKill": {
-        "frames": [
-            615,
-            615,
-            615,
-            616,
-            617,
-            618,
-            619,
-            620,
-            621,
-            622,
-            623,
-            624,
-            625,
+            210,
             210
         ],
         "speed": 1
     },
-    "circleHit": {"frames": [1, 2, 3, 4, 5, 6, 7, 8, 9], "speed": 1},
-    "powerupSuperSpread": {"frames": [731], "speed": 1},
-    "triangleHit": {"frames": [60, 61, 62, 63, 64, 65, 66, 67, 68], "speed": 1},
-    "hexagonHit": {
-        "frames": [166, 167, 168, 169, 170, 171, 172, 173, 174],
+    "squareFire": {
+        "frames": [29, 29, 39, 39, 40, 40, 29, 29, 41, 41, 42, 42, 29, 29],
         "speed": 1
     },
-    "triangle": {"frames": [59], "speed": 1},
-    "rhombus": {"frames": [91], "speed": 1},
-    "powerupSpread": {"frames": [730], "speed": 1},
-    "nonagonFire": {
+    "rectangleDamage": {"frames": [353], "speed": 1},
+    "powerupHalfPower": {"frames": [737], "speed": 1},
+    "powerupDouble": {"frames": [728], "speed": 1},
+    "bullet3": {"frames": [427], "speed": 1},
+    "iconWeapon_rapid": {"frames": [723], "speed": 1},
+    "explosion400": {
         "frames": [
-            271,
-            281,
-            282,
-            283,
-            284,
-            285,
-            286,
-            287,
-            288,
-            289,
-            290,
-            291,
-            292,
-            293,
-            294,
-            295,
-            296,
-            297,
-            298,
-            271
+            451,
+            452,
+            453,
+            454,
+            507,
+            508,
+            509,
+            510,
+            511,
+            512,
+            513,
+            514,
+            515,
+            516,
+            517,
+            518,
+            210
         ],
         "speed": 1
     },
-    "powerupSuperDouble": {"frames": [729], "speed": 1},
-    "bossMiniTriangle": {"frames": [615], "speed": 1},
-    "playerEntrance": {"frames": [379, 380, 381, 382, 383, 384, 385], "speed": 1},
-    "hexagon": {"frames": [165], "speed": 1},
-    "rectangleHit": {
-        "frames": [328, 329, 330, 331, 332, 333, 334, 335, 336],
+    "iconWeapon_single": {"frames": [717], "speed": 1},
+    "explosion50": {
+        "frames": [
+            451,
+            452,
+            453,
+            454,
+            455,
+            456,
+            457,
+            458,
+            459,
+            460,
+            461,
+            462,
+            463,
+            464,
+            465,
+            466,
+            210
+        ],
         "speed": 1
     },
+    "triangleHit": {"frames": [60, 61, 62, 63, 64, 65, 66, 67, 68], "speed": 1},
+    "rhombusDamageFire": {
+        "frames": [120, 121, 122, 123, 124, 125, 126, 127, 108, 128, 129, 120],
+        "speed": 1
+    },
+    "nonagonDamage": {"frames": [299], "speed": 1},
+    "explosion100": {
+        "frames": [
+            451,
+            452,
+            453,
+            454,
+            468,
+            469,
+            470,
+            471,
+            472,
+            473,
+            474,
+            475,
+            476,
+            477,
+            478,
+            479,
+            210
+        ],
+        "speed": 1
+    },
+    "bossSquare": {"frames": [543], "speed": 1},
+    "bullet2": {"frames": [426], "speed": 1},
+    "powerupSpread": {"frames": [730], "speed": 1},
+    "nonagon": {"frames": [271], "speed": 1},
     "bossExplosion1000": {
         "frames": [
             637,
@@ -982,560 +1503,10 @@
         ],
         "speed": 1
     },
-    "powerupDouble": {"frames": [728], "speed": 1},
-    "ellipseFire": {
-        "frames": [130, 140, 141, 142, 143, 144, 145, 146, 147, 148, 130],
-        "speed": 1
-    },
-    "hexagonFire": {
-        "frames": [
-            165,
-            175,
-            176,
-            177,
-            178,
-            179,
-            180,
-            179,
-            178,
-            177,
-            176,
-            175,
-            165
-        ],
-        "speed": 1
-    },
-    "bossMiniHexagonKill": {
-        "frames": [
-            604,
-            604,
-            604,
-            605,
-            606,
-            607,
-            608,
-            609,
-            610,
-            611,
-            612,
-            613,
-            614,
-            210
-        ],
-        "speed": 1
-    },
-    "bossTriangle": {"frames": [582], "speed": 1},
-    "playerShield": {"frames": [392], "speed": 1},
-    "bossMiniHexagon": {"frames": [604], "speed": 1},
-    "lose100": {"frames": [480], "speed": 1},
-    "powerupHeavy": {"frames": [727], "speed": 1},
-    "rectangleFire": {
-        "frames": [
-            327,
-            337,
-            338,
-            339,
-            340,
-            341,
-            342,
-            343,
-            344,
-            345,
-            346,
-            347,
-            348,
-            340,
-            349,
-            350,
-            351,
-            352,
-            327
-        ],
-        "speed": 1
-    },
-    "lose50": {"frames": [467], "speed": 1},
-    "pentagon": {"frames": [196], "speed": 1},
-    "rhombusHit": {
-        "frames": [92, 93, 94, 95, 96, 97, 98, 99, 100],
-        "speed": 1
-    },
-    "explosion100": {
-        "frames": [
-            451,
-            452,
-            453,
-            454,
-            468,
-            469,
-            470,
-            471,
-            472,
-            473,
-            474,
-            475,
-            476,
-            477,
-            478,
-            479,
-            210
-        ],
-        "speed": 1
-    },
-    "bullet2": {"frames": [426], "speed": 1},
-    "playerLeft": {
-        "frames": [395, 396, 397, 398, 399, 400, 396, 397, 398, 399, 400],
-        "speed": 1
-    },
-    "rectangle": {"frames": [327], "speed": 1},
-    "bossRhombus": {"frames": [571], "speed": 1},
-    "hexagonDamage": {"frames": [181], "speed": 1},
-    "bullet3": {"frames": [427], "speed": 1},
-    "playerRight": {
-        "frames": [401, 402, 403, 404, 405, 406, 402, 403, 404, 405, 406],
-        "speed": 1
-    },
-    "bossRhombusKill": {
-        "frames": [
-            571,
-            571,
-            571,
-            572,
-            573,
-            574,
-            575,
-            576,
-            577,
-            578,
-            579,
-            580,
-            581,
-            210
-        ],
-        "speed": 1
-    },
-    "iconWeapon_laser": {"frames": [724], "speed": 1},
-    "squareDamageHit": {"frames": [44, 45, 46, 47, 48, 49, 50, 51, 52], "speed": 1},
-    "explosion50": {
-        "frames": [
-            451,
-            452,
-            453,
-            454,
-            455,
-            456,
-            457,
-            458,
-            459,
-            460,
-            461,
-            462,
-            463,
-            464,
-            465,
-            466,
-            210
-        ],
-        "speed": 1
-    },
-    "iconWeapon_bounce": {"frames": [725], "speed": 1},
-    "ellipseDamageHit": {
-        "frames": [150, 151, 133, 134, 135, 152, 153, 154, 155],
-        "speed": 1
-    },
-    "circle": {"frames": [0], "speed": 1},
-    "powerupSingle": {"frames": [726], "speed": 1},
-    "bossDecagonKill": {
-        "frames": [
-            556,
-            556,
-            556,
-            557,
-            558,
-            559,
-            560,
-            561,
-            562,
-            563,
-            564,
-            565,
-            566,
-            567,
-            568,
-            569,
-            570,
-            210
-        ],
-        "speed": 1
-    },
-    "iconWeapon_superBounce": {"frames": [725], "speed": 1},
-    "triangleDamageHit": {"frames": [77, 78, 79, 63, 64, 80, 81, 82, 83], "speed": 1},
-    "circleDamage": {"frames": [14], "speed": 1},
-    "iconWeapon_rapid": {"frames": [723], "speed": 1},
-    "rectangleDamageHit": {
-        "frames": [354, 355, 356, 331, 357, 358, 359, 360, 361],
-        "speed": 1
-    },
-    "bullet1": {"frames": [425], "speed": 1},
-    "nonagonDamage": {"frames": [299], "speed": 1},
-    "nonagonDamageHit": {
-        "frames": [300, 301, 302, 303, 304, 305, 306, 307, 308],
-        "speed": 1
-    },
-    "bossSquareKill": {
-        "frames": [
-            543,
-            543,
-            543,
-            544,
-            545,
-            546,
-            547,
-            548,
-            549,
-            550,
-            551,
-            552,
-            553,
-            554,
-            555,
-            210
-        ],
-        "speed": 1
-    },
-    "squareHit": {"frames": [30, 31, 32, 33, 34, 35, 36, 37, 38], "speed": 1},
-    "bossDecagon": {"frames": [556], "speed": 1},
-    "bulletExplosion": {
-        "frames": [428, 429, 430, 427, 431, 432, 433, 434, 435],
-        "speed": 1
-    },
-    "circleFire": {"frames": [0, 10, 11, 12, 13, 12, 11, 10, 0], "speed": 1},
-    "squareDamageFire": {
-        "frames": [43, 43, 53, 53, 54, 54, 55, 55, 56, 56, 57, 57, 58, 58],
-        "speed": 1
-    },
-    "bossHexagonKill": {
-        "frames": [
-            593,
-            593,
-            593,
-            594,
-            595,
-            596,
-            597,
-            598,
-            599,
-            600,
-            601,
-            602,
-            603,
-            210
-        ],
-        "speed": 1
-    },
-    "laserBullet": {
-        "frames": [415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 210],
-        "speed": 1
-    },
-    "squareDamage": {"frames": [43], "speed": 1},
-    "iconWeapon_superSpread": {"frames": [722], "speed": 1},
-    "bossSquare": {"frames": [543], "speed": 1},
-    "circleDamageFire": {"frames": [24, 25, 26, 27, 28, 27, 26, 25, 24], "speed": 1},
-    "bossMiniRhombusKill": {
-        "frames": [
-            626,
-            626,
-            626,
-            627,
-            628,
-            629,
-            630,
-            631,
-            632,
-            633,
-            634,
-            635,
-            636,
-            210
-        ],
-        "speed": 1
-    },
-    "iconWeapon_superDouble": {"frames": [720], "speed": 1},
-    "nonagonHit": {
-        "frames": [272, 273, 274, 275, 276, 277, 278, 279, 280],
-        "speed": 1
-    },
-    "explosionNoPoints": {
-        "frames": [
-            451,
-            452,
-            453,
-            454,
-            533,
-            534,
-            535,
-            536,
-            537,
-            538,
-            539,
-            540,
-            541,
-            542,
-            210,
-            210,
-            210
-        ],
-        "speed": 1
-    },
-    "iconWeapon_spread": {"frames": [721], "speed": 1},
-    "ellipseDamageFire": {
-        "frames": [149, 156, 157, 158, 159, 160, 161, 162, 163, 164, 149],
-        "speed": 1
-    },
-    "squareFire": {
-        "frames": [29, 29, 39, 39, 40, 40, 29, 29, 41, 41, 42, 42, 29, 29],
-        "speed": 1
-    },
-    "iconWeapon_double": {"frames": [719], "speed": 1},
-    "iconWeapon_heavy": {"frames": [718], "speed": 1},
-    "explosion300": {
-        "frames": [
-            451,
-            452,
-            453,
-            454,
-            494,
-            495,
-            496,
-            497,
-            498,
-            499,
-            500,
-            501,
-            502,
-            503,
-            504,
-            505,
-            210
-        ],
-        "speed": 1
-    },
-    "lose500": {"frames": [532], "speed": 1},
-    "playerKilled": {
-        "frames": [
-            436,
-            437,
-            438,
-            439,
-            440,
-            441,
-            442,
-            443,
-            444,
-            445,
-            446,
-            447,
-            448,
-            449,
-            450
-        ],
-        "speed": 1
-    },
-    "nonagon": {"frames": [271], "speed": 1},
-    "rapidBullet": {"frames": [408], "speed": 1},
+    "powerupSuperBounce": {"frames": [735], "speed": 1},
     "ellipseDamage": {"frames": [149], "speed": 1},
-    "explosion500": {
-        "frames": [
-            451,
-            452,
-            453,
-            454,
-            520,
-            521,
-            522,
-            523,
-            524,
-            525,
-            526,
-            527,
-            528,
-            529,
-            530,
-            531,
-            210
-        ],
-        "speed": 1
-    },
-    "bossTriangleKill": {
-        "frames": [
-            582,
-            582,
-            582,
-            583,
-            584,
-            585,
-            586,
-            587,
-            588,
-            589,
-            590,
-            591,
-            592,
-            210
-        ],
-        "speed": 1
-    },
-    "lose400": {"frames": [519], "speed": 1},
-    "starDamageFire": {
-        "frames": [
-            259,
-            264,
-            265,
-            266,
-            267,
-            268,
-            269,
-            270,
-            269,
-            268,
-            267,
-            266,
-            265,
-            264,
-            259
-        ],
-        "speed": 1
-    },
-    "triangleFire": {
-        "frames": [59, 69, 70, 71, 72, 73, 74, 75, 74, 73, 72, 71, 70, 69, 59],
-        "speed": 1
-    },
-    "starDamage": {"frames": [259], "speed": 1},
-    "square": {"frames": [29], "speed": 1},
-    "starFire": {
-        "frames": [
-            242,
-            252,
-            253,
-            254,
-            255,
-            256,
-            257,
-            258,
-            257,
-            256,
-            255,
-            254,
-            253,
-            252,
-            242
-        ],
-        "speed": 1
-    },
-    "bossHexagon": {"frames": [593], "speed": 1},
-    "lose200": {"frames": [493], "speed": 1},
-    "rhombusDamage": {"frames": [111], "speed": 1},
-    "bossMiniExplosion400": {
-        "frames": [
-            684,
-            685,
-            686,
-            687,
-            688,
-            703,
-            704,
-            705,
-            706,
-            707,
-            708,
-            709,
-            710,
-            711,
-            712,
-            713,
-            714,
-            715,
-            716,
-            210
-        ],
-        "speed": 1
-    },
-    "nonagonDamageFire": {
-        "frames": [
-            299,
-            309,
-            310,
-            311,
-            312,
-            313,
-            314,
-            315,
-            316,
-            317,
-            318,
-            319,
-            320,
-            321,
-            322,
-            323,
-            324,
-            325,
-            326,
-            299
-        ],
-        "speed": 1
-    },
-    "starHit": {
-        "frames": [243, 244, 245, 246, 247, 248, 249, 250, 251],
-        "speed": 1
-    },
-    "iconWeapon_single": {"frames": [717], "speed": 1},
-    "bossMiniExplosion200": {
-        "frames": [
-            684,
-            685,
-            686,
-            687,
-            688,
-            689,
-            690,
-            691,
-            692,
-            693,
-            694,
-            695,
-            696,
-            697,
-            698,
-            699,
-            700,
-            701,
-            702,
-            210
-        ],
-        "speed": 1
-    },
-    "hexagonDamageFire": {
-        "frames": [
-            181,
-            191,
-            192,
-            177,
-            193,
-            194,
-            195,
-            194,
-            193,
-            177,
-            192,
-            191,
-            181
-        ],
-        "speed": 1
-    },
-    "ellipseHit": {
-        "frames": [131, 132, 133, 134, 135, 136, 137, 138, 139],
-        "speed": 1
-    },
+    "star": {"frames": [242], "speed": 1},
+    "iconWeapon_double": {"frames": [719], "speed": 1},
     "explosion200": {
         "frames": [
             451,
@@ -1558,76 +1529,105 @@
         ],
         "speed": 1
     },
-    "bounceBullet": {
-        "frames": [409, 410, 411, 412, 413, 414, 413, 412, 411, 410, 409],
+    "laserBullet": {
+        "frames": [415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 210],
         "speed": 1
     },
-    "star": {"frames": [242], "speed": 1},
-    "powerupKill": {
-        "frames": [741, 742, 743, 744, 745, 746, 747, 748, 749],
-        "speed": 1
-    },
-    "playerShieldRight": {"frames": [394], "speed": 1},
-    "rhombusDamageFire": {
-        "frames": [120, 121, 122, 123, 124, 125, 126, 127, 108, 128, 129, 120],
-        "speed": 1
-    },
-    "ellipse": {"frames": [130], "speed": 1},
-    "explosion400": {
+    "bossTriangleKill": {
         "frames": [
-            451,
-            452,
-            453,
-            454,
-            507,
-            508,
-            509,
-            510,
-            511,
-            512,
-            513,
-            514,
-            515,
-            516,
-            517,
-            518,
+            582,
+            582,
+            582,
+            583,
+            584,
+            585,
+            586,
+            587,
+            588,
+            589,
+            590,
+            591,
+            592,
             210
         ],
         "speed": 1
     },
-    "bossExplosion5000": {
-        "frames": [
-            637,
-            638,
-            639,
-            640,
-            641,
-            670,
-            671,
-            672,
-            673,
-            674,
-            675,
-            676,
-            677,
-            678,
-            679,
-            680,
-            681,
-            682,
-            683,
-            210
-        ],
+    "squareDamageHit": {"frames": [44, 45, 46, 47, 48, 49, 50, 51, 52], "speed": 1},
+    "iconWeapon_laser": {"frames": [724], "speed": 1},
+    "circleDamageHit": {"frames": [15, 16, 17, 18, 19, 20, 21, 22, 23], "speed": 1},
+    "starDamage": {"frames": [259], "speed": 1},
+    "square": {"frames": [29], "speed": 1},
+    "nonagonDamageHit": {
+        "frames": [300, 301, 302, 303, 304, 305, 306, 307, 308],
         "speed": 1
     },
-    "powerupShield": {"frames": [740], "speed": 1},
+    "rhombusFire": {
+        "frames": [91, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 91],
+        "speed": 1
+    },
+    "powerupFullPower": {"frames": [738], "speed": 1},
+    "circleDamageFire": {"frames": [24, 25, 26, 27, 28, 27, 26, 25, 24], "speed": 1},
+    "bossDecagon": {"frames": [556], "speed": 1},
+    "nonagonHit": {
+        "frames": [272, 273, 274, 275, 276, 277, 278, 279, 280],
+        "speed": 1
+    },
+    "bossMiniRhombus": {"frames": [626], "speed": 1},
+    "rhombus": {"frames": [91], "speed": 1},
     "playerShieldLeft": {"frames": [393], "speed": 1},
+    "lose400": {"frames": [519], "speed": 1},
+    "playerRight": {
+        "frames": [401, 402, 403, 404, 405, 406, 402, 403, 404, 405, 406],
+        "speed": 1
+    },
+    "powerupPower": {"frames": [736], "speed": 1},
+    "powerupSuperSpread": {"frames": [731], "speed": 1},
+    "circleHit": {"frames": [1, 2, 3, 4, 5, 6, 7, 8, 9], "speed": 1},
     "hexagonDamageHit": {
         "frames": [182, 183, 184, 185, 186, 187, 188, 189, 190],
         "speed": 1
     },
-    "rhombusDamageHit": {
-        "frames": [112, 113, 114, 95, 115, 116, 117, 118, 119],
+    "spreadBullet": {"frames": [409], "speed": 1},
+    "hexagonDamageFire": {
+        "frames": [
+            181,
+            191,
+            192,
+            177,
+            193,
+            194,
+            195,
+            194,
+            193,
+            177,
+            192,
+            191,
+            181
+        ],
+        "speed": 1
+    },
+    "bossMiniRhombusKill": {
+        "frames": [
+            626,
+            626,
+            626,
+            627,
+            628,
+            629,
+            630,
+            631,
+            632,
+            633,
+            634,
+            635,
+            636,
+            210
+        ],
+        "speed": 1
+    },
+    "bullet": {"frames": [407], "speed": 1},
+    "rectangleHit": {
+        "frames": [328, 329, 330, 331, 332, 333, 334, 335, 336],
         "speed": 1
     }
 }

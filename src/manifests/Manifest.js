@@ -192,4 +192,19 @@ var gameManifest = [
         id:"gameOver",
         data:1
     },
+    {
+        src:"lib/interface1.ogg",
+        id:"interface1",
+        data:2
+    },
+    {
+        src:"lib/interface2.ogg",
+        id:"interface2",
+        data:2
+    },
+    {
+        src:"lib/interface3.ogg",
+        id:"interface3",
+        data:2
+    },
 ];
