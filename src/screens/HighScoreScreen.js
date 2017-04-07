@@ -11,9 +11,9 @@ var HighScoreScreen = function() {
     selector.x = 102;
     selector.y = 344;
     screen.addChild(selector);
-    var txtCurrentScore = new createjs.BitmapText("",assetManager.getSpriteSheet("charset30"));
+    var txtCurrentScore = new createjs.BitmapText("",assetManager.getSpriteSheet("charset80"));
     txtCurrentScore.letterSpacing = 4;
-    txtCurrentScore.y = 220;
+    txtCurrentScore.y = 200;
     screen.addChild(txtCurrentScore);
     var txtInitials = new createjs.BitmapText("",assetManager.getSpriteSheet("charset80"));
     txtInitials.letterSpacing = 8;
@@ -26,13 +26,28 @@ var HighScoreScreen = function() {
     var rowIndex = 0;
     var charIndex = 0;
 
+    // the high score
+    var score = 0;
+
     // --------------------------------------------------------- private methods
     function centerMe(displayObj) {
         displayObj.x = (stage.canvas.width/2) - (displayObj.getBounds().width/2);
     }
 
+    function reverse(str) {
+        // Step 1. Use the split() method to return a new array
+        var splitString = str.split(""); // var splitString = "hello".split("");
+        // Step 2. Use the reverse() method to reverse the new created array
+        var reverseArray = splitString.reverse(); // var reverseArray = ["h", "e", "l", "l", "o"].reverse();
+        // Step 3. Use the join() method to join all elements of the array into a string
+        var joinArray = reverseArray.join(""); // var joinArray = ["o", "l", "l", "e", "h"].join("");
+        //Step 4. Return the reversed string
+        return joinArray; // "olleh"
+    }
+
     // ------------------------------------------------- public methods
-    this.showMe = function(score) {
+    this.showMe = function(myScore) {
+        score = myScore;
         rowIndex = 0;
         charIndex = 0;
         txtCurrentScore.text = String(score);
@@ -101,16 +116,37 @@ var HighScoreScreen = function() {
         var initials = txtInitials.text;
 
         if (char === "1") {
-            console.log("!!! submit initials !!!");
+            
+            // !!!!!! TESTING
+            var score = 9876;
+            // !!!!!!!!!!!!!!
+
+            var hash = CryptoJS.MD5(initials + score + "2f6d0f62dbedda976330f88add53a7e7").toString();
+            // assemble the URL to send data
+            var source = Globals.gameConstants.HIGHSCORE_SCRIPT1 + "?z=" + btoa(reverse(initials)) + "&a=" + btoa(reverse(String(score))) + "&s=" + hash;
+
+            console.log("initials: " + btoa(reverse(initials)));
+            console.log("score: " + btoa(reverse(String(score))));
+            console.log("HASH: " + hash);
+
+            // send score results to the server sided script
+            Globals.sendMe(source, onResponse);
 
         } else if ((char === "-1") && (initials.length > 0)) {
             txtInitials.text = initials.substring(0, initials.length - 1);
             // center initials on stage
-            if (txtInitials.text != "") centerMe(txtInitials);
+            if (txtInitials.text !== "") centerMe(txtInitials);
         } else if (initials.length < 3) {
             txtInitials.text += char;
             centerMe(txtInitials);
         }
     };
+
+    // ----------------------------------------------------------- event handlers
+    function onResponse(e) {            
+        console.log("got here");
+
+        
+    }
 
 };

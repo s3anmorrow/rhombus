@@ -159,9 +159,9 @@
 		//createjs.Sound.play("music","none",0,0,-1);
 
 		// ???????????????? temporary start
-		//sstartGame();
-		//Globals.gameState = GameStates.HIGHSCORE;
-		//screenManager.setScreen("highScoreScreen");
+		//startGame();
+		Globals.gameState = GameStates.HIGHSCORE;
+		screenManager.setScreen("highScoreScreen");
 
 	}
 

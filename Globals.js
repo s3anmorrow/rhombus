@@ -11,7 +11,9 @@ var Globals = {
 	// game constants used throughout
     gameConstants:{
 		FRAME_RATE:30,
-		HIGHSCORE_SCRIPT:"",
+		HIGHSCORE_SCRIPT1:"handlers/a.php",
+		HIGHSCORE_SCRIPT2:"handlers/d.php",
+		HIGHSCORE_SCRIPT3:"handlers/c.php",
 		PLAYER_SPEED:14,
 		PLAYER_MIN_X:20,
 		PLAYER_MAX_X:780,
@@ -183,6 +185,17 @@ var Globals = {
 		var iRandomNum = 0;
 		iRandomNum = Math.round(Math.random() * (upper - lower)) + lower;
 		return iRandomNum;
+	},
+
+	sendMe:function(source, responseFn) {
+		// send the results to the server sided script - XMLHttpRequest object
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.addEventListener("readystatechange", function(e){
+			// has the response been received successfully?
+			if ((xmlhttp.readyState === 4) && (xmlhttp.status === 200)) responseFn(xmlhttp);			
+		});
+		xmlhttp.open("GET", source, true);
+		xmlhttp.send();
 	},
 	
 	// ------------------------------------------ private methods
