@@ -19,14 +19,14 @@ var gamepadManifest = {
         {
             // flip button
             id:1,
-            keyCode:13,
+            keyCode:16,
             keydown:true,
             keyup:true,
             gameState:1
         },
         {
             // select initial in highscore board
-            id:1,
+            id:0,
             keyCode:32,
             keydown:true,
             keyup:true,            

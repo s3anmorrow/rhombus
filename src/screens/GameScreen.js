@@ -7,6 +7,7 @@ var GameScreen = function() {
     var score = 0;
     var lives = 0;
     var highScore = 0;
+    var currentHighScore = 0;
     var power = 0;
     var ammo = 0;
     var weaponType = "";
@@ -97,10 +98,15 @@ var GameScreen = function() {
             });
     };
 
+    this.setHighScore = function(myHighScore) {
+        highScore = myHighScore;
+        refreshScoreBoard();
+    };
+
     // ------------------------------------------------- public methods
     this.showMe = function() {
         score = 0;
-        highScore = 126628;
+        currentHighScore = highScore;
         lives = Globals.gameConstants.PLAYER_START_LIVES;
         power = Globals.gameConstants.PLAYER_START_POWER;
         refreshScoreBoard();
@@ -119,6 +125,10 @@ var GameScreen = function() {
     this.adjustPoints = function(amount) {
         score+=amount;
         if (score < 0) score = 0;
+        // if highscore adjust output
+        if (score >= currentHighScore) highScore = score;
+        else highScore = currentHighScore;
+
         refreshScoreBoard();
     };
 

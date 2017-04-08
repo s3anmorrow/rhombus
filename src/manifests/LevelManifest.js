@@ -574,7 +574,7 @@ var levelManifest = [
         {type:"square", 
             wave:{count:8, spaced:20},
             settings:{x:100, y:-30, shooters:[{index:0, freq:50},{index:1, freq:50},{index:2, freq:50}]}, 
-            movement:{type:"zipzag",speed:6,angle:45,bounces:6},
+            movement:{type:"zigzag",speed:6,angle:45,bounces:6},
             powerup:null,
             time:32
         },

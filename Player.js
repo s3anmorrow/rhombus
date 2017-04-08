@@ -88,6 +88,10 @@ var Player = function(){
         return power;
     };
 
+    this.getShieldEnabled = function() {
+        return shieldEnabled;
+    };
+
     this.setPower = function(myPower) {
         power = myPower;
         if (power > gameConstants.PLAYER_START_POWER) power = gameConstants.PLAYER_START_POWER;

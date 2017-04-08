@@ -1,4 +1,9 @@
 var IntroScreen = function() {
+    // custom events
+    var newHighScoreEvent = new createjs.Event("gameEvent", true);
+    newHighScoreEvent.id = "newHighScore";
+    newHighScoreEvent.score = 0;
+
     // set references to globals
     var stage = Globals.stage;
     var assetManager = Globals.assetManager;
@@ -87,6 +92,7 @@ var IntroScreen = function() {
     // ------------------------------------------------ event handlers
     function onResponse(xhr) {
         //console.log("test: " + xhr.responseText);
+
         // update scoreboard
         var data = xhr.responseText.split(",");
         var i=0;
@@ -98,6 +104,11 @@ var IntroScreen = function() {
         }
         screen.removeChild(loadingScoresPanel);
         screen.addChild(highScores);
+
+        // update highscore on game screen
+        newHighScoreEvent.target = null;
+        newHighScoreEvent.score = data[1];
+        stage.dispatchEvent(newHighScoreEvent);
     }
 
 };

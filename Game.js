@@ -5,12 +5,8 @@
 	"use strict";
 	
 	// TODO: way for game to finish with rhombus big boss
-	// TODO: high score board implemented
-	// TODO: level design
-	// TODO: consider no destroy when shield enabled
+	// TODO: level design 18, 19, 20
 	// TODO: collision detection not always working (solid shapes?)
-	// TODO: put cap on spawned shapes from turrets
-	// TODO: normalize sounds and output mp3
 	// TODO: bug with cloaking shape and collision
 
 	// game variables
@@ -160,10 +156,11 @@
 
 		// ???????????????? temporary start
 		//startGame();
+		/*
 		stage.addEventListener("gameEvent", onGameEvent);
 		Globals.gameState = GameStates.HIGHSCORE;
 		screenManager.setScreen("highScoreScreen");
-
+		*/
 	}
 
 	function onKeyDown(e) {
@@ -194,7 +191,7 @@
 			else if (e.keyCode === 39) screenManager.highScore.moveSelector("right");
 			else if (e.keyCode === 32) screenManager.highScore.selectInitial();
 		} else if (Globals.gameState === GameStates.GAMEOVER) {
-			if (e.keyCode === 16) {
+			if (e.keyCode === 32) {
 				// show highScoreScreen to check for high score
 				Globals.gameState = GameStates.HIGHSCORE;
 				screenManager.setScreen("highScoreScreen");
@@ -231,13 +228,16 @@
 				screenManager.game.setLevelName(e.levelTitle);
 				break;
 			case "gameOver":
-				Globals.gameState = GameStates.GAMEOVER;
+				//Globals.gameState = GameStates.GAMEOVER;
 				screenManager.setScreen("gameOverScreen");
 				break;
 			case "highScoreComplete":
 				Globals.gameState = GameStates.INTRO;
 				screenManager.setScreen("introScreen");
-				break;			
+				break;	
+			case "newHighScore":
+				screenManager.game.setHighScore(e.score);
+				break;		
 		}
 	}
 

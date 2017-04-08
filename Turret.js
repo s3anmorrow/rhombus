@@ -25,6 +25,8 @@ var Turret = function(){
     var bulletType = "";
     var frameCounter = 0;
     var accuracy = 0;
+    var spawnMax = 10;
+    var spawnCount = 0;
     // reference to Player object (the target!)
     var player = objectPool.playerPool[0];    
     // get shape's sprite
@@ -49,6 +51,7 @@ var Turret = function(){
         owner = myOwner;
         shootFreq = freq;
         hitPoints = gameConstants.SHAPES[type].hp;
+        spawnCount = 0;
         // turrets get a bonus accuracy
         accuracy = gameConstants.SHAPES[type].accuracy + gameConstants.TURRET_BONUS_ACCURACY;
         halfHitPoints = hitPoints/2;
@@ -114,6 +117,8 @@ var Turret = function(){
     }
 
     this.fireMe = function() {
+        // put cap on number of shapes spawn
+        if (spawnCount > spawnMax) return;
         // play firing animation
         sprite.gotoAndPlay(type + "Fire");
         sprite.addEventListener("animationend",function(e){
@@ -134,6 +139,7 @@ var Turret = function(){
                           {index:0, freq:60, bulletType:"bullet1"}, 
                           {type:"kamikaze", speed:3, rotate:true});
 
+            spawnCount++;
             createjs.Sound.play("enemyReleaseShape");
         } else {
             // fire regular bullet!

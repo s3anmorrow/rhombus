@@ -37,6 +37,7 @@ var ScreenManager = function() {
     var prompt = assetManager.getSprite("ui","spacebarContinue");
     prompt.x = 240;
     prompt.y = 420;
+    gameOverScreen.alpha = 0;
     gameOverScreen.addChild(prompt);
     
     // --------------------------------------------------------- private methods
@@ -95,6 +96,8 @@ var ScreenManager = function() {
         introScreen.hideMe();
         if (which != "gameOverScreen") gameScreen.hideMe();
         highScoreScreen.hideMe();
+        gameOverScreen.alpha = 0;
+        createjs.Tween.removeTweens(gameOverScreen);
         stage.removeChild(gameOverScreen);
 
         // add corresponding screen container and setup
@@ -105,6 +108,10 @@ var ScreenManager = function() {
             prompt.gotoAndStop("spacebarContinue");
             if (Globals.gamepadManager.connected) prompt.gotoAndStop("startButtonContinue");
             stage.addChild(gameOverScreen);
+            createjs.Tween.get(gameOverScreen, {useTicks:true}).to({alpha:1}, 40)
+                .call(function(){
+                    Globals.gameState = GameStates.GAMEOVER;
+                });
             createjs.Sound.play("gameOver");
         }
     };

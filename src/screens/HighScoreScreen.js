@@ -172,12 +172,11 @@ var HighScoreScreen = function() {
     }
 
     function onCheckResponse(xhr) {  
-
-        console.log(xhr.responseText);
-
+        //console.log(xhr.responseText);
         if (xhr.responseText === "t") {
             stage.removeChild(checkingScreen);
             stage.addChild(screen);
+            createjs.Sound.play("powerupAppear");
         } else {
             // back to intro screen
             completeEvent.target = null;

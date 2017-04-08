@@ -21,9 +21,9 @@ var Globals = {
 		PLAYER_MAX_Y:750,
 		PLAYER_START_POWER:4,
 		PLAYER_MAX_POWER:4,
-		PLAYER_START_LIVES:1,
+		PLAYER_START_LIVES:3,
 		POWERUP_DURATION:8,
-		TURRET_BONUS_ACCURACY:30,
+		TURRET_BONUS_ACCURACY:20,
 		SHAPES:{
 			"circle": {hp:1,points:50,accuracy:30},
 			"square": {hp:1,points:50,accuracy:80},

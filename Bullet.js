@@ -157,7 +157,7 @@ var Bullet = function() {
 				var length = shapePool.length;
 				for (var n=0; n<length; n++) {	
 					var shape = shapePool[n];
-					if ((shape.used) && (shape.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, shape.sprite, 0, true))) {
+					if ((shape.used) && (shape.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, shape.sprite, 0, false))) {
 						destroyed = shape.killMe(damage,true);
 						// only play bullet explosion if target NOT destroyed
 						if (!invincible) this.killMe(!destroyed);
@@ -168,7 +168,7 @@ var Bullet = function() {
 				length = turretPool.length;
 				for (n=0; n<length; n++) {	
 					var turret = turretPool[n];
-					if ((turret.used) && (turret.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, turret.sprite, 0, true))) {
+					if ((turret.used) && (turret.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, turret.sprite, 0, false))) {
 						destroyed = turret.killMe(damage);
 						if (!invincible) this.killMe(!destroyed);
 					}
@@ -177,7 +177,7 @@ var Bullet = function() {
 			// Shape or Turret's bullet
 			} else if ((owner.constructor.name === "Shape") || (owner.constructor.name === "Bigboss"))  {
 				
-				if ((player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
+				if ((player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, false))) {
 					player.hitMe(damage);
 					this.killMe(true);
 				}

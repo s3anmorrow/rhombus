@@ -8,10 +8,10 @@ var ObjectPool = function() {
 	var updateList = [];
 
 	// starting constant maximums of the game elements (virusMax can be extended by Object pool if needed)
-	var SHAPE_MAX = 100;
+	var SHAPE_MAX = 200;
 	var PLAYER_MAX = 1;
-	var BULLET_MAX = 400;
-	var BIGBOSS_MAX = 20;
+	var BULLET_MAX = 500;
+	var BIGBOSS_MAX = 10;
 	var TURRET_MAX = 50;
 	var POWERUP_MAX = 5;
 
