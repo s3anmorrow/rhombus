@@ -3,7 +3,8 @@ var WaveFactory = function(){
     // custom events
     var levelEvent = new createjs.Event("gameEvent", true);
     levelEvent.id = "levelChange";
-    levelEvent.levelTitle = 0;
+    levelEvent.level = 0;
+    levelEvent.levelTitle = "";
 
     // set references to globals
     var stage = Globals.stage;
@@ -46,8 +47,7 @@ var WaveFactory = function(){
         // go through all pending waves of current level to see if time to release
         for (var n=0; n<activeLevel.length; n++) {
             if (activeLevel[n].time === seconds) {
-
-                console.log("Adding wave at seconds: " + seconds);
+                //console.log("Adding wave at seconds: " + seconds);
 
                 // release new wave
                 // initializing next wave object before starting wave
@@ -87,7 +87,8 @@ var WaveFactory = function(){
 
         // announce level change
         levelEvent.target = null;
-        levelEvent.levelTitle = "L" + level + " " + levelTitle;
+        levelEvent.level = level;
+        levelEvent.levelTitle = levelTitle;
         stage.dispatchEvent(levelEvent);
 
         createjs.Sound.play("level");

@@ -207,4 +207,9 @@ var gameManifest = [
         id:"interface3",
         data:2
     },
+    {
+        src:"lib/perfectScore.ogg",
+        id:"perfectScore",
+        data:1
+    }
 ];

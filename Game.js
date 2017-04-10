@@ -6,8 +6,8 @@
 	
 	// TODO: way for game to finish with rhombus big boss
 	// TODO: level design 18, 19, 20
-	// TODO: collision detection not always working (solid shapes?)
-	// TODO: bug with cloaking shape and collision
+	// TODO: collision detection not always working (solid shapes?) (something to do with not working when shape firing)
+	// TODO: bug when no power left but still alive
 
 	// game variables
 	var stage = null;
@@ -40,7 +40,7 @@
 		rightKey = false;
 		fireKey = false;
 		// game event listener for all events that control gameplay
-		stage.addEventListener("gameEvent", onGameEvent);
+		//stage.addEventListener("gameEvent", onGameEvent);
 		// initialization
 		screenManager.setScreen("gameScreen");
 		// start the waves
@@ -56,9 +56,9 @@
 		console.log(">> game started");
 	}
 
-	function stopGame(win) {
+	function stopGame() {
 		// kill game event listener
-		stage.removeEventListener("gameEvent", onGameEvent, true);
+		//stage.removeEventListener("gameEvent", onGameEvent, true);
 		Globals.gameState = GameStates.GAMEOVER;
 	}
 
@@ -128,6 +128,9 @@
 		// kill event listeners
 		stage.removeEventListener("onAssetLoaded", onAssetLoaded);
 		stage.removeEventListener("onAllAssetsLoaded", onSetup);
+
+		// game event listener for all events that control gameplay
+		stage.addEventListener("gameEvent", onGameEvent);
 		
 		// construct object pool
 		objectPool = new ObjectPool(stage, assetManager);
@@ -225,10 +228,9 @@
 				screenManager.game.adjustPoints(e.points);
 				break;
 			case "levelChange":
-				screenManager.game.setLevelName(e.levelTitle);
+				screenManager.game.setLevelName(e.level, e.levelTitle);
 				break;
 			case "gameOver":
-				//Globals.gameState = GameStates.GAMEOVER;
 				screenManager.setScreen("gameOverScreen");
 				break;
 			case "highScoreComplete":
@@ -282,7 +284,8 @@
 			waveFactory.updateMe();
 		}
 		// screenManager needs updating for all gameGameStates except initalization (background shapes)
-		if (Globals.gameState !== GameStates.INITIALIZE) screenManager.updateMe();		
+		if (Globals.gameState !== GameStates.INITIALIZE) screenManager.updateMe();
+		//if (Globals.gameState === GameStates.INTRO) screenManager.updateMe();
 
 		// monitor gamepadManager for any buttons / joystick changes
 		gamepadManager.monitorMe(Globals.gameState);

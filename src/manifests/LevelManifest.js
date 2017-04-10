@@ -18,8 +18,8 @@ var levelManifest = [
     [
         // LEVEL 1
         {levelTitle:"Bunny",
-            type:"circle", 
-            wave:{count:5, spaced:20},
+            type:"square", 
+            wave:{count:10, spaced:20},
             settings:{x:400, y:-50}, 
             movement:{type:"down",speed:4},
             powerup:null,

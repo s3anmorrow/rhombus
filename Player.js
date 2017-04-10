@@ -312,7 +312,6 @@ var Player = function(){
             return;
         }
 
-        if (powerLoss === undefined) powerLoss = 1;
         this.setPower(power - powerLoss);
         createjs.Sound.play("playerHit");
         if (power <= 0) {
@@ -343,7 +342,7 @@ var Player = function(){
 
     this.killMe = function() {
         // can't be killed if shieldEnabled
-        if (shieldEnabled) return;
+        if ((shieldEnabled) && (power <= 0)) return;
 
         state = PlayerState.KILLED;
         createjs.Tween.removeTweens(shieldSprite);

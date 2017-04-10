@@ -21,7 +21,7 @@ var AssetManager = function(stage) {
 	// ------------------------------------------------------ event handlers
 	function onLoaded(e) {
 
-        console.log("asset loaded: " + e.item.src + " type: " + e.item.type);
+        //console.log("asset loaded: " + e.item.src + " type: " + e.item.type);
 
         // what type of asset was loaded?
         switch(e.item.type) {

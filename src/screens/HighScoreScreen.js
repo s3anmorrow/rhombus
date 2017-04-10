@@ -62,6 +62,9 @@ var HighScoreScreen = function() {
 
         rowIndex = 0;
         charIndex = 0;
+        selector.x = 102;
+        selector.y = 344;
+        txtInitials.text = "";
         txtCurrentScore.text = Globals.commaUpScore(String(score));
         centerMe(txtCurrentScore);
 

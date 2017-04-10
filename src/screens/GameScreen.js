@@ -8,6 +8,7 @@ var GameScreen = function() {
     var lives = 0;
     var highScore = 0;
     var currentHighScore = 0;
+    var perfectScore = false;
     var power = 0;
     var ammo = 0;
     var weaponType = "";
@@ -39,6 +40,7 @@ var GameScreen = function() {
     var txtLevel = new createjs.BitmapText("A",assetManager.getSpriteSheet("charset30"));
     txtLevel.x = 15;
     txtLevel.y = 245;
+    txtLevel.lineHeight = 40;
     txtLevel.alpha = 0;
     screen.addChild(txtLevel);    
 
@@ -85,9 +87,17 @@ var GameScreen = function() {
         return score;
     };
 
-    this.setLevelName = function(levelName) {
-        // update bitmapttext
-        txtLevel.text = levelName;
+    this.setLevelName = function(level, levelName) {
+        if (perfectScore) {
+            this.adjustPoints(Globals.gameConstants.PERFECT_SCORE_POINTS);
+            createjs.Sound.play("perfectScore");
+            txtLevel.text = "Perfect Score! +" + Globals.gameConstants.PERFECT_SCORE_POINTS + "\nLevel " + level + "\n" + levelName;
+        } else {
+            // update bitmapttext
+            txtLevel.text = "Level " + level + "\n" + levelName;
+        }
+        // assume this next level will be a perfect score
+        perfectScore = true;
         // tween fading in
         createjs.Tween.get(txtLevel, {useTicks:true}).to({alpha:1}, 20)
             .call(function(){
@@ -107,6 +117,7 @@ var GameScreen = function() {
     this.showMe = function() {
         score = 0;
         currentHighScore = highScore;
+        perfectScore = false;
         lives = Globals.gameConstants.PLAYER_START_LIVES;
         power = Globals.gameConstants.PLAYER_START_POWER;
         refreshScoreBoard();
@@ -125,6 +136,7 @@ var GameScreen = function() {
     this.adjustPoints = function(amount) {
         score+=amount;
         if (score < 0) score = 0;
+        if (amount < 0) perfectScore = false;
         // if highscore adjust output
         if (score >= currentHighScore) highScore = score;
         else highScore = currentHighScore;
