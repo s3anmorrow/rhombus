@@ -92,7 +92,7 @@ var Powerup = function(){
         }
 
         // has the player collided with the powerup?
-        if (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true)) {
+        if (ndgmr.checkPixelCollision(sprite, player.sprite)) {
             var powerupData = gameConstants.POWERUPS[type];
             if (powerupData.category === "weapon") {
                 // change weapontype of player

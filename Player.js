@@ -342,7 +342,7 @@ var Player = function(){
 
     this.killMe = function() {
         // can't be killed if shieldEnabled
-        if ((shieldEnabled) && (power <= 0)) return;
+        if ((shieldEnabled) && (power > 0)) return;
 
         state = PlayerState.KILLED;
         createjs.Tween.removeTweens(shieldSprite);
