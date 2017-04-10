@@ -850,7 +850,7 @@ var levelManifest = [
             wave:{count:5, spaced:50},
             settings:{x:830, y:450, shooters:[{index:0, freq:50, bulletType:"bullet3"}]}, 
             movement:{type:"left",speed:2},
-            powerup:null,
+            powerup:{type:"powerupSuperSpread",index:4},
             time:20
         },
         {type:"bossMiniRhombus", 
@@ -978,7 +978,7 @@ var levelManifest = [
             wave:{count:20, spaced:25},
             settings:{x:830, y:400, shooters:[{index:0, freq:50, bulletType:"bullet1"},{index:5, freq:100, bulletType:"bullet1"}]}, 
             movement:{type:"looping", r:90, cx:400, cy:400, dir:"left", loops:8, speed:4},
-            powerup:null,
+            powerup:{type:"powerupShield",index:4},
             time:12
         },
         {type:"bossMiniTriangle", 
@@ -1046,7 +1046,7 @@ var levelManifest = [
             wave:{count:12, spaced:25},
             settings:{x:500, y:-30, shooters:[{index:0, freq:60, bulletType:"bullet1"},{index:5, freq:60, bulletType:"bullet1"}]}, 
             movement:{type:"looping", r:250, cx:500, cy:300, dir:"down", loops:8, speed:2, rotate:true},
-            powerup:null,
+            powerup:{type:"powerupLife",index:10},
             time:55
         },
         {type:"bossTriangle", 
@@ -1092,7 +1092,7 @@ var levelManifest = [
             wave:{count:10, spaced:20},
             settings:{x:400, y:-30}, 
             movement:{type:"downAndStop",speed:6, stopAt:400, rotate:true},
-            powerup:null,
+            powerup:{type:"powerupSuperSpread",index:4},
             time:10
         },
         {type:"nonagon", 
@@ -1505,6 +1505,7 @@ var levelManifest = [
             wave:{count:6, spaced:10},
             settings:{x:600, y:-50, points:200, shooters:[{index:0, freq:35, bulletType:"bullet1"}]},
             movement:{type:"switch", dir:"down", speed:6, switchAt:700, rotate:false},
+            powerup:{type:"powerupLife",index:4},
             time:30
         },
         {type:"ellipse", 
@@ -1524,6 +1525,7 @@ var levelManifest = [
             wave:{count:6, spaced:10},
             settings:{x:350, y:850, points:200, shooters:[{index:0, freq:35, bulletType:"bullet1"}]},
             movement:{type:"switch", dir:"up", speed:6, switchAt:100, rotate:true},
+            powerup:{type:"powerupShield",index:4},
             time:45
         },
         {type:"ellipse", 
@@ -2210,7 +2212,7 @@ var levelManifest = [
                 {index:10, freq:15, bulletType:"bullet1"}
             ]},   
             movement:{type:"zigzag", angle:45, speed:6, bounces:20, rotate:true},
-            powerup:null,
+            powerup:{type:"powerupLife",index:15},
             time:14
         },
         {type:"square",
@@ -2396,7 +2398,7 @@ var levelManifest = [
 
     ],
     [
-        // back and forth
+        // level 19
         {levelTitle:"Plaid!",
             type:"nonagon", 
             wave:{count:10, spaced:15},
@@ -2444,7 +2446,7 @@ var levelManifest = [
                     {index:8, freq:100, bulletType:"bullet1"}
                 ]}, 
             movement:{type:"zigzag", angle:0, bounces:20, speed:2},
-            powerup:null,
+            powerup:{type:"powerupLife",index:4},
             time:28
         },
         {type:"circle", 
@@ -2497,7 +2499,102 @@ var levelManifest = [
         }
     ],
     [
-        // finale has loads of big bosses
+        {levelTitle:"Boss!",
+            type:"rhombus", 
+            wave:{count:5, spaced:15},
+            settings:{x:-30, y:400, 
+                shooters:[
+                    {index:0, freq:40, bulletType:"bullet2"},
+                    {index:4, freq:45, bulletType:"bullet2"}
+                ]}, 
+            movement:{type:"zigzag", angle:36, bounces:20, speed:4},
+            powerup:{type:"powerupSpread",index:4},
+            time:2
+        },
+        {type:"bossRhombus", 
+            wave:{count:1, spaced:4},
+            settings:{x:700, y:1000, points:5000,
+                turrets:[   
+                    {type:"nonagon",x:0,y:0,freq:75,bulletType:"square"},
+                    {type:"nonagon",x:55,y:55,freq:60,bulletType:"bullet3"},
+                    {type:"nonagon",x:-55,y:55,freq:100,bulletType:"bullet3"},
+                    {type:"nonagon",x:55,y:-55,freq:60,bulletType:"bullet3"},
+                    {type:"nonagon",x:-55,y:-55,freq:100,bulletType:"bullet3"}
+                ]
+            },
+            movement:{type:"kamikaze", speed:1, rotate:true},
+            time:16
+        },
+        {type:"bossHexagon", 
+            wave:{count:1, spaced:4},
+            settings:{x:-200, y:400, points:5000,
+                turrets:[   
+                    {type:"rectangle",x:0,y:0,freq:60,bulletType:"nonagon"},
+                    {type:"rhombus",x:100,y:100,freq:40,bulletType:"bullet2"},
+                    {type:"rhombus",x:-100,y:100,freq:45,bulletType:"bullet2"},
+                    {type:"rhombus",x:100,y:-100,freq:35,bulletType:"bullet2"},
+                    {type:"rhombus",x:-100,y:-100,freq:25,bulletType:"bullet2"}
+                ]
+            },
+            movement:{type:"rightAndStop", speed:2, stopAt:400, rotate:true},
+            time:16
+        },
+        {type:"bossMiniTriangle", 
+            wave:{count:1, spaced:120},
+            settings:{x:200, y:850, points:200,
+                turrets:[   
+                    {type:"nonagon",x:25,y:-20,freq:120,bulletType:"triangle"},
+                    {type:"nonagon",x:-25,y:-20,freq:120,bulletType:"triangle"},
+                    {type:"nonagon",x:0,y:25,freq:60,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"zigzag", angle:280, speed:4, bounces:20, rotate:true},
+            time:40
+        },
+        {type:"bossMiniTriangle", 
+            wave:{count:1, spaced:2},
+            settings:{x:850, y:550, points:200,
+                turrets:[   
+                    {type:"triangle",x:-20,y:0,freq:40,bulletType:"bullet1"},
+                    {type:"triangle",x:20,y:0,freq:40,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"looping", r:200, cx:500, cy:550, dir:"left", loops:10, speed:2, stop:true, rotate:true},
+            time:40
+        },
+        {type:"bossMiniTriangle", 
+            wave:{count:1, spaced:2},
+            settings:{x:-50, y:250, points:200,
+                turrets:[   
+                    {type:"triangle",x:-20,y:0,freq:40,bulletType:"bullet1"},
+                    {type:"triangle",x:20,y:0,freq:40,bulletType:"bullet1"}
+                ]
+            },
+            movement:{type:"looping", r:200, cx:300, cy:250, dir:"right", loops:10, speed:2, stop:true, rotate:true},
+            time:40
+        },
+        {type:"circle", 
+            wave:{count:30, spaced:30},
+            settings:{x:-30, y:400, 
+                shooters:[{index:0, freq:40, bulletType:"bullet1"}]}, 
+            movement:{type:"zigzag", angle:36, bounces:20, speed:2},
+            powerup:{type:"powerupSuperSpread",index:4},
+            time:60
+        },        
+        {type:"bossSquare", 
+            wave:{count:5, spaced:30},
+            settings:{x:-200, y:-200, points:2000,
+                turrets:[   
+                    {type:"nonagon",x:0,y:0,freq:35,bulletType:"bullet2"},
+                    {type:"nonagon",x:85,y:85,freq:25,bulletType:"bullet2"},
+                    {type:"nonagon",x:-85,y:85,freq:35,bulletType:"bullet2"},
+                    {type:"nonagon",x:85,y:-85,freq:25,bulletType:"bullet2"},
+                    {type:"nonagon",x:-85,y:-85,freq:35,bulletType:"bullet2"}
+                ]
+            },
+            movement:{type:"diagonalAndStop", speed:4, angle:45, stopAt:400, rotate:true},
+            time:60
+        }
     ]
     
 ];
