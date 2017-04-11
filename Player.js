@@ -314,6 +314,7 @@ var Player = function(){
 
         this.setPower(power - powerLoss);
         createjs.Sound.play("playerHit");
+
         if (power <= 0) {
             this.killMe();
         } else {

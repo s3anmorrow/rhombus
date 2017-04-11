@@ -146,10 +146,9 @@ var HighScoreScreen = function() {
             var hash = CryptoJS.MD5(initials + score + "2f6d0f62dbedda976330f88add53a7e7").toString();
             // assemble the URL to send data
             var source = Globals.gameConstants.HIGHSCORE_SCRIPT1 + "?z=" + btoa(reverse(initials)) + "&a=" + btoa(reverse(String(score))) + "&s=" + hash;
-
-            console.log("initials: " + btoa(reverse(initials)));
-            console.log("score: " + btoa(reverse(String(score))));
-            console.log("HASH: " + hash);
+            //console.log("initials: " + btoa(reverse(initials)));
+            //console.log("score: " + btoa(reverse(String(score))));
+            //console.log("HASH: " + hash);
 
             // send score results to the server sided script
             Globals.sendMe(source, onAddResponse);

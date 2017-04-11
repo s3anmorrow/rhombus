@@ -19,6 +19,7 @@ var Shape = function(){
     var state = ShapeState.ATTACKING;
     var points = 0;    
     var hitPoints = 0;
+    var fullHitPoints = 0;
     var halfHitPoints = 0;
     var powerupType = "";
     // control frequency of firing if shape is a shooter
@@ -50,8 +51,9 @@ var Shape = function(){
         accuracy = gameConstants.SHAPES[type].accuracy;
         pointsEvent.points = points;
         state = ShapeState.ATTACKING;
-        hitPoints = gameConstants.SHAPES[type].hp;
-        halfHitPoints = hitPoints/2;
+        fullHitPoints = gameConstants.SHAPES[type].hp;
+        hitPoints = fullHitPoints;
+        halfHitPoints = fullHitPoints/2;
         powerupType = myPowerupType;
         createjs.Tween.removeTweens(sprite);
 
@@ -195,7 +197,7 @@ var Shape = function(){
         // Step I : collision detection
         // has the shape collided with the player?
         if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (!player.getShieldEnabled()) && (ndgmr.checkPixelCollision(sprite, player.sprite))) {
-            player.hitMe(hitPoints);
+            player.hitMe(fullHitPoints);
             // kill shape with no points and no powerups
             powerupType = "";
             this.killMe(hitPoints, false);

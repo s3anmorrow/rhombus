@@ -4,10 +4,7 @@
 (function() {
 	"use strict";
 	
-	// TODO: way for game to finish with rhombus big boss
-	// TODO: level design 20
 	// TODO: collision detection not always working (solid shapes?) (something to do with not working when shape firing)
-	// TODO: bug when no power left but still alive
 
 	// game variables
 	var stage = null;

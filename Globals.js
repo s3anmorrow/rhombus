@@ -21,7 +21,7 @@ var Globals = {
 		PLAYER_MAX_Y:750,
 		PLAYER_START_POWER:4,
 		PLAYER_MAX_POWER:4,
-		PLAYER_START_LIVES:200,
+		PLAYER_START_LIVES:3,
 		PERFECT_SCORE_POINTS:2000,
 		POWERUP_DURATION:8,
 		TURRET_BONUS_ACCURACY:20,
@@ -160,7 +160,8 @@ var Globals = {
 				auto:false,
 				speed:6,
 				damage:0.6,
-				ammo:200,
+				//ammo:200,
+				ammo:1000,
 				invincible:true,
 				frame:"bounceBullet"				
 			}

@@ -19,6 +19,7 @@ var WaveFactory = function(){
     var enemyReleased = 0;
     var enemyTotal = 0;
     var levelTitle = "";
+    var godlike = false;
     // current level metadata
     var activeLevel = null;
     // the current active waves on the stage
@@ -61,6 +62,7 @@ var WaveFactory = function(){
     // ------------------------------------------------------------- public methods
     this.startMe = function() {
         level = 0;
+        godlike = false;
         this.levelMe();
     };
 
@@ -72,10 +74,17 @@ var WaveFactory = function(){
         wave = 0;
 
         // LEVEL TESTING
-        level = 20;
-        //seconds = 19;
+        //level = 11;
+        //seconds = 29;
 
-        activeLevel = levelManifest[level - 1];        
+        var levelIndex = level - 1;
+        if (level > 20) {
+            // godlike mode!
+            levelIndex = Globals.randomMe(0,levelManifest.length - 1);
+            godlike = true;
+        }
+
+        activeLevel = levelManifest[levelIndex];        
         if (activeLevel[0].levelTitle === "undefined") levelTitle = "Untitled";
         else levelTitle = activeLevel[0].levelTitle;
         enemyReleased = 0;
@@ -118,6 +127,12 @@ var WaveFactory = function(){
                         // drop bigboss into the game
                         var boss = objectPool.getBigboss();
                         var turretData = activeWave.settings.turrets;
+
+                        if (godlike) {
+                            // make all shooters high frequency
+                            turretData.freq = 20;
+                        }
+
                         // start the boss shape and pass along required data
                         boss.startMe(activeWave.type, activeWave.settings.x, activeWave.settings.y, activeWave.settings.points, turretData, movementData);
                         enemyReleased++;
@@ -133,6 +148,14 @@ var WaveFactory = function(){
                             var powerupIndex = activeWave.powerup.index;
                             if (activeWave.wave.dropped === powerupIndex) powerupType = activeWave.powerup.type;
                         }
+
+                        if (godlike) {
+                            if (shootData !== null) {
+                                // make all shooters high frequency
+                                shootData.freq = 20;
+                            }
+                        }
+
                         // start the shape and pass along required data
                         shape.startMe(activeWave.type, 
                                       activeWave.settings.x, 

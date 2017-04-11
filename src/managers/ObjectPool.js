@@ -11,7 +11,7 @@ var ObjectPool = function() {
 	var SHAPE_MAX = 200;
 	var PLAYER_MAX = 1;
 	var BULLET_MAX = 500;
-	var BIGBOSS_MAX = 10;
+	var BIGBOSS_MAX = 30;
 	var TURRET_MAX = 50;
 	var POWERUP_MAX = 5;
 

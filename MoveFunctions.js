@@ -225,7 +225,7 @@ var MoveFunctions = {
                 if (sprite.y <= sprite.moveData.switchAt) sprite.moveData.stage = 1;
             } else {
                 sprite.y+=sprite.moveData.speed;
-                if (sprite.y <= -sprite.moveData.height) return false;
+                if (sprite.y >= (Globals.stage.canvas.height + sprite.moveData.height)) return false;
             }
             return true;
         }
