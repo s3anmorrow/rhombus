@@ -34,13 +34,12 @@ var Turret = function(){
 
     // make sprite public for easy access
     this.sprite = sprite;
+    this.radius = 0;
 
     // ----------------------------------------------- get/set methods
     this.getState = function() {
         return state;
     };
-
-    // ----------------------------------------------- event handlers
 
     // ----------------------------------------------- public methods
     this.startMe = function(myType, startX, startY, freq, myBulletType, myOwner) {
@@ -51,6 +50,7 @@ var Turret = function(){
         owner = myOwner;
         shootFreq = freq;
         hitPoints = gameConstants.SHAPES[type].hp;
+        this.radius = gameConstants.SHAPES[type].radius;
         spawnCount = 0;
         // turrets get a bonus accuracy
         accuracy = gameConstants.SHAPES[type].accuracy + gameConstants.TURRET_BONUS_ACCURACY;
@@ -158,16 +158,19 @@ var Turret = function(){
             var bullet = objectPool.getBullet();
             var bulletSpeed = 6;
             var bulletDamage = 1;
+            var bulletRadius = 5;
             if (bulletType === "bullet2") {
                 bulletSpeed = 8;
                 bulletDamage = 2;
+                bulletRadius = 10;
             } else if (bulletType === "bullet3") {
                 bulletSpeed = 10;
                 bulletDamage = 3;
+                bulletRadius = 15;
             }
 
             // myType, myOwner, spriteFrame, mySpeed, myDamage, myInvincible, x, y, r
-            bullet.startMe(bulletType, owner, bulletType, bulletSpeed, bulletDamage, false, turretPoint.x, turretPoint.y, targetAngle);
+            bullet.startMe(bulletType, owner, bulletType, bulletSpeed, bulletDamage, false, turretPoint.x, turretPoint.y, targetAngle, bulletRadius);
             createjs.Sound.play("enemyShoot");
         }
     };

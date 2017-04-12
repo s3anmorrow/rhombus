@@ -26,16 +26,16 @@ var Globals = {
 		POWERUP_DURATION:8,
 		TURRET_BONUS_ACCURACY:20,
 		SHAPES:{
-			"circle": {hp:1,points:50,accuracy:30},
-			"square": {hp:1,points:50,accuracy:80},
-			"triangle": {hp:2,points:100,accuracy:40},
-			"ellipse": {hp:2,points:100,accuracy:60},
-			"star": {hp:3,points:200,accuracy:50},
-			"nonagon": {hp:3,points:300,accuracy:70},
-			"rectangle": {hp:4,points:400,accuracy:80},
-			"hexagon": {hp:4,points:400,accuracy:70},
-			"rhombus": {hp:5,points:500,accuracy:100},
-			"pentagon": {hp:5,points:500,accuracy:100}
+			"circle": {hp:1,points:50,radius:18,accuracy:30},
+			"square": {hp:1,points:50,radius:16,accuracy:80},
+			"triangle": {hp:2,points:100,radius:16,accuracy:40},
+			"ellipse": {hp:2,points:100,radius:22,accuracy:60},
+			"star": {hp:3,points:200,radius:17,accuracy:50},
+			"nonagon": {hp:3,points:300,radius:19,accuracy:70},
+			"rectangle": {hp:4,points:400,radius:25,accuracy:80},
+			"hexagon": {hp:4,points:400,radius:22,accuracy:70},
+			"rhombus": {hp:5,points:500,radius:15,accuracy:100},
+			"pentagon": {hp:5,points:500,radius:18,accuracy:100}
 		},
 		POWERUPS:{
 			"powerupDouble": {category:"weapon",data:"double"},
@@ -63,6 +63,7 @@ var Globals = {
 				damage:1,
 				invincible:false,
 				ammo:-1,
+				radius:6,
 				frame:"bullet"
 			},
 			"double":{
@@ -74,6 +75,7 @@ var Globals = {
 				damage:1,
 				ammo:200,
 				invincible:false,
+				radius:6,
 				frame:"bullet"				
 			},
 			"superDouble":{
@@ -85,6 +87,7 @@ var Globals = {
 				damage:1,
 				ammo:200,
 				invincible:false,
+				radius:6,
 				frame:"bullet"				
 			},
 			"spread":{
@@ -96,6 +99,7 @@ var Globals = {
 				damage:0.5,
 				ammo:300,
 				invincible:false,
+				radius:4,
 				frame:"spreadBullet"				
 			},
 			"superSpread":{
@@ -107,6 +111,7 @@ var Globals = {
 				damage:1,
 				ammo:500,
 				invincible:false,
+				radius:4,
 				frame:"spreadBullet"				
 			},
 			"heavy":{
@@ -118,6 +123,7 @@ var Globals = {
 				damage:5,
 				ammo:25,
 				invincible:true,
+				radius:10,
 				frame:"bullet2"
 			},
 			"rapid":{
@@ -129,6 +135,7 @@ var Globals = {
 				damage:0.4,
 				ammo:600,
 				invincible:false,
+				radius:2,
 				frame:"rapidBullet"				
 			},
 			"laser":{
@@ -140,6 +147,7 @@ var Globals = {
 				damage:0.2,
 				ammo:100,
 				invincible:true,
+				radius:-1,
 				frame:"laserBullet"				
 			},
 			"bounce":{
@@ -151,6 +159,7 @@ var Globals = {
 				damage:0.3,
 				ammo:150,
 				invincible:true,
+				radius:4,
 				frame:"bounceBullet"				
 			},
 			"superBounce":{
@@ -162,6 +171,7 @@ var Globals = {
 				damage:0.6,
 				ammo:100,
 				invincible:true,
+				radius:4,
 				frame:"bounceBullet"				
 			}
 		}
@@ -186,6 +196,32 @@ var Globals = {
 		var iRandomNum = 0;
 		iRandomNum = Math.round(Math.random() * (upper - lower)) + lower;
 		return iRandomNum;
+	},
+
+	checkRadiusCollision:function(sprite1, sprite2, threshold, xAdjust, yAdjust) {
+		var a,b;
+		if (xAdjust !== undefined) {
+			// THIS ONE WORKS!!!
+			// convert turret position to global coord space
+			// adjust x and y as turret is position with boss center reg point while stage is top left
+			var point = sprite2.localToGlobal(sprite2.x + xAdjust, sprite2.y + yAdjust);
+			// Calculate difference between centers
+			a = sprite1.x - point.x;
+			b = sprite1.y - point.y;
+
+			//console.log("turret at: " + point2.x + "," + point2.y + " VS bullet at: " + sprite1.x + "," + sprite1.y);
+			//console.log("before at: " + sprite2.x + "," + sprite2.y);			
+
+		} else {
+			a = sprite1.x - sprite2.x;
+			b = sprite1.y - sprite2.y;
+		}
+
+        // Get distance with Pythagoras
+        var c = Math.sqrt((a * a) + (b * b));
+		// threshold is sum of two radius of sprites
+        if (c <= threshold) return true;
+        else return false;
 	},
 
 	sendMe:function(source, responseFn) {

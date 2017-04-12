@@ -9,6 +9,7 @@ var Bullet = function() {
     var stage = Globals.stage;
     var assetManager = Globals.assetManager;
 	var objectPool = Globals.objectPool;
+	var checkRadiusCollision = Globals.checkRadiusCollision;
 
 	// private property variables
 	var owner = null;
@@ -21,6 +22,7 @@ var Bullet = function() {
 	var invincible = false;
 	var speed = 0;
 	var bounces = 0;
+	var radius = 0;
 	var canvas = Globals.stage.canvas;
 	var stageLeft = -10;
 	var stageRight = canvas.width + 10;
@@ -47,13 +49,14 @@ var Bullet = function() {
 	
 
 	// ------------------------------------------------------ public methods
-	this.startMe = function(myType, myOwner, spriteFrame, mySpeed, myDamage, myInvincible, x, y, r) {
+	this.startMe = function(myType, myOwner, spriteFrame, mySpeed, myDamage, myInvincible, x, y, r, myRadius) {
 		// initialization
 		type = myType;
 		owner = myOwner;
 		invincible = myInvincible;
 		speed = mySpeed;
 		bounces = 0;
+		radius = myRadius;
 
 		state = BulletState.MOVING;
 		//distance = 0;
@@ -73,12 +76,6 @@ var Bullet = function() {
 		sprite.x = x;
 		sprite.y = y;
 		sprite.rotation = r;
-
-		/*
-		// play bullet sound effect
-		if ((ownerType === "RedPlane") || (ownerType === "RedTank") || (ownerType === "RedJeep") || (ownerType === "RedBunker")) createjs.Sound.play("RedFire");
-		else createjs.Sound.play("BlueFire");
-		*/
 
 		// place bullet below the owner on displaylist
 		var index = stage.getChildIndex(owner.sprite);
@@ -157,10 +154,21 @@ var Bullet = function() {
 				var length = shapePool.length;
 				for (var n=0; n<length; n++) {	
 					var shape = shapePool[n];
-					if ((shape.used) && (shape.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, shape.sprite))) {
-						destroyed = shape.killMe(damage,true);
-						// only play bullet explosion if target NOT destroyed
-						if (!invincible) this.killMe(!destroyed);
+
+					if (type === "laser") {
+						// using rectangle collision for laser
+						if ((shape.used) && (shape.getState() !== ShapeState.KILLED) && (ndgmr.checkRectCollision(sprite, shape.sprite))) {
+							destroyed = shape.killMe(damage,true);
+							// only play bullet explosion if target NOT destroyed
+							if (!invincible) this.killMe(!destroyed);
+						}
+					} else {
+						// using radius testing for collision for everything else
+						if ((shape.used) && (shape.getState() !== ShapeState.KILLED) && (checkRadiusCollision(sprite, shape.sprite,(radius + shape.radius)))) {
+							destroyed = shape.killMe(damage,true);
+							// only play bullet explosion if target NOT destroyed
+							if (!invincible) this.killMe(!destroyed);
+						}
 					}
 				}
 
@@ -168,19 +176,33 @@ var Bullet = function() {
 				length = turretPool.length;
 				for (n=0; n<length; n++) {	
 					var turret = turretPool[n];
-					if ((turret.used) && (turret.getState() !== ShapeState.KILLED) && (ndgmr.checkPixelCollision(sprite, turret.sprite))) {
-						destroyed = turret.killMe(damage);
-						if (!invincible) this.killMe(!destroyed);
+
+					if (type === "laser") {
+						if ((turret.used) && (turret.getState() !== ShapeState.KILLED) && (ndgmr.checkRectCollision(sprite, turret.sprite))) {
+							destroyed = turret.killMe(damage);
+							if (!invincible) this.killMe(!destroyed);
+						}
+					} else {
+						if ((turret.used) && (turret.getState() !== ShapeState.KILLED) && (checkRadiusCollision(sprite, turret.sprite, (radius + turret.radius), (turret.sprite.x * -1), (turret.sprite.y * -1)))) {
+							destroyed = turret.killMe(damage);
+							if (!invincible) this.killMe(!destroyed);
+						}
 					}
 				}
 
 			// Shape or Turret's bullet
 			} else if ((owner.constructor.name === "Shape") || (owner.constructor.name === "Bigboss"))  {
-				
-				if ((player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(sprite, player.sprite))) {
+				/*
+				if ((player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkRectCollision(sprite, player.sprite))) {
 					player.hitMe(damage);
 					this.killMe(true);
 				}
+				*/
+				// player is radius 45/2 = 22
+				if ((player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (checkRadiusCollision(sprite, player.sprite,(radius + 22)))) {
+					player.hitMe(damage);
+					this.killMe(true);
+				}				
 			}
 		}
 	};

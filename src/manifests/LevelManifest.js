@@ -60,6 +60,16 @@ var levelManifest = [
             movement:{type:"rightAndStop", speed:2, stopAt:500, rotate:true},
             time:30
         },
+        {type:"bossMiniHexagon", 
+            wave:{count:1, spaced:4},
+            settings:{x:850, y:400, points:200,
+                turrets:[   
+                    {type:"triangle",x:0,y:0,freq:25,bulletType:"bullet1"},
+                ]
+            },
+            movement:{type:"leftAndStop", speed:2, stopAt:300, rotate:true},
+            time:30
+        },
         {type:"square", 
             wave:{count:8, spaced:20},
             settings:{x:830, y:450, shooters:[{index:0, freq:48},{index:1, freq:48}]}, 
@@ -120,14 +130,14 @@ var levelManifest = [
             time:2
         },
         {type:"circle", 
-            wave:{count:6, spaced:25},
+            wave:{count:12, spaced:25},
             settings:{x:250, y:-50, shooters:[{index:1, freq:50, bulletType:"bullet1"}]}, 
             movement:{type:"down",speed:4},
             powerup:null,
             time:12
         },
         {type:"circle", 
-            wave:{count:6, spaced:25},
+            wave:{count:12, spaced:25},
             settings:{x:550, y:-50, shooters:[{index:1, freq:50, bulletType:"bullet1"}]}, 
             movement:{type:"down",speed:4},
             powerup:null,

@@ -4,6 +4,7 @@ var Powerup = function(){
     var assetManager = Globals.assetManager;
     var objectPool = Globals.objectPool;
     var gameConstants = Globals.gameConstants;
+    var checkRadiusCollision = Globals.checkRadiusCollision;
 
     // private game variables
     var _this = this;
@@ -92,7 +93,8 @@ var Powerup = function(){
         }
 
         // has the player collided with the powerup?
-        if (ndgmr.checkPixelCollision(sprite, player.sprite)) {
+        // radius of player = 22 / radius of powerup = 17
+        if (checkRadiusCollision(sprite, player.sprite, 39)) {
             var powerupData = gameConstants.POWERUPS[type];
             if (powerupData.category === "weapon") {
                 // change weapontype of player

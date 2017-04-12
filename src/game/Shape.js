@@ -34,13 +34,14 @@ var Shape = function(){
     var sprite = assetManager.getSprite("assets");
     // make sprite public for easy access
     this.sprite = sprite;
+    this.radius = 0;
     // the moveFunction that will be called in updateMe()
     var moveFunction = null;
 
     // ----------------------------------------------- private methods
     this.getState = function() {
         return state;
-    };
+    };    
 
     // ----------------------------------------------- public methods
     this.startMe = function(myType, startX, startY, myPowerupType, myShootData, myMovement) {
@@ -49,6 +50,7 @@ var Shape = function(){
         type = myType;
         points = gameConstants.SHAPES[type].points;
         accuracy = gameConstants.SHAPES[type].accuracy;
+        this.radius = gameConstants.SHAPES[type].radius;
         pointsEvent.points = points;
         state = ShapeState.ATTACKING;
         fullHitPoints = gameConstants.SHAPES[type].hp;
@@ -178,16 +180,19 @@ var Shape = function(){
         var bullet = objectPool.getBullet();
         var bulletSpeed = 6;
         var bulletDamage = 1;
+        var bulletRadius = 5;
         if (bulletType === "bullet2") {
             bulletSpeed = 8;
             bulletDamage = 2;
+            bulletRadius = 10;
         } else if (bulletType === "bullet3") {
             bulletSpeed = 10;
             bulletDamage = 3;
+            bulletRadius = 15;
         }
 
         // myType, myOwner, spriteFrame, mySpeed, myDamage, myInvincible, x, y, r
-        bullet.startMe(bulletType, this, bulletType, bulletSpeed, bulletDamage, false, sprite.x, sprite.y, targetAngle);
+        bullet.startMe(bulletType, this, bulletType, bulletSpeed, bulletDamage, false, sprite.x, sprite.y, targetAngle, bulletRadius);
         createjs.Sound.play("enemyShoot");
     };
 

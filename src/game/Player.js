@@ -270,7 +270,8 @@ var Player = function(){
                                 weaponData.invincible,
                                 sprite.x + gunPoints[n].x, 
                                 sprite.y + gunPoints[n].y, 
-                                gunPoints[n].r);
+                                gunPoints[n].r,
+                                weaponData.radius);
                     
                     // play sound effect
                     createjs.Sound.play(weaponType);
