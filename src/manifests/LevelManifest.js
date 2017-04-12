@@ -2518,11 +2518,11 @@ var levelManifest = [
             wave:{count:1, spaced:4},
             settings:{x:700, y:1000, points:5000,
                 turrets:[   
-                    {type:"nonagon",x:0,y:0,freq:75,bulletType:"square"},
-                    {type:"nonagon",x:55,y:55,freq:60,bulletType:"bullet3"},
-                    {type:"nonagon",x:-55,y:55,freq:100,bulletType:"bullet3"},
-                    {type:"nonagon",x:55,y:-55,freq:60,bulletType:"bullet3"},
-                    {type:"nonagon",x:-55,y:-55,freq:100,bulletType:"bullet3"}
+                    {type:"star",x:0,y:0,freq:75,bulletType:"square"},
+                    {type:"star",x:55,y:55,freq:60,bulletType:"bullet2"},
+                    {type:"star",x:-55,y:55,freq:100,bulletType:"bullet3"},
+                    {type:"star",x:55,y:-55,freq:60,bulletType:"bullet3"},
+                    {type:"star",x:-55,y:-55,freq:100,bulletType:"bullet2"}
                 ]
             },
             movement:{type:"kamikaze", speed:1, rotate:true},
@@ -2532,7 +2532,7 @@ var levelManifest = [
             wave:{count:1, spaced:4},
             settings:{x:-200, y:400, points:5000,
                 turrets:[   
-                    {type:"rectangle",x:0,y:0,freq:60,bulletType:"nonagon"},
+                    {type:"rectangle",x:0,y:0,freq:60,bulletType:"star"},
                     {type:"rhombus",x:100,y:100,freq:40,bulletType:"bullet2"},
                     {type:"rhombus",x:-100,y:100,freq:45,bulletType:"bullet2"},
                     {type:"rhombus",x:100,y:-100,freq:35,bulletType:"bullet2"},
@@ -2551,7 +2551,7 @@ var levelManifest = [
                     {type:"nonagon",x:0,y:25,freq:60,bulletType:"bullet1"}
                 ]
             },
-            movement:{type:"zigzag", angle:280, speed:4, bounces:20, rotate:true},
+            movement:{type:"zigzag", angle:280, speed:2, bounces:20, rotate:true},
             time:40
         },
         {type:"bossMiniTriangle", 
@@ -2582,7 +2582,7 @@ var levelManifest = [
                 shooters:[{index:0, freq:40, bulletType:"bullet1"}]}, 
             movement:{type:"zigzag", angle:36, bounces:20, speed:2},
             powerup:{type:"powerupSuperSpread",index:4},
-            time:60
+            time:70
         },        
         {type:"bossSquare", 
             wave:{count:5, spaced:30},
@@ -2596,7 +2596,7 @@ var levelManifest = [
                 ]
             },
             movement:{type:"diagonalAndStop", speed:4, angle:45, stopAt:400, rotate:true},
-            time:60
+            time:70
         }
     ]
     

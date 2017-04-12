@@ -236,6 +236,9 @@
 				break;	
 			case "newHighScore":
 				screenManager.game.setHighScore(e.score);
+				break;
+			case "godLikeMode":
+				player.enableGodLike();
 				break;		
 		}
 	}

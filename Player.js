@@ -50,6 +50,8 @@ var Player = function(){
     var shieldKillTime = 0;
     // flip behaviour
     var baseRotation = 0;
+    // is player godlike? > level 20
+    var godLike = false;
 
     // get sprite for Player
     var sprite = assetManager.getSprite("assets","playerEntrance");
@@ -115,6 +117,7 @@ var Player = function(){
     // --------------------------------------------------------- public methods
     this.startMe = function(){
         // new game for player initialization
+        godLike = false;
         lives =  Globals.gameConstants.PLAYER_START_LIVES;
         this.setWeapon("single");         
         this.spawnMe();
@@ -282,7 +285,8 @@ var Player = function(){
                         stage.dispatchEvent(ammoChangeEvent);
                         // out of ammo?
                         if (ammo <= 0) {
-                            this.setWeapon("single");
+                            if (godLike) this.setWeapon("double");
+                            else this.setWeapon("single");
                             break;
                         }
                     }
@@ -365,6 +369,12 @@ var Player = function(){
                 _this.spawnMe();
             }
         });
+    };
+
+    this.enableGodLike = function() {
+        godLike = true;
+        // upgrade to superDouble as default weapon
+        if (weaponType === "single") this.setWeapon("double");
     };
 
     this.updateMe = function() {

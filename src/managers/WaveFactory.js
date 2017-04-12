@@ -5,6 +5,8 @@ var WaveFactory = function(){
     levelEvent.id = "levelChange";
     levelEvent.level = 0;
     levelEvent.levelTitle = "";
+    var godlikeEvent = new createjs.Event("gameEvent", true);
+    godlikeEvent.id = "godLikeMode";
 
     // set references to globals
     var stage = Globals.stage;
@@ -31,7 +33,7 @@ var WaveFactory = function(){
 
     // ----------------------------------------------------------- get/set methods
     this.getLevel = function() {
-        return (level + 1);
+        return level;
     };
 
     // ------------------------------------------------------------- private methods
@@ -83,6 +85,11 @@ var WaveFactory = function(){
             levelIndex = Globals.randomMe(0,levelManifest.length - 1);
             godlike = true;
         }
+        if (level === 21) {
+            // announce we are in godlike mode for player to adjust
+            godlikeEvent.target = null;
+            stage.dispatchEvent(godlikeEvent);
+        }        
 
         activeLevel = levelManifest[levelIndex];        
         if (activeLevel[0].levelTitle === "undefined") levelTitle = "Untitled";
