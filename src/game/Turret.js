@@ -77,10 +77,6 @@ var Turret = function(){
 		objectPool.dispose(this);
     };
 
-    this.resetMe = function() {
-
-    };
-
     this.killMe = function(damage) {
         // remove hitpoints according to bullet damage
         hitPoints-=damage;

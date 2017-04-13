@@ -79,21 +79,21 @@ var levelManifest = [
         },
         {type:"circle", 
             wave:{count:6, spaced:25},
-            settings:{x:150, y:-30, shooters:[{index:2, freq:60, bulletType:"bullet1"}]}, 
+            settings:{x:150, y:-30, shooters:[{index:2, freq:40, bulletType:"bullet1"}]}, 
             movement:{type:"down",speed:4},
             powerup:null,
             time:40
         },
         {type:"circle", 
             wave:{count:5, spaced:20},
-            settings:{x:400, y:-50, shooters:[{index:0, freq:100, bulletType:"bullet1"}]}, 
+            settings:{x:400, y:-50, shooters:[{index:0, freq:60, bulletType:"bullet1"}]}, 
             movement:{type:"downAndStop",speed:4,stopAt:300},
             powerup:null,
             time:43
         },
         {type:"ellipse", 
-            wave:{count:1, spaced:30},
-            settings:{x:650, y:830, shooters:[{index:0, freq:20, bulletType:"bullet1"}]}, 
+            wave:{count:4, spaced:80},
+            settings:{x:650, y:830, shooters:[{index:0, freq:20, bulletType:"bullet1"},{index:3, freq:20, bulletType:"bullet1"}]}, 
             movement:{type:"upAndStop",speed:4,stopAt:200},
             powerup:null,
             time:46
@@ -158,15 +158,15 @@ var levelManifest = [
             time:20
         },
         {type:"ellipse", 
-            wave:{count:1, spaced:30},
-            settings:{x:-30, y:300, shooters:[{index:0, freq:75}]}, 
+            wave:{count:3, spaced:30},
+            settings:{x:-30, y:300, shooters:[{index:0, freq:75},{index:1, freq:75},{index:2, freq:75}]}, 
             movement:{type:"rightAndStop",speed:4,stopAt:200,rotate:true},
             powerup:null,
             time:24
         },
         {type:"ellipse", 
-            wave:{count:1, spaced:30},
-            settings:{x:830, y:300, shooters:[{index:0, freq:75}]}, 
+            wave:{count:3, spaced:30},
+            settings:{x:830, y:300, shooters:[{index:0, freq:75},{index:1, freq:75},{index:2, freq:75}]}, 
             movement:{type:"leftAndStop",speed:4,stopAt:600,rotate:true},
             powerup:null,
             time:24
@@ -287,6 +287,13 @@ var levelManifest = [
                 ]},
             movement:{type:"switch", dir:"up", speed:6, switchAt:200, rotate:false},
             time:24
+        },
+        {type:"triangle", 
+            wave:{count:10, spaced:25},
+            settings:{x:400, y:830, shooters:[{index:0, freq:20, bulletType:"bullet1"},{index:5, freq:20, bulletType:"bullet1"}]}, 
+            movement:{type:"looping", r:50, cx:400, cy:500, dir:"up", loops:4, speed:4},
+            powerup:null,
+            time:28
         },
         {type:"square", 
             wave:{count:10, spaced:20},
@@ -501,7 +508,6 @@ var levelManifest = [
         }
     ],
     [
-        // LEVEL 3
         {levelTitle:"Walls!",
             type:"circle", 
             wave:{count:20, spaced:30},

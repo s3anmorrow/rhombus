@@ -113,13 +113,6 @@ var WaveFactory = function(){
         console.log("level up: " + level);
     };
 
-    this.resetMe = function() {
-        // various resets
-        level = 0;
-
-    };
-
-
     this.updateMe = function() {
         // loop through all active waves
         for (var n=0; n<activeWaves.length; n++) {

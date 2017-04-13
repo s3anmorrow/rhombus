@@ -75,6 +75,7 @@ var Player = function(){
         weaponType = type;
         weaponData = gameConstants.PLAYER_WEAPONS[type];
         ammo = weaponData.ammo;
+        firingGunIndex = 0;
         // dispatch event so game screen can display new weapontype/ammo
         ammoChangeEvent.target = null;
         ammoChangeEvent.ammo = ammo;
@@ -119,7 +120,7 @@ var Player = function(){
         // new game for player initialization
         godLike = false;
         lives =  Globals.gameConstants.PLAYER_START_LIVES;
-        this.setWeapon("single");         
+        this.setWeapon("bounce");         
         this.spawnMe();
     };
 
@@ -259,7 +260,6 @@ var Player = function(){
             var gunPoints = weaponData.gunPoints[direction];
             // loop through all gunPoints and add bullet
             for (var n=0; n<gunPoints.length; n++) {
-
                 if (((weaponData.alternateFire) && (firingGunIndex === n)) || (!weaponData.alternateFire)) {
                     // pluck bullet out of object pool and release
                     var bullet = objectPool.getBullet();

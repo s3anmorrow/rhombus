@@ -114,14 +114,6 @@ var Bigboss = function(){
 		objectPool.dispose(this);
     };
 
-    this.resetMe = function() {
-        moveFunction = null;
-
-        
-
-
-    };
-
     this.turretKilled = function(){
         turretsActive--;
         if (turretsActive <= 0) {

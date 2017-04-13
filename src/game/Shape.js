@@ -101,14 +101,6 @@ var Shape = function(){
 		objectPool.dispose(this);
     };
 
-    this.resetMe = function() {
-        //moveFunction = null;
-
-        
-
-
-    };
-
     this.killMe = function(damage, pointsAwarded) {
         // remove hitpoints according to bullet damage
         hitPoints-=damage;

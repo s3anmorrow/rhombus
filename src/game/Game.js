@@ -3,9 +3,6 @@
 // Jan 2017
 (function() {
 	"use strict";
-	
-	// TODO: collision detection not always working (solid shapes?) (something to do with not working when shape firing)
-	// TODO: elllipse needs to be made more round to fit circle for radius testing - same for rectangle
 
 	// game variables
 	var stage = null;

@@ -60,10 +60,6 @@ var Powerup = function(){
 		objectPool.dispose(this);
     };
 
-    this.resetMe = function() {
-
-    };
-
     this.killMe = function() {
         state = ShapeState.KILLED;
         createjs.Tween.removeTweens(sprite);
