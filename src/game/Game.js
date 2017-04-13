@@ -4,6 +4,8 @@
 (function() {
 	"use strict";
 
+	// TODO: not allow blank scoreboard
+
 	// game variables
 	var stage = null;
 	var canvas = null;
@@ -149,9 +151,7 @@
 		screenManager.setScreen("introScreen");
 		Globals.gameState = GameStates.INTRO;
 		console.log(">> intro gameScreen ready");
-
-		//createjs.Sound.play("music","none",0,0,-1);
-
+		
 		// ???????????????? temporary start
 		//startGame();
 		/*

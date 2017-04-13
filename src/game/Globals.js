@@ -59,7 +59,7 @@ var Globals = {
 				gunPoints:[[{x:0,y:-20,r:270}],[{x:0,y:20,r:90}]],
 				alternateFire:false,
 				auto:false,
-				speed:12,
+				speed:10,
 				damage:1,
 				invincible:false,
 				ammo:-1,
@@ -209,8 +209,7 @@ var Globals = {
 			a = sprite1.x - point.x;
 			b = sprite1.y - point.y;
 
-			//console.log("turret at: " + point2.x + "," + point2.y + " VS bullet at: " + sprite1.x + "," + sprite1.y);
-			//console.log("before at: " + sprite2.x + "," + sprite2.y);			
+			//console.log("turret at: " + point.x + "," + point.y + " VS bullet at: " + sprite2.x + "," + sprite2.y);
 
 		} else {
 			a = sprite1.x - sprite2.x;

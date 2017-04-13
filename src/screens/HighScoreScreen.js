@@ -59,6 +59,8 @@ var HighScoreScreen = function() {
     // ------------------------------------------------- public methods
     this.showMe = function(myScore) {
         score = myScore;
+        // testing
+        //score = 100000;
 
         rowIndex = 0;
         charIndex = 0;
@@ -138,6 +140,12 @@ var HighScoreScreen = function() {
         var char = charList[rowIndex][charIndex];
         var initials = txtInitials.text;
 
+        // must have entered something
+        if ((char == "1") && (initials.length < 3)) {
+            createjs.Sound.play("interface2");
+            return;
+        }
+
         if (char === "1") {
             // display recording screen
             stage.addChild(recordingScreen);
@@ -151,7 +159,7 @@ var HighScoreScreen = function() {
             //console.log("HASH: " + hash);
 
             // send score results to the server sided script
-            Globals.sendMe(source, onAddResponse);
+            //Globals.sendMe(source, onAddResponse);
 
             createjs.Sound.play("powerupPickup");
         } else if ((char === "-1") && (initials.length > 0)) {

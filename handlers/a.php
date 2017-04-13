@@ -6,6 +6,12 @@
     $username = "root";
     $password = "root";
     $database = "smorrow";
+    /*
+    $username = "sean_classsample";
+    $password = "Forrester308";
+    $database = "sean_classsample";
+    */
+
     $port = 8888;
 
     $link = mysqli_init();

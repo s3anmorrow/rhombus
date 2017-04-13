@@ -120,7 +120,7 @@ var Player = function(){
         // new game for player initialization
         godLike = false;
         lives =  Globals.gameConstants.PLAYER_START_LIVES;
-        this.setWeapon("bounce");         
+        this.setWeapon("single");         
         this.spawnMe();
     };
 

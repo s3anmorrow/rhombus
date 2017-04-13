@@ -114,7 +114,6 @@ var Bullet = function() {
 
 	this.updateMe = function(){
 		if (state === BulletState.MOVING) {
-
 			// STEP I : Bullet Movement
 			// different bullet type behaviours
 			if (type === "laser") {
@@ -148,11 +147,11 @@ var Bullet = function() {
 
 			// STEP III : collision detection
 			// Player's bullet
-			if (owner.constructor.name === "Player") {
+			if (owner.name === "Player") {
 				// has the bullet collided with a shape?
 				var destroyed = false;
-				var length = shapePool.length;
-				for (var n=0; n<length; n++) {	
+				var poolLength = shapePool.length;
+				for (var n=0; n<poolLength; n++) {	
 					var shape = shapePool[n];
 
 					if (type === "laser") {
@@ -173,8 +172,9 @@ var Bullet = function() {
 				}
 
 				// has the bullet collided with a bigboss turret?
-				length = turretPool.length;
-				for (n=0; n<length; n++) {	
+				poolLength = turretPool.length;
+
+				for (n=0; n<poolLength; n++) {	
 					var turret = turretPool[n];
 
 					if (type === "laser") {
@@ -191,7 +191,7 @@ var Bullet = function() {
 				}
 
 			// Shape or Turret's bullet
-			} else if ((owner.constructor.name === "Shape") || (owner.constructor.name === "Bigboss"))  {
+			} else if ((owner.name === "Shape") || (owner.name === "Bigboss"))  {
 				/*
 				if ((player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkRectCollision(sprite, player.sprite))) {
 					player.hitMe(damage);

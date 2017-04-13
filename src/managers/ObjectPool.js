@@ -49,10 +49,11 @@ var ObjectPool = function() {
 		return null;
 	}
 
-	function constructObjects(pool,max,Class) {
+	function constructObjects(pool,max,Class,name) {
 		// adding new object to a pool
 		for (var i = 0; i < max; i++) {
 			pool[i] = new Class();
+			pool[i].name = name;
 			pool[i].poolIndex = i;
 			pool[i].usedIndex = index;
 			updateList[index] = null;
@@ -82,12 +83,12 @@ var ObjectPool = function() {
 	this.init = function() {
 		// pool object construction
 		// populate arrays to create pool of game objects
-		constructObjects(playerPool, PLAYER_MAX, Player);
-		constructObjects(shapePool, SHAPE_MAX, Shape);
-		constructObjects(bulletPool, BULLET_MAX, Bullet);
-		constructObjects(bigbossPool, BIGBOSS_MAX, Bigboss);
-		constructObjects(turretPool, TURRET_MAX, Turret);
-		constructObjects(powerupPool, POWERUP_MAX, Powerup);
+		constructObjects(playerPool, PLAYER_MAX, Player, "Player");
+		constructObjects(shapePool, SHAPE_MAX, Shape, "Shape");
+		constructObjects(bulletPool, BULLET_MAX, Bullet, "Bullet");
+		constructObjects(bigbossPool, BIGBOSS_MAX, Bigboss, "Bigboss");
+		constructObjects(turretPool, TURRET_MAX, Turret, "Turret");
+		constructObjects(powerupPool, POWERUP_MAX, Powerup, "Powerup");
 
 		console.log(">> object pools filled");
 	};
@@ -118,22 +119,22 @@ var ObjectPool = function() {
 
     this.dispose = function(o) {
 		// which type of game object are we disposing?
-		if (o.constructor.name === "Shape") {
+		if (o.name === "Shape") {
 			shapePool[o.poolIndex].used = false;			
-		} else if (o.constructor.name === "Player") {
+		} else if (o.name === "Player") {
 			playerPool[o.poolIndex].used = false;
-		} else if (o.constructor.name === "Bullet") {
+		} else if (o.name === "Bullet") {
 			bulletPool[o.poolIndex].used = false;	
-		} else if (o.constructor.name === "Bigboss") {
+		} else if (o.name === "Bigboss") {
 			bigbossPool[o.poolIndex].used = false;	
-		} else if (o.constructor.name === "Turret") {
+		} else if (o.name === "Turret") {
 			turretPool[o.poolIndex].used = false;	
-		} else if (o.constructor.name === "Powerup") {
+		} else if (o.name === "Powerup") {
 			powerupPool[o.poolIndex].used = false;	
 		}
 		updateList[o.usedIndex] = null;
 
-		//console.log("dispose " + o.constructor.name + " @ pool index " + o.poolIndex);
+		//console.log("dispose " + o.name + " @ pool index " + o.poolIndex);
 	};
 
 };
