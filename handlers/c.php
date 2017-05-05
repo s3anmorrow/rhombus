@@ -1,16 +1,6 @@
 <?php
     // check for high score placement
-    
-    // Configuration
-    $hostname = "localhost";
-    $username = "root";
-    $password = "root";
-    $database = "smorrow";
-    /*
-    $username = "sean_classsample";
-    $password = "Forrester308";
-    $database = "sean_classsample";
-    */
+    include "i.php";
 
     $score = strrev(base64_decode($_GET["v"]));
     //echo "test: " . $score;

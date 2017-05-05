@@ -4,8 +4,6 @@
 (function() {
 	"use strict";
 
-	// TODO: not allow blank scoreboard
-
 	// game variables
 	var stage = null;
 	var canvas = null;
