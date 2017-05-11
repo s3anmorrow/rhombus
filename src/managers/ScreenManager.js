@@ -154,6 +154,11 @@ var ScreenManager = function() {
             dropShape();
             frameCounter = 0;
         }
+
+        if (introScreen != null) {
+            // change instruction prompt on intro screen if gamepad connects at any time
+            if (Globals.gamepadManager.connected) introScreen.setToGamepad();
+        }
     };
 
 };

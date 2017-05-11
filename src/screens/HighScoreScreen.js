@@ -159,7 +159,7 @@ var HighScoreScreen = function() {
             //console.log("HASH: " + hash);
 
             // send score results to the server sided script
-            //Globals.sendMe(source, onAddResponse);
+            Globals.sendMe(source, onAddResponse);
 
             createjs.Sound.play("powerupPickup");
         } else if ((char === "-1") && (initials.length > 0)) {

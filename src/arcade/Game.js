@@ -1,6 +1,22 @@
 // Rhombus!
 // Sean Morrow
 // Jan 2017
+
+/*
+ARCADE MACHINE VERSION
+Changes from web version:
+
+arcade_Index.html
+> links in local copy of createjs
+> <div> set max-width style property to 1280px;
+
+styles.css 
+> width/height is set to 800x800 for stage
+
+Game.js 
+> construct an instance of ArcadeManager instead of GamepadManager. Uses ArcadeManager.js / ArcadeManifest.js
+*/
+
 (function() {
 	"use strict";
 
@@ -85,9 +101,8 @@
 		stage.addEventListener("onAssetLoaded", onAssetLoaded);
 		stage.addEventListener("onAllAssetsLoaded", onSetup);
 
-		// construct gamepadManager
-		gamepadManager = new GamepadManager();
-		gamepadManager.setup(gamepadManifest);
+		gamepadManager = new ArcadeManager();
+		gamepadManager.setup(arcadeManifest);
 		Globals.gamepadManager = gamepadManager;		
 
 		// listen for loss of focus on browser and pause game

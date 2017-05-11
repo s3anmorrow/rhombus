@@ -76,7 +76,7 @@ var WaveFactory = function(){
         wave = 0;
 
         // LEVEL TESTING
-        //level = 11;
+        //level = 15;
         //seconds = 29;
 
         var levelIndex = level - 1;

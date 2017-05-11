@@ -193,11 +193,11 @@ var Shape = function(){
 
         // Step I : collision detection
         // has the shape collided with the player?
-        if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (!player.getShieldEnabled()) && (ndgmr.checkPixelCollision(sprite, player.sprite))) {
+        if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (ndgmr.checkPixelCollision(sprite, player.sprite))) {
             player.hitMe(fullHitPoints);
             // kill shape with no points and no powerups
             powerupType = "";
-            this.killMe(hitPoints, false);
+            if (!player.getShieldEnabled()) this.killMe(hitPoints, false);
         }
 
         // Step II : Attacking

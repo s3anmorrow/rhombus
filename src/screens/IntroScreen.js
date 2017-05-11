@@ -14,8 +14,8 @@ var IntroScreen = function() {
     var screenSprite = assetManager.getSprite("ui","introScreen");
     screen.addChild(screenSprite);
     var prompt = assetManager.getSprite("ui","spacebar");
-    prompt.x = 245;
-    prompt.y = 600;
+    prompt.x = 190;
+    prompt.y = 585;
     screen.addChild(prompt);
 
     var loadingScoresPanel = new createjs.Container();
@@ -25,12 +25,10 @@ var IntroScreen = function() {
     loadingScoresPrompt.x = 70;
     loadingScoresPrompt.y = 28;
     loadingScoresPanel.addChild(loadingScoresPrompt);
-    var loadingScoresSprite = assetManager.getSprite("assets","square");
+    var loadingScoresSprite = assetManager.getSprite("assets","powerupKill");
     loadingScoresSprite.x = 40;
     loadingScoresSprite.y = 40;
     loadingScoresPanel.addChild(loadingScoresSprite);
-    createjs.Tween.get(loadingScoresSprite,{useTicks:true, loop:true})
-                    .to({rotation:359}, 90);
 
     var highScores = new createjs.Container();
     highScores.x = 248;
@@ -80,13 +78,17 @@ var IntroScreen = function() {
         // send out AJAX request
         Globals.sendMe(source, onResponse);
 
+        // assume keyboard control
         prompt.gotoAndStop("spacebar");
-        if (Globals.gamepadManager.connected) prompt.gotoAndStop("startButton");
         stage.addChild(screen);
     };
 
     this.hideMe = function() {
         stage.removeChild(screen);
+    };
+
+    this.setToGamepad = function() {
+        prompt.gotoAndStop("startButton");
     };
 
     // ------------------------------------------------ event handlers
