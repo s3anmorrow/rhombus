@@ -88,6 +88,9 @@ this.ndgmr = this.ndgmr || {};
 
     imageData1 = _intersectingImagePart(intersection,bitmap1,collisionCtx,1);
     imageData2 = _intersectingImagePart(intersection,bitmap2,collisionCtx2,2);
+    // ???????????????????????? SEANIFIED CODE
+    if ((imageData1 === null) || (imageData2 === null)) return false;
+    // ????????????????????????????????????    
 
     //compare the alpha values to the threshold and return the result
     // = true if pixels are both > alphaThreshold at one coordinate
@@ -142,9 +145,9 @@ this.ndgmr = this.ndgmr || {};
       }
     } else if ( bitmap instanceof createjs.MovieClip ) {
       var mBitmap;
-      if(bitmap.instance.instance !== undefined) {
+      if(bitmap.instance.instance != undefined) {
         mBitmap = bitmap.instance.instance; 
-      } else if (bitmap.instance !== undefined) {		  
+      } else if (bitmap.instance != undefined) {		  
         mBitmap = bitmap.instance; 
       }
       frame = mBitmap.spriteSheet.getFrame( mBitmap.currentFrame )
@@ -170,7 +173,13 @@ this.ndgmr = this.ndgmr || {};
     } else {
       ctx.drawImage(image,0,0,image.width,image.height);
     }
-    return ctx.getImageData(0, 0, intersetion.width, intersetion.height).data;
+
+    return ctx.getImageData(0, 0, intersetion.width || intersetion.naturalWidth, intersetion.height || intersetion.naturalHeight).data;
+    // ???????????????????????? SEANIFIED CODE
+    // https://github.com/OpenGov/react-leaflet-heatmap-layer/issues/14
+    //if (intersetion.width, intersetion.height) return null;
+    // ???????????????????????????????????????
+    //else return ctx.getImageData(0, 0, intersetion.width, intersetion.height).data;
   }
 
   var _compareAlphaValues = function(imageData1,imageData2,width,height,alphaThreshold,getRect) {
@@ -178,6 +187,7 @@ this.ndgmr = this.ndgmr || {};
         pixelRect = {x:Infinity,y:Infinity,x2:-Infinity,y2:-Infinity};
 
     // parsing through the pixels checking for an alpha match
+    // TODO: intelligent parsing, not just from 0 to end!
     for ( y = 0; y < height; ++y) {
         for ( x = 0; x < width; ++x) {
             alpha1 = imageData1.length > offset+1 ? imageData1[offset] / 255 : 0;
@@ -197,7 +207,7 @@ this.ndgmr = this.ndgmr || {};
         }
     }
 
-    if ( pixelRect.x !== Infinity ) {
+    if ( pixelRect.x != Infinity ) {
       pixelRect.width  = pixelRect.x2 - pixelRect.x + 1;
       pixelRect.height = pixelRect.y2 - pixelRect.y + 1;
       return pixelRect;
@@ -214,7 +224,7 @@ this.ndgmr = this.ndgmr || {};
     if ( child.parent && child.parent[propName] ) {
       var cp = child[propName];
       var pp = _getParentalCumulatedProperty(child.parent,propName,operation);
-      if ( operation === '*' ) {
+      if ( operation == '*' ) {
         return cp * pp;
       } else {
         return cp + pp;
@@ -268,10 +278,10 @@ this.ndgmr = this.ndgmr || {};
         //if ( cbounds.x - bounds.x + cbounds.width  > bounds.width  ) bounds.width  = cbounds.x - bounds.x + cbounds.width;
         //if ( cbounds.y - bounds.y + cbounds.height > bounds.height ) bounds.height = cbounds.y - bounds.y + cbounds.height;
       }
-      if ( bounds.x === Infinity ) bounds.x = 0;
-      if ( bounds.y === Infinity ) bounds.y = 0;
-      if ( bounds.x2 === Infinity ) bounds.x2 = 0;
-      if ( bounds.y2 === Infinity ) bounds.y2 = 0;
+      if ( bounds.x == Infinity ) bounds.x = 0;
+      if ( bounds.y == Infinity ) bounds.y = 0;
+      if ( bounds.x2 == Infinity ) bounds.x2 = 0;
+      if ( bounds.y2 == Infinity ) bounds.y2 = 0;
       
       bounds.width = bounds.x2 - bounds.x;
       bounds.height = bounds.y2 - bounds.y;

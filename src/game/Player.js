@@ -36,6 +36,8 @@ var Player = function(){
     var targetSpeedX = gameConstants.PLAYER_SPEED;
     var speedY = 0;
     var targetSpeedY = gameConstants.PLAYER_SPEED;
+    var targetDiagonalSpeedX = gameConstants.PLAYER_DIAGONAL_SPEED;
+    var targetDiagonalSpeedY = gameConstants.PLAYER_DIAGONAL_SPEED;
     var minX = gameConstants.PLAYER_MIN_X; 
     var maxX = gameConstants.PLAYER_MAX_X;
     var minY = gameConstants.PLAYER_MIN_Y;
@@ -163,6 +165,7 @@ var Player = function(){
         // center the player sprite
         sprite.x = startX;
         sprite.y = startY;
+        sprite.scaleX = 1;
         sprite.rotation = baseRotation;
         shieldSprite.rotation = baseRotation;
 
@@ -185,55 +188,57 @@ var Player = function(){
         createjs.Sound.play("playerEnter");
     };
 
-    this.goLeft = function() {
+    // ??????????????????????????????????????????????????
+    function go(currentState, animateframe, shieldFrame, sound) {
         // do nothing if in ENTERING or KILLED state
         if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
         // don't change animation sequence if currently being hit
-        if (sprite.currentAnimation != "playerLeft") {
-            sprite.gotoAndPlay("playerLeft");
-            createjs.Sound.play("playerMove");
+        if (sprite.currentAnimation != animateframe) {
+            sprite.gotoAndPlay(animateframe);
+            if (sound) createjs.Sound.play("playerMove");
         }
-        if (shieldEnabled) shieldSprite.gotoAndStop("playerShieldLeft");
-        state = PlayerState.MOVING_LEFT;
-    };
+        if (shieldEnabled) shieldSprite.gotoAndStop(shieldFrame);
+        // change state property for update() to know what to do on refresh
+        state = currentState;
+    }
 
-    this.goRight = function() {
-        if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
-        if (sprite.currentAnimation != "playerRight") {
-            sprite.gotoAndPlay("playerRight");
-            createjs.Sound.play("playerMove");
-        }
-        if (shieldEnabled) shieldSprite.gotoAndStop("playerShieldRight");
-        state = PlayerState.MOVING_RIGHT;
-    };     
-
-    this.goUp = function() {
-        if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
-        if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
-        if (shieldEnabled) shieldSprite.gotoAndStop("playerShield");
-        state = PlayerState.MOVING_UP;
+    this.goUpLeft = function(){
+        go(PlayerState.MOVING_UP_LEFT, "playerUpLeft", "playerShieldLeft", true);
     };
-
-    this.goDown = function() {
-        if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
-        if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
-        if (shieldEnabled) shieldSprite.gotoAndStop("playerShield");
-        state = PlayerState.MOVING_DOWN;
+    this.goUpRight = function(){
+        go(PlayerState.MOVING_UP_RIGHT, "playerUpRight", "playerShieldRight", true);
     };
-
-    this.goIdle = function() {
-        if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
-        if (sprite.currentAnimation != "playerIdle") sprite.gotoAndPlay("playerIdle");
-        if (shieldEnabled) shieldSprite.gotoAndStop("playerShield");
-        state = PlayerState.IDLE;
+    this.goDownLeft = function(){
+        go(PlayerState.MOVING_DOWN_LEFT, "playerUpLeft", "playerShieldLeft", true);
     };
+    this.goDownRight = function(){
+        go(PlayerState.MOVING_DOWN_RIGHT, "playerUpRight", "playerShieldRight", true);
+    };
+    this.goLeft = function(){
+        go(PlayerState.MOVING_LEFT, "playerLeft", "playerShieldLeft", true);
+    };    
+    this.goRight = function(){
+        go(PlayerState.MOVING_RIGHT, "playerRight", "playerShieldRight", true);
+    };
+    this.goUp = function(){
+        go(PlayerState.MOVING_UP, "playerIdle", "playerShield", false);
+    };
+    this.goDown = function(){
+        go(PlayerState.MOVING_DOWN, "playerIdle", "playerShield", false);
+    };
+    this.goIdle = function(){
+        go(PlayerState.IDLE, "playerIdle", "playerShield", false);
+    };
+    // ??????????????????????????????????????????????????
 
     this.flipMe = function() {
         if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
         // animate player rotating to direction
         if (direction === 0) {
             createjs.Tween.get(sprite, {useTicks:true})
-                .to({rotation:180}, 6);
+                .to({rotation:180}, 6).call(function() { 
+                    sprite.scaleX = -1;
+                });
             createjs.Tween.get(shieldSprite, {useTicks:true})
                 .to({rotation:180}, 6);
             baseRotation = 180;
@@ -241,7 +246,9 @@ var Player = function(){
             createjs.Sound.play("flipIn");
         } else {
             createjs.Tween.get(sprite, {useTicks:true})
-                .to({rotation:0}, 6);
+                .to({rotation:0}, 6).call(function() { 
+                    sprite.scaleX = 1;
+                });
             createjs.Tween.get(shieldSprite, {useTicks:true})
                 .to({rotation:0}, 6);
             baseRotation = 0;
@@ -297,7 +304,6 @@ var Player = function(){
             // increment index of firing gun of next shot
             firingGunIndex++;
             if (firingGunIndex === gunPoints.length) firingGunIndex = 0;
-
             // reset fire frame counter
             fireCounter = 0;
             // if not set to auto set fireCounter one past frequency so it never happens again
@@ -382,7 +388,24 @@ var Player = function(){
         if ((state === PlayerState.KILLED) || (state === PlayerState.ENTERING)) return;
 
         // which direction is player moving?
-        if (state === PlayerState.MOVING_LEFT) {
+        // ???????????????????????????????????????????
+        if (state === PlayerState.MOVING_UP_LEFT) {
+            if (speedY > -targetDiagonalSpeedY) speedY-=1;
+            if (speedX > -targetDiagonalSpeedX) speedX-=1;
+        } else if (state === PlayerState.MOVING_UP_RIGHT) {
+            if (speedY > -targetDiagonalSpeedY) speedY-=1;
+            if (speedX < targetDiagonalSpeedX) speedX+=1;
+        } else if (state === PlayerState.MOVING_DOWN_LEFT) {
+            if (speedY < targetDiagonalSpeedY) speedY+=1;
+            if (speedX > -targetDiagonalSpeedX) speedX-=1;
+        } else if (state === PlayerState.MOVING_DOWN_RIGHT) {
+            if (speedY < targetDiagonalSpeedY) speedY+=1;
+            if (speedX < targetDiagonalSpeedX) speedX+=1;
+        // ???????????????????????????????????????????
+
+
+
+        } else if (state === PlayerState.MOVING_LEFT) {
             speedY = 0;
             if (speedX > -targetSpeedX) speedX-=2;
         } else if (state === PlayerState.MOVING_RIGHT) {
@@ -394,10 +417,13 @@ var Player = function(){
         } else if (state === PlayerState.MOVING_DOWN) {
             speedX = 0;
             if (speedY < targetSpeedY) speedY+=2;
+       
+
         } else if (state === PlayerState.IDLE) {
             // do I need to decelerate the player anymore?
             if ((speedX !== 0) || (speedY !== 0)) {
 
+                /*
                 // decelerate player
                 if (speedX < 0) {
                     speedX+=2;
@@ -409,6 +435,25 @@ var Player = function(){
                     speedY+=2;
                     if (speedY > 0) speedY = 0;
                 } else if (speedY > 0) {
+                    speedY-=2;
+                    if (speedY < 0) speedY = 0;
+                }
+                */
+
+                // decelerate player
+                if (speedX < 0) {
+                    speedX+=2;
+                    if (speedX > 0) speedX = 0;
+                }
+                if (speedX > 0) {
+                    speedX-=2;
+                    if (speedX < 0) speedX = 0;
+                }
+                if (speedY < 0) {
+                    speedY+=2;
+                    if (speedY > 0) speedY = 0;
+                }
+                if (speedY > 0) {
                     speedY-=2;
                     if (speedY < 0) speedY = 0;
                 }
@@ -426,13 +471,16 @@ var Player = function(){
         if (sprite.y < minY) {
             sprite.y = minY;
             speedY = 0;
-        } else if (sprite.y > maxY) {
+        }
+        if (sprite.y > maxY) {
             sprite.y = maxY;
             speedY = 0;
-        } else if (sprite.x < minX) {
+        }
+        if (sprite.x < minX) {
             sprite.x = minX;
             speedX = 0;
-        } else if (sprite.x > maxX) {
+        } 
+        if (sprite.x > maxX) {
             sprite.x = maxX;
             speedX = 0;
         }
@@ -468,5 +516,9 @@ var PlayerState = {
     "MOVING_RIGHT":3,
     "MOVING_UP":4,
     "MOVING_DOWN":5,
-    "KILLED":6
+    "KILLED":6,
+    "MOVING_UP_LEFT":7,
+    "MOVING_UP_RIGHT":8,
+    "MOVING_DOWN_LEFT":9,
+    "MOVING_DOWN_RIGHT":10
 };

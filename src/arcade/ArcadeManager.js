@@ -109,10 +109,12 @@ var ArcadeManager = function(){
             }
         }
         
+        /*
         // exit game and go back to menu if START + SELECT pressed at the same time
         if ((gamepad.buttons[18].pressed) && (gamepad.buttons[19].pressed)) {
             window.location.href = "http://localhost/";
         }
+        */
         
         // loop through all joystick axis in the gamepad manifest
         for (n=0; n<manifest.joystick.length; n++) {

@@ -173,10 +173,10 @@ Game.js
 	function onKeyDown(e) {
 		if (Globals.gameState === GameStates.PLAYING) {
 			if ((e.keyCode === 40) || (e.keyCode === 83)) downKey = true;
-			else if ((e.keyCode === 38) || (e.keyCode === 87)) upKey = true;
-			else if ((e.keyCode === 37) || (e.keyCode === 65)) leftKey = true;
-			else if ((e.keyCode === 39) || (e.keyCode === 68)) rightKey = true;
-			else if (e.keyCode === 32) fireKey = true;
+			if ((e.keyCode === 38) || (e.keyCode === 87)) upKey = true;
+			if ((e.keyCode === 37) || (e.keyCode === 65)) leftKey = true;
+			if ((e.keyCode === 39) || (e.keyCode === 68)) rightKey = true;
+			if (e.keyCode === 32) fireKey = true;
 		}
 		e.preventDefault();
 	}
@@ -186,11 +186,11 @@ Game.js
 			if (e.keyCode === 32) startGame();
 		} else if (Globals.gameState === GameStates.PLAYING) {
 			if ((e.keyCode === 40) || (e.keyCode === 83)) downKey = false;
-			else if ((e.keyCode === 38) || (e.keyCode === 87)) upKey = false;
-			else if ((e.keyCode === 37) || (e.keyCode === 65)) leftKey = false;
-			else if ((e.keyCode === 39) || (e.keyCode === 68)) rightKey = false;
-			else if (e.keyCode === 32) fireKey = false;
-			else if (e.keyCode === 16) player.flipMe();
+			if ((e.keyCode === 38) || (e.keyCode === 87)) upKey = false;
+			if ((e.keyCode === 37) || (e.keyCode === 65)) leftKey = false;
+			if ((e.keyCode === 39) || (e.keyCode === 68)) rightKey = false;
+			if (e.keyCode === 32) fireKey = false;
+			if (e.keyCode === 16) player.flipMe();
 		} else if (Globals.gameState === GameStates.HIGHSCORE) {			
 			if (e.keyCode === 40) screenManager.highScore.moveSelector("down");
 			else if (e.keyCode === 38) screenManager.highScore.moveSelector("up");
@@ -268,7 +268,12 @@ Game.js
 
 		if (Globals.gameState === GameStates.PLAYING) {
 			// STEP I : KEYBOARD / GAMEPAD MONITORING
-			if (leftKey) player.goLeft();
+			if (upKey && leftKey) player.goUpLeft();
+			else if (upKey && rightKey) player.goUpRight();
+			else if (downKey && leftKey) player.goDownLeft();
+			else if (downKey && rightKey) player.goDownRight();
+
+			else if (leftKey) player.goLeft();
 			else if (rightKey) player.goRight();
 			else if (upKey) player.goUp();
 			else if (downKey) player.goDown();

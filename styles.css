@@ -8,22 +8,16 @@ body {
 	color: #FFFFFF;
 }
 
-.outer {
-    display: table;
+body > div {
+    width: 800px;
+    height: 800px;
+    background-color:#000000;
     position: absolute;
-    height: 100%;
-    width: 100%;
-}
-
-.middle {
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.inner {
-    margin-left: auto;
-    margin-right: auto; 
-    width: 1280px;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 #stage {

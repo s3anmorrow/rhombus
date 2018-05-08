@@ -22,6 +22,7 @@ var Bigboss = function(){
     var turretsTotal = 0;
     var frameCounter = 0;
     var explosionSound = "";
+    var radius = 0;
 
     // the moveFunction that will be called in updateMe()
     var moveFunction = null;
@@ -53,6 +54,7 @@ var Bigboss = function(){
         type = myType;
         bodySprite.gotoAndPlay(type);
         sprite.addChild(bodySprite);
+        radius = bodySprite.getBounds().width/2;
 
         // get explosion sprite ready to play
         if (type.indexOf("Mini") != -1) {
@@ -157,7 +159,9 @@ var Bigboss = function(){
 
         // Step I : collision detection
         // has the bigboss collided with the player?
-        if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(bodySprite, player.sprite))) {
+        //if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(bodySprite, player.sprite, 0 , true))) {
+        //if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkRectCollision(bodySprite, player.sprite))) {
+        if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (Globals.checkRadiusCollision(bodySprite, player.sprite, (radius + 27)))) {
             // immediate death!
             player.killMe();
         }

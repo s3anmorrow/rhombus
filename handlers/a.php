@@ -2,7 +2,8 @@
     // add high score
     include "i.php";
 
-    $port = 8888;
+    $port = 3306;
+    //$port = 8888;
 
     $link = mysqli_init();
     $success = mysqli_real_connect(
