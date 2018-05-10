@@ -172,7 +172,24 @@ movement:{type:"zigzag", angle:[angle shape comes out on], speed:[speed of movem
 - all movements can have rotate:true which will cause shape to rotate slowly while it moves
 */
 
+// PROBLEM BOSS SHAPES
+// bossTriangle
+// bossSquare
+
 var levelManifest = [
+    [
+        // LEVEL TESTY
+        {type:"bossTriangle", 
+            wave:{count:1, spaced:1},
+            settings:{x:-200, y:400, points:5000,
+                turrets:[   
+                    {type:"nonagon",x:0,y:0,freq:100,bulletType:"bullet2"},
+                ]
+            },
+            movement:{type:"kamikaze", speed:2, rotate:true},
+            time:2
+        }
+    ],
     [
         // LEVEL 1
         {levelTitle:"Bunny!",

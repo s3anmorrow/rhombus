@@ -22,7 +22,12 @@ var Globals = {
 		PLAYER_MAX_Y:750,
 		PLAYER_START_POWER:4,
 		PLAYER_MAX_POWER:4,
-		PLAYER_START_LIVES:3,
+
+		
+		//PLAYER_START_LIVES:3,
+		PLAYER_START_LIVES:30,
+
+
 		PERFECT_SCORE_POINTS:2000,
 		POWERUP_DURATION:8,
 		TURRET_BONUS_ACCURACY:20,
@@ -68,7 +73,7 @@ var Globals = {
 				frame:"bullet"
 			},
 			"double":{
-				freq:6,
+				freq:4,
 				gunPoints:[[{x:-5,y:-5,r:270},{x:5,y:-5,r:270}],[{x:-10,y:5,r:90},{x:10,y:5,r:90}]],
 				alternateFire:true,
 				auto:true,
@@ -80,7 +85,7 @@ var Globals = {
 				frame:"bullet"				
 			},
 			"superDouble":{
-				freq:6,
+				freq:4,
 				gunPoints:[[{x:-10,y:-5,r:270},{x:10,y:-5,r:270}],[{x:-10,y:5,r:90},{x:10,y:5,r:90}]],
 				alternateFire:false,
 				auto:true,
@@ -218,10 +223,10 @@ var Globals = {
 		}
 
         // Get distance with Pythagoras
-        var c = Math.sqrt((a * a) + (b * b));
+		var c = Math.sqrt((a * a) + (b * b));
 		// threshold is sum of two radius of sprites
         if (c <= threshold) return true;
-        else return false;
+		else return false;
 	},
 
 	sendMe:function(source, responseFn) {

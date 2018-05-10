@@ -199,7 +199,7 @@ var Bullet = function() {
 				}
 				*/
 				// player is radius 45/2 = 22
-				if ((player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (checkRadiusCollision(sprite, player.sprite,(radius + 22)))) {
+				if ((player.getState() !== PlayerState.KILLED) && (checkRadiusCollision(sprite, player.sprite,(radius + 22)))) {
 					player.hitMe(damage);
 					this.killMe(true);
 				}				

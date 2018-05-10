@@ -54,7 +54,6 @@ var Bigboss = function(){
         type = myType;
         bodySprite.gotoAndPlay(type);
         sprite.addChild(bodySprite);
-        radius = bodySprite.getBounds().width/2;
 
         // get explosion sprite ready to play
         if (type.indexOf("Mini") != -1) {
@@ -98,6 +97,8 @@ var Bigboss = function(){
         // getBounds() is expensive - setBounds so it is cached all subsequent getBounds() calls
         var bounds = sprite.getBounds();
         sprite.setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
+        // store radius of big boss for collision detection
+        radius = bounds.width/2 - 10;
 
         stage.addChild(sprite);
     };
@@ -161,7 +162,7 @@ var Bigboss = function(){
         // has the bigboss collided with the player?
         //if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(bodySprite, player.sprite, 0 , true))) {
         //if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkRectCollision(bodySprite, player.sprite))) {
-        if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (Globals.checkRadiusCollision(bodySprite, player.sprite, (radius + 27)))) {
+        if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (Globals.checkRadiusCollision(sprite, player.sprite, (radius + 27)))) {
             // immediate death!
             player.killMe();
         }

@@ -46,56 +46,56 @@ var gamepadManifest = {
             keyCode:40,
             clipping:true,
             axis:1,
-            range:[0.7,1.0],
+            range:[0.5,1.0],
             gameState:1
         },
         {
             keyCode:38,
             clipping:true,
             axis:1,
-            range:[-1.0,-0.7],
+            range:[-1.0,-0.5],
             gameState:1
         },
         {
             keyCode:37,
             clipping:true,
             axis:0,
-            range:[-1.0,-0.7],
+            range:[-1.0,-0.5],
             gameState:1
         },
         {
             keyCode:39,
             clipping:true,
             axis:0,
-            range:[0.7,1.0],
+            range:[0.5,1.0],
             gameState:1
         },
         {
             keyCode:40,
             clipping:false,
             axis:1,
-            range:[0.7,1.0],
+            range:[0.5,1.0],
             gameState:2
         },
         {
             keyCode:38,
             clipping:false,
             axis:1,
-            range:[-1.0,-0.7],
+            range:[-1.0,-0.5],
             gameState:2
         },
         {
             keyCode:37,
             clipping:false,
             axis:0,
-            range:[-1.0,-0.7],
+            range:[-1.0,-0.5],
             gameState:2
         },
         {
             keyCode:39,
             clipping:false,
             axis:0,
-            range:[0.7,1.0],
+            range:[0.5,1.0],
             gameState:2
         }
     ]

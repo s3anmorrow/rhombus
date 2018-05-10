@@ -68,6 +68,12 @@ var Player = function(){
     var startX = stage.canvas.width / 2;
     var startY = stage.canvas.height + sprite.getBounds().height;    
 
+
+    // ?????????????????
+
+
+    // ????????????????
+
     // other variables
     var _this = this;
 
@@ -188,7 +194,6 @@ var Player = function(){
         createjs.Sound.play("playerEnter");
     };
 
-    // ??????????????????????????????????????????????????
     function go(currentState, animateframe, shieldFrame, sound) {
         // do nothing if in ENTERING or KILLED state
         if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
@@ -203,16 +208,16 @@ var Player = function(){
     }
 
     this.goUpLeft = function(){
-        go(PlayerState.MOVING_UP_LEFT, "playerUpLeft", "playerShieldLeft", true);
+        go(PlayerState.MOVING_UP_LEFT, "playerUpLeft", "playerShieldLeft", false);
     };
     this.goUpRight = function(){
-        go(PlayerState.MOVING_UP_RIGHT, "playerUpRight", "playerShieldRight", true);
+        go(PlayerState.MOVING_UP_RIGHT, "playerUpRight", "playerShieldRight", false);
     };
     this.goDownLeft = function(){
-        go(PlayerState.MOVING_DOWN_LEFT, "playerUpLeft", "playerShieldLeft", true);
+        go(PlayerState.MOVING_DOWN_LEFT, "playerUpLeft", "playerShieldLeft", false);
     };
     this.goDownRight = function(){
-        go(PlayerState.MOVING_DOWN_RIGHT, "playerUpRight", "playerShieldRight", true);
+        go(PlayerState.MOVING_DOWN_RIGHT, "playerUpRight", "playerShieldRight", false);
     };
     this.goLeft = function(){
         go(PlayerState.MOVING_LEFT, "playerLeft", "playerShieldLeft", true);
@@ -221,15 +226,14 @@ var Player = function(){
         go(PlayerState.MOVING_RIGHT, "playerRight", "playerShieldRight", true);
     };
     this.goUp = function(){
-        go(PlayerState.MOVING_UP, "playerIdle", "playerShield", false);
+        go(PlayerState.MOVING_UP, "playerIdle", "playerShield", true);
     };
     this.goDown = function(){
-        go(PlayerState.MOVING_DOWN, "playerIdle", "playerShield", false);
+        go(PlayerState.MOVING_DOWN, "playerIdle", "playerShield", true);
     };
     this.goIdle = function(){
         go(PlayerState.IDLE, "playerIdle", "playerShield", false);
     };
-    // ??????????????????????????????????????????????????
 
     this.flipMe = function() {
         if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
@@ -354,7 +358,10 @@ var Player = function(){
 
     this.killMe = function() {
         // can't be killed if shieldEnabled
-        if ((shieldEnabled) && (power > 0)) return;
+        if ((shieldEnabled) && (power > 0)) {
+            createjs.Sound.play("hitWithShield");
+            return;
+        }
 
         state = PlayerState.KILLED;
         createjs.Tween.removeTweens(shieldSprite);
@@ -388,7 +395,6 @@ var Player = function(){
         if ((state === PlayerState.KILLED) || (state === PlayerState.ENTERING)) return;
 
         // which direction is player moving?
-        // ???????????????????????????????????????????
         if (state === PlayerState.MOVING_UP_LEFT) {
             if (speedY > -targetDiagonalSpeedY) speedY-=1;
             if (speedX > -targetDiagonalSpeedX) speedX-=1;
@@ -401,10 +407,6 @@ var Player = function(){
         } else if (state === PlayerState.MOVING_DOWN_RIGHT) {
             if (speedY < targetDiagonalSpeedY) speedY+=1;
             if (speedX < targetDiagonalSpeedX) speedX+=1;
-        // ???????????????????????????????????????????
-
-
-
         } else if (state === PlayerState.MOVING_LEFT) {
             speedY = 0;
             if (speedX > -targetSpeedX) speedX-=2;
@@ -422,24 +424,6 @@ var Player = function(){
         } else if (state === PlayerState.IDLE) {
             // do I need to decelerate the player anymore?
             if ((speedX !== 0) || (speedY !== 0)) {
-
-                /*
-                // decelerate player
-                if (speedX < 0) {
-                    speedX+=2;
-                    if (speedX > 0) speedX = 0;
-                } else if (speedX > 0) {
-                    speedX-=2;
-                    if (speedX < 0) speedX = 0;
-                } else if (speedY < 0) {
-                    speedY+=2;
-                    if (speedY > 0) speedY = 0;
-                } else if (speedY > 0) {
-                    speedY-=2;
-                    if (speedY < 0) speedY = 0;
-                }
-                */
-
                 // decelerate player
                 if (speedX < 0) {
                     speedX+=2;
