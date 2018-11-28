@@ -192,12 +192,6 @@ var Bullet = function() {
 
 			// Shape or Turret's bullet
 			} else if ((owner.name === "Shape") || (owner.name === "Bigboss"))  {
-				/*
-				if ((player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkRectCollision(sprite, player.sprite))) {
-					player.hitMe(damage);
-					this.killMe(true);
-				}
-				*/
 				// player is radius 45/2 = 22
 				if ((player.getState() !== PlayerState.KILLED) && (checkRadiusCollision(sprite, player.sprite,(radius + 22)))) {
 					player.hitMe(damage);

@@ -60,7 +60,7 @@ var HighScoreScreen = function() {
     this.showMe = function(myScore) {
         score = myScore;
         // testing
-        //score = 100000;
+        //score = 66900;
 
         rowIndex = 0;
         charIndex = 0;

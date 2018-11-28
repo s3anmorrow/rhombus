@@ -54,6 +54,8 @@ var Player = function(){
     var baseRotation = 0;
     // is player godlike? > level 20
     var godLike = false;
+    // collision points for collision detection using hitText
+    var collisionPoints = [[0,-20],[27,3],[-27,3],[-17,21],[17,21]];
 
     // get sprite for Player
     var sprite = assetManager.getSprite("assets","playerEntrance");
@@ -67,13 +69,6 @@ var Player = function(){
     // calculating starting position of player sprite (center of stage)
     var startX = stage.canvas.width / 2;
     var startY = stage.canvas.height + sprite.getBounds().height;    
-
-
-    // ?????????????????
-
-
-    // ????????????????
-
     // other variables
     var _this = this;
 
@@ -123,12 +118,16 @@ var Player = function(){
         stage.dispatchEvent(livesChangeEvent);
     };
 
+    this.getCollisionPoints = function() {
+        return collisionPoints;
+    };
+
     // --------------------------------------------------------- public methods
     this.startMe = function(){
         // new game for player initialization
         godLike = false;
         lives =  Globals.gameConstants.PLAYER_START_LIVES;
-        this.setWeapon("single");         
+        this.setWeapon("single");
         this.spawnMe();
     };
 
@@ -265,9 +264,14 @@ var Player = function(){
         stage.dispatchEvent(changeDirEvent);
     };
 
+    var bulletReady = true;
+
     this.fire = function() {
         if ((state === PlayerState.ENTERING) || (state === PlayerState.KILLED)) return;
-        if (fireCounter === weaponData.freq) {
+        
+        if (!bulletReady) return;
+
+        if (fireCounter >= weaponData.freq) {
             var gunPoints = weaponData.gunPoints[direction];
             // loop through all gunPoints and add bullet
             for (var n=0; n<gunPoints.length; n++) {
@@ -304,20 +308,22 @@ var Player = function(){
                     }
                 } 
             }
-
             // increment index of firing gun of next shot
             firingGunIndex++;
             if (firingGunIndex === gunPoints.length) firingGunIndex = 0;
+
             // reset fire frame counter
             fireCounter = 0;
             // if not set to auto set fireCounter one past frequency so it never happens again
-            if (!weaponData.auto) fireCounter = weaponData.freq + 1;
+            //if (!weaponData.auto) fireCounter = weaponData.freq + 1;
+            if (!weaponData.auto) bulletReady = false;
         }
-        if (weaponData.auto) fireCounter++;
+        //if (weaponData.auto) fireCounter++;
     };
 
     this.cease = function() {
-        fireCounter = weaponData.freq;
+        //fireCounter = weaponData.freq;
+        bulletReady = true;
     };
 
     this.hitMe = function(powerLoss) {
@@ -393,6 +399,9 @@ var Player = function(){
 
     this.updateMe = function() {
         if ((state === PlayerState.KILLED) || (state === PlayerState.ENTERING)) return;
+
+        // increment fire index (for spacing out bullets so player can't spam)
+        fireCounter++;
 
         // which direction is player moving?
         if (state === PlayerState.MOVING_UP_LEFT) {

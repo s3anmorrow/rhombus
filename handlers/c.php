@@ -3,6 +3,7 @@
     include "i.php";
 
     $score = strrev(base64_decode($_GET["v"]));
+    //$score = $_GET["v"];
     //echo "test: " . $score;
 
     try {
@@ -20,7 +21,7 @@
     // by default score is not qualified
     $qualified = false;
 
-    $output = "";
+    // if score is greater or equal to any score in database (of top 5)
     if(count($result) > 0) {
         foreach($result as $r) {
             if ($score >= $r["score"]) {

@@ -194,8 +194,7 @@ var Shape = function(){
         // Step I : collision detection
         // has the shape collided with the player?
         //if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (ndgmr.checkPixelCollision(sprite, player.sprite, 0, true))) {
-        //if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (ndgmr.checkRectCollision(sprite, player.sprite))) {
-        if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (Globals.checkRadiusCollision(sprite, player.sprite, (this.radius + 27)))) {
+        if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (Globals.checkPointCollision(sprite, player.sprite, player.getCollisionPoints()))) {
             player.hitMe(fullHitPoints);
             // kill shape with no points and no powerups
             powerupType = "";

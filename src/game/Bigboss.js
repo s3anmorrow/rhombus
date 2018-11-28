@@ -161,8 +161,7 @@ var Bigboss = function(){
         // Step I : collision detection
         // has the bigboss collided with the player?
         //if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkPixelCollision(bodySprite, player.sprite, 0 , true))) {
-        //if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (player.getState() !== PlayerState.HIT) && (ndgmr.checkRectCollision(bodySprite, player.sprite))) {
-        if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (Globals.checkRadiusCollision(sprite, player.sprite, (radius + 27)))) {
+        if ((state !== ShapeState.KILLED) && (player.getState() !== PlayerState.KILLED) && (Globals.checkPointCollision(sprite, player.sprite, player.getCollisionPoints()))) {
             // immediate death!
             player.killMe();
         }

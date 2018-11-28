@@ -22,12 +22,7 @@ var Globals = {
 		PLAYER_MAX_Y:750,
 		PLAYER_START_POWER:4,
 		PLAYER_MAX_POWER:4,
-
-		
-		//PLAYER_START_LIVES:3,
-		PLAYER_START_LIVES:30,
-
-
+		PLAYER_START_LIVES:3,
 		PERFECT_SCORE_POINTS:2000,
 		POWERUP_DURATION:8,
 		TURRET_BONUS_ACCURACY:20,
@@ -61,7 +56,7 @@ var Globals = {
 		},
 		PLAYER_WEAPONS:{
 			"single":{
-				freq:8,
+				freq:7,
 				gunPoints:[[{x:0,y:-20,r:270}],[{x:0,y:20,r:90}]],
 				alternateFire:false,
 				auto:false,
@@ -73,7 +68,7 @@ var Globals = {
 				frame:"bullet"
 			},
 			"double":{
-				freq:4,
+				freq:5,
 				gunPoints:[[{x:-5,y:-5,r:270},{x:5,y:-5,r:270}],[{x:-10,y:5,r:90},{x:10,y:5,r:90}]],
 				alternateFire:true,
 				auto:true,
@@ -89,7 +84,7 @@ var Globals = {
 				gunPoints:[[{x:-10,y:-5,r:270},{x:10,y:-5,r:270}],[{x:-10,y:5,r:90},{x:10,y:5,r:90}]],
 				alternateFire:false,
 				auto:true,
-				speed:22,
+				speed:24,
 				damage:0.5,
 				ammo:200,
 				invincible:false,
@@ -97,7 +92,7 @@ var Globals = {
 				frame:"bullet"				
 			},
 			"spread":{
-				freq:4,
+				freq:6,
 				gunPoints:[[{x:0,y:-20,r:270},{x:-20,y:-5,r:250},{x:20,y:-5,r:290}],[{x:0,y:20,r:90},{x:-20,y:5,r:110},{x:20,y:5,r:70}]],
 				alternateFire:false,
 				auto:false,
@@ -139,7 +134,7 @@ var Globals = {
 				auto:true,
 				speed:12,
 				damage:0.4,
-				ammo:600,
+				ammo:500,
 				invincible:false,
 				radius:2,
 				frame:"rapidBullet"				
@@ -151,13 +146,13 @@ var Globals = {
 				auto:false,
 				speed:0,
 				damage:0.2,
-				ammo:100,
+				ammo:250,
 				invincible:true,
 				radius:-1,
 				frame:"laserBullet"				
 			},
 			"bounce":{
-				freq:0,
+				freq:6,
 				gunPoints:[[{x:0,y:-20,r:270},{x:-20,y:-5,r:260},{x:20,y:-5,r:280}],[{x:0,y:20,r:90},{x:-20,y:5,r:100},{x:20,y:5,r:80}]],
 				alternateFire:false,
 				auto:false,
@@ -169,13 +164,13 @@ var Globals = {
 				frame:"bounceBullet"				
 			},
 			"superBounce":{
-				freq:0,
+				freq:4,
 				gunPoints:[[{x:0,y:-20,r:270},{x:-20,y:-5,r:260},{x:20,y:-5,r:280}],[{x:0,y:20,r:90},{x:-20,y:5,r:100},{x:20,y:5,r:80}]],
 				alternateFire:false,
 				auto:false,
-				speed:6,
+				speed:8,
 				damage:0.4,
-				ammo:100,
+				ammo:200,
 				invincible:true,
 				radius:4,
 				frame:"bounceBullet"				
@@ -204,19 +199,25 @@ var Globals = {
 		return iRandomNum;
 	},
 
+	checkPointCollision:function(sprite1, sprite2, collisionPoints) {
+		for (var n=0; n<collisionPoints.length; n++) {
+			var point = sprite2.localToLocal(collisionPoints[n][0], collisionPoints[n][1], sprite1);
+			if (sprite1.hitTest(point.x, point.y)) {
+				return true;
+			}
+		}
+		return false;
+	},
+
 	checkRadiusCollision:function(sprite1, sprite2, threshold, xAdjust, yAdjust) {
 		var a,b;
 		if (xAdjust !== undefined) {
-			// THIS ONE WORKS!!!
 			// convert turret position to global coord space
 			// adjust x and y as turret is position with boss center reg point while stage is top left
 			var point = sprite2.localToGlobal(sprite2.x + xAdjust, sprite2.y + yAdjust);
 			// Calculate difference between centers
 			a = sprite1.x - point.x;
 			b = sprite1.y - point.y;
-
-			//console.log("turret at: " + point.x + "," + point.y + " VS bullet at: " + sprite2.x + "," + sprite2.y);
-
 		} else {
 			a = sprite1.x - sprite2.x;
 			b = sprite1.y - sprite2.y;
